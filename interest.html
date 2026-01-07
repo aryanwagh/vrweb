@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vanar Generation 1</title>
+    <link rel="icon" type="image/gif" href="images/Renders/WebP/profile.webp" /> 
+
+    <style>
+      :root {
+        --bg: #0b0c0e;
+        --fg: #ffffff;
+        --muted: #9aa0a6;
+        --accent: #6cf2c2;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+      }
+
+      
+      
+
+
+
+
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+      .vr-navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 24px 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      }
+
+      .vr-navbar.scrolled {
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .vr-navbar__logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+        display: block;
+      }
+
+      .vr-navbar__links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .vr-navbar__links a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        position: relative;
+        transition: opacity 0.25s ease;
+      }
+
+      .vr-navbar__links a:hover {
+        opacity: 1;
+        color: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__links a:not(:hover) {
+        opacity: 0.65;
+      }
+
+      .vr-navbar__cta {
+        padding: 10px 26px;
+        border-radius: 30px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .vr-navbar__cta:hover {
+        background: #ffffff;
+        color: #000;
+        border-color: #ffffff;
+      }
+
+      /* Hamburger Menu */
+      .vr-navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 1001;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .vr-navbar__hamburger span {
+        width: 22px;
+        height: 2px;
+        background: rgba(255,255,255,0.9);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 2px;
+        display: block;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      /* Mobile Dropdown */
+      .vr-navbar__mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 20px 6vw;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vr-navbar__mobile-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vr-navbar__mobile-menu a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.8);
+        text-transform: uppercase;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.25s ease;
+      }
+
+      .vr-navbar__mobile-menu a:hover {
+        color: rgba(255,255,255,1);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-navbar {
+          padding: 18px 6vw;
+        }
+        
+        .vr-navbar__links {
+          display: none;
+        }
+        
+        .vr-navbar__hamburger {
+          display: flex;
+        }
+        
+        .vr-navbar__logo {
+          flex: 0 0 auto;
+        }
+        
+        .vr-navbar__logo img {
+          width: 90px;
+        }
+        
+        /* Push CTA and hamburger to the right */
+        .vr-navbar__cta {
+          padding: 8px 18px;
+          font-size: 12px;
+          margin-left: auto;
+          margin-right: 12px;
+        }
+      }.vr-navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 24px 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      }
+
+      .vr-navbar.scrolled {
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .vr-navbar__logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+        display: block;
+      }
+
+      .vr-navbar__links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .vr-navbar__links a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        position: relative;
+        transition: opacity 0.25s ease;
+      }
+
+      .vr-navbar__links a:hover {
+        opacity: 1;
+        color: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__links a:not(:hover) {
+        opacity: 0.65;
+      }
+
+      .vr-navbar__cta {
+        padding: 10px 26px;
+        border-radius: 30px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .vr-navbar__cta:hover {
+        background: #ffffff;
+        color: #000;
+        border-color: #ffffff;
+      }
+
+      /* Hamburger Menu */
+      .vr-navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+      }
+
+      .vr-navbar__hamburger span {
+        width: 24px;
+        height: 2px;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+        background: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      /* Mobile Dropdown */
+      .vr-navbar__mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 20px 6vw;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vr-navbar__mobile-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vr-navbar__mobile-menu a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.8);
+        text-transform: uppercase;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.25s ease;
+      }
+
+      .vr-navbar__mobile-menu a:hover {
+        color: rgba(255,255,255,1);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-navbar {
+          padding: 18px 6vw;
+        }
+        
+        .vr-navbar__links {
+          display: none;
+        }
+        
+        .vr-navbar__hamburger {
+          display: flex;
+        }
+        
+        .vr-navbar__logo {
+          flex: 0 0 auto;
+        }
+        
+        .vr-navbar__logo img {
+          width: 90px;
+        }
+        
+        /* Push CTA and hamburger to the right */
+        .vr-navbar__cta {
+          padding: 8px 18px;
+          font-size: 12px;
+          margin-left: auto;
+          margin-right: 12px;
+        }
+      }.vr-navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 24px 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      }
+
+      .vr-navbar.scrolled {
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .vr-navbar__logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+        display: block;
+      }
+
+      .vr-navbar__links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .vr-navbar__links a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        position: relative;
+        transition: opacity 0.25s ease;
+      }
+
+      .vr-navbar__links a:hover {
+        opacity: 1;
+        color: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__links a:not(:hover) {
+        opacity: 0.65;
+      }
+
+      .vr-navbar__cta {
+        padding: 10px 26px;
+        border-radius: 30px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .vr-navbar__cta:hover {
+        background: #ffffff;
+        color: #000;
+        border-color: #ffffff;
+      }
+
+      /* Hamburger Menu */
+      .vr-navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+      }
+
+      .vr-navbar__hamburger span {
+        width: 24px;
+        height: 2px;
+        background: rgba(255,255,255,0.8);
+        transition: all 0.3s ease;
+        border-radius: 2px;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      /* Mobile Dropdown */
+      .vr-navbar__mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 20px 6vw;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vr-navbar__mobile-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vr-navbar__mobile-menu a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.8);
+        text-transform: uppercase;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.25s ease;
+      }
+
+      .vr-navbar__mobile-menu a:hover {
+        color: rgba(255,255,255,1);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-navbar {
+          padding: 18px 6vw;
+        }
+        
+        .vr-navbar__links {
+          display: none;
+        }
+        
+        .vr-navbar__hamburger {
+          display: flex;
+        }
+        
+        .vr-navbar__logo {
+          flex: 0 0 auto;
+        }
+        
+        .vr-navbar__logo img {
+          width: 90px;
+        }
+        
+        /* Push CTA and hamburger to the right */
+        .vr-navbar__cta {
+          padding: 8px 18px;
+          font-size: 12px;
+          margin-left: auto;
+          margin-right: 12px;
+        }
+      }
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+
+
+
+
+
+
+
+
+
+/* ===== FOOTER (WHITE THEME) ===== */
+      .vr-footer {
+        background: #000000ff;
+        color: #ffffffff;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        padding: 60px 8vw;
+        font-size: 0.85rem;
+      }
+
+      .vr-footer-split {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .vr-footer-right img {
+        height: 22px;
+        width: auto;
+        opacity: 0.9;
+      }
+
+      @media (max-width: 768px) {
+        .vr-footer-split {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .vr-footer-right img {
+          height: 20px;
+        }
+      }
+
+
+      @media (max-width: 768px) {
+        .vr-footer {
+        text-align: center;
+        }
+      }
+   
+    /* ===== JOIN BETA FORM ===== */
+.beta-section {
+  padding: 140px 8vw 100px;
+  background: var(--bg);
+}
+
+.beta-container {
+  padding-top: 50px;
+  max-width: 720px;
+  margin: auto;
+}
+
+.beta-container h1 {
+  font-size: 2.2rem;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.beta-container p {
+  color: var(--muted);
+  margin-bottom: 28px;
+  line-height: 1.6;
+  text-align: center;
+}
+
+.beta-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.beta-container input,
+.beta-container select,
+.beta-container textarea {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: #111;
+  color: #fff;
+  font-size: 14px;
+}
+
+.beta-container textarea {
+  margin-top: 16px;
+  resize: vertical;
+}
+
+.beta-container button {
+  margin-top: 24px;
+  padding: 14px;
+  width: 100%;
+  border-radius: 30px;
+  border: 1px solid var(--accent);
+  background: transparent;
+  color: var(--accent);
+  font-size: 14px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.beta-container button:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+.beta-note {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+}
+
+.beta-status {
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .beta-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+
+.vr-cta-meta {
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+        color: rgba(0,0,0,0.55);
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 768px) {
+        .vr-cta-meta {
+          font-size: 0.75rem;
+          letter-spacing: 1.5px;
+          gap: 12px;
+          margin-bottom: 32px;
+          text-align: center;
+        }
+      }
+
+
+
+
+
+/* ===== BETA CONFIRMATION PANEL ===== */
+.beta-overlay {
+  position: fixed;
+  inset: 0;
+  background: #0b0c0e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.beta-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.beta-confirm {
+  max-width: 600px;
+  padding: 30px 40px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(180deg, #0f1115, #0b0c0e);
+  box-shadow: 0 40px 120px rgba(0,0,0,0.9);
+  animation: riseIn 0.5s ease forwards;
+}
+
+.beta-confirm-line {
+  width: 60px;
+  height: 2px;
+  background: var(--accent);
+  margin: 0 auto 24px;
+}
+
+.beta-confirm h2 {
+  font-size: 1.6rem;
+  margin-bottom: 14px;
+}
+
+.beta-confirm p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.beta-confirm-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 12px 34px;
+  border-radius: 30px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 13px;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+}
+
+.beta-confirm-btn:hover {
+  background: var(--accent);
+  color: #000;
+}
+
+@keyframes riseIn {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ===== MOBILE OVERLAY OVERRIDE ===== */
+@media (max-width: 768px) {
+  .beta-confirm {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    border: none;
+    border-radius: 0;
+    padding: 32px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    animation: riseInMobile 0.45s ease forwards;
+  }
+
+  .beta-confirm h2 {
+    font-size: 2rem;
+  }
+
+  .beta-confirm p {
+    font-size: 0.95rem;
+  }
+
+  .beta-confirm-line {
+    margin-bottom: 20px;
+  }
+}
+
+@keyframes riseInMobile {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+    </style>
+  </head>
+
+  <body>
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <nav class="vr-navbar">
+      <div class="vr-navbar__logo">
+        <a href="index.html"><img src="images/WhiteLogo1.png" alt="Vanar Robots"></a>
+      </div>
+      <div class="vr-navbar__links">
+        <a href="Gen1.html">Generation 1</a>
+        <a href="indistinguishability.html">Vision</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="interest.html" class="vr-navbar__cta">Join Beta</a>
+      <button class="vr-navbar__hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile Dropdown Menu -->
+    <div class="vr-navbar__mobile-menu">
+      <a href="Gen1.html">Generation 1</a>
+      <a href="indistinguishability.html">Vision</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <script>
+      const hamburger = document.querySelector('.vr-navbar__hamburger');
+      const mobileMenu = document.querySelector('.vr-navbar__mobile-menu');
+      const navbar = document.querySelector('.vr-navbar');
+      
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        
+        // Add scrolled class to navbar when menu opens
+        if (mobileMenu.classList.contains('active')) {
+          navbar.classList.add('scrolled');
+        } else {
+          // Only remove if user hasn't scrolled
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+      
+      // Close menu when clicking on a link
+      document.querySelectorAll('.vr-navbar__mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          
+          // Remove scrolled class if at top of page
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.vr-navbar')) {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          
+          // Remove scrolled class if at top of page
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+      
+      // Handle scroll events (assuming you already have this)
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          // Only remove if menu is not active
+          if (!mobileMenu.classList.contains('active')) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+    </script>
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <!-- Navbar -->
+
+    
+    <!-- Navbar --> <!-- END NAVBAR -->
+    <section class="beta-section">
+      <div class="beta-container">
+        <h1>Join the Beta Program List</h1>
+        <p>
+          Vanar Generation 1 is built for organizations that rely on physical labor.
+        </p>
+
+        <form id="betaForm">
+          <div class="beta-grid">
+            <input type="text" name="name" placeholder="Full Name" required />
+            <input type="email" name="email" placeholder="Work Email" required />
+            <input type="text" name="organization" placeholder="Company / Organization" required />
+            <input type="text" name="industry" placeholder="Industry (Manufacturing, Logistics, etc.)" required />
+            <input type="tel" name="phone" placeholder="Phone Number" required />
+            <select name="usecase" required>
+              <option value="">Primary Use Case</option>
+              <option value="Manufacturing">Manufacturing</option>
+              <option value="Warehousing">Warehousing</option>
+              <option value="Construction">Construction</option>
+              <option value="Healthcare Support">Healthcare Support</option>
+              <option value="Hospitality">Hospitality</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <textarea name="details" rows="4" placeholder="Describe the physical labor problem you want Vanar to solve"></textarea>
+
+          <button type="submit">Request Beta Access</button>
+          <p class="vr-cta-meta">Starting  ₹20,000 / Month <span class="vr-cta-sep">·</span> BETA deployment in 2026-27
+        </p>
+        </form>
+
+
+        <div id="betaOverlay" class="beta-overlay">
+  <div class="beta-confirm">
+    <h2>Beta Request Logged</h2>
+    <p>
+      Your request has been securely recorded.
+      We actively receive a large number of beta deployment requests across different environments.
+      If your use case aligns best with our current beta deployment criteria, our team will reach out with next steps.
+    </p>
+    <a href="index.html" class="beta-confirm-btn">Return to Home</a>
+  </div>
+</div>
+      </div>
+    </section>
+
+    <br><br><br><br>
+
+    <!-- Footer -->
+    <footer class="vr-footer vr-footer-split">
+      <div class="vr-footer-left">
+        2026 © Vanar Robots Private Limited · Vanar Generation 1
+      </div>
+      <div class="vr-footer-right">
+        <img src="images/India.png" alt="Made in India">
+      </div>
+    </footer>
+    <!-- Footer -->
+    <script>
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    </script>
+
+    <script>
+const form = document.getElementById("betaForm");
+const overlay = document.getElementById("betaOverlay");
+
+// REPLACE with your Google Apps Script Web App URL
+const scriptURL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkRqZoU-kc-j1cGCUOxHaB2VH5hL2p61U5M92ktDeNcpaRDP-Zww/exec";
+
+form.addEventListener("submit", e => {
+  e.preventDefault();
+
+  fetch(scriptURL, {
+    method: "POST",
+    mode: "no-cors",
+    body: new FormData(form)
+  })
+  .then(() => {
+    overlay.classList.add("active");
+    form.reset();
+  })
+  .catch(() => {
+    // fallback inline status text if needed
+  });
+});
+
+// TEMP: Manual overlay trigger for testing
+const testBtn = document.getElementById("testOverlayBtn");
+if (testBtn) {
+  testBtn.addEventListener("click", () => {
+    overlay.classList.add("active");
+  });
+}
+    </script>
+    
+  </body>
+</html>

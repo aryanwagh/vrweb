@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="icon" type="image/gif" href="images/Renders/WebP/profile.webp" /> 
+    <title>Vanar Robots</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Adobe Fonts -->
+    <link href="https://fonts.adobe.com/fonts/neue-haas-grotesk-display" rel="stylesheet">
+
+    <style>
+        @font-face {
+            font-family: 'NeueHaasDisplayBold';
+            src: url('fonts/NeueHaas/NeueHaasDisplayBold.ttf') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NeueHaasDisplayMedium';
+            src: url('fonts/NeueHaas/NeueHaasDisplayMediu.ttf') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'NeueHaasDisplayRoman';
+            src: url('fonts/NeueHaas/NeueHaasDisplayRoman.ttf') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .fade-in-section {
+            opacity: 0;
+            transition: opacity 3s ease-out, transform 1.5s ease-out;
+        }
+
+        .fade-in-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background-color: #000;
+            color: #fff;
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+
+        :root {
+          --accent: #ffffff;
+        }
+        
+
+
+
+
+        /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+      .vr-navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 24px 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      }
+
+      .vr-navbar.scrolled {
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .vr-navbar__logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+        display: block;
+      }
+
+      .vr-navbar__links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .vr-navbar__links a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        position: relative;
+        transition: opacity 0.25s ease;
+      }
+
+      .vr-navbar__links a:hover {
+        opacity: 1;
+        color: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__links a:not(:hover) {
+        opacity: 0.65;
+      }
+
+      .vr-navbar__cta {
+        padding: 10px 26px;
+        border-radius: 30px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .vr-navbar__cta:hover {
+        background: #ffffff;
+        color: #000;
+        border-color: #ffffff;
+      }
+
+      /* Hamburger Menu */
+      .vr-navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 1001;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .vr-navbar__hamburger span {
+        width: 22px;
+        height: 2px;
+        background: rgba(255,255,255,0.9);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 2px;
+        display: block;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      /* Mobile Dropdown */
+      .vr-navbar__mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 20px 6vw;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vr-navbar__mobile-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vr-navbar__mobile-menu a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.8);
+        text-transform: uppercase;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.25s ease;
+      }
+
+      .vr-navbar__mobile-menu a:hover {
+        color: rgba(255,255,255,1);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-navbar {
+          padding: 18px 6vw;
+        }
+        
+        .vr-navbar__links {
+          display: none;
+        }
+        
+        .vr-navbar__hamburger {
+          display: flex;
+        }
+        
+        .vr-navbar__logo {
+          flex: 0 0 auto;
+        }
+        
+        .vr-navbar__logo img {
+          width: 90px;
+        }
+        
+        /* Push CTA and hamburger to the right */
+        .vr-navbar__cta {
+          padding: 8px 18px;
+          font-size: 12px;
+          margin-left: auto;
+          margin-right: 12px;
+        }
+      }.vr-navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 24px 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      }
+
+      .vr-navbar.scrolled {
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .vr-navbar__logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+        display: block;
+      }
+
+      .vr-navbar__links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .vr-navbar__links a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        position: relative;
+        transition: opacity 0.25s ease;
+      }
+
+      .vr-navbar__links a:hover {
+        opacity: 1;
+        color: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__links a:not(:hover) {
+        opacity: 0.65;
+      }
+
+      .vr-navbar__cta {
+        padding: 10px 26px;
+        border-radius: 30px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .vr-navbar__cta:hover {
+        background: #ffffff;
+        color: #000;
+        border-color: #ffffff;
+      }
+
+      /* Hamburger Menu */
+      .vr-navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+      }
+
+      .vr-navbar__hamburger span {
+        width: 24px;
+        height: 2px;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+        background: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      /* Mobile Dropdown */
+      .vr-navbar__mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 20px 6vw;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vr-navbar__mobile-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vr-navbar__mobile-menu a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.8);
+        text-transform: uppercase;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.25s ease;
+      }
+
+      .vr-navbar__mobile-menu a:hover {
+        color: rgba(255,255,255,1);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-navbar {
+          padding: 18px 6vw;
+        }
+        
+        .vr-navbar__links {
+          display: none;
+        }
+        
+        .vr-navbar__hamburger {
+          display: flex;
+        }
+        
+        .vr-navbar__logo {
+          flex: 0 0 auto;
+        }
+        
+        .vr-navbar__logo img {
+          width: 90px;
+        }
+        
+        /* Push CTA and hamburger to the right */
+        .vr-navbar__cta {
+          padding: 8px 18px;
+          font-size: 12px;
+          margin-left: auto;
+          margin-right: 12px;
+        }
+      }.vr-navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 24px 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      }
+
+      .vr-navbar.scrolled {
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .vr-navbar__logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+        display: block;
+      }
+
+      .vr-navbar__links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .vr-navbar__links a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        position: relative;
+        transition: opacity 0.25s ease;
+      }
+
+      .vr-navbar__links a:hover {
+        opacity: 1;
+        color: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__links a:not(:hover) {
+        opacity: 0.65;
+      }
+
+      .vr-navbar__cta {
+        padding: 10px 26px;
+        border-radius: 30px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .vr-navbar__cta:hover {
+        background: #ffffff;
+        color: #000;
+        border-color: #ffffff;
+      }
+
+      /* Hamburger Menu */
+      .vr-navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+      }
+
+      .vr-navbar__hamburger span {
+        width: 24px;
+        height: 2px;
+        background: rgba(255,255,255,0.8);
+        transition: all 0.3s ease;
+        border-radius: 2px;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      /* Mobile Dropdown */
+      .vr-navbar__mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 20px 6vw;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vr-navbar__mobile-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vr-navbar__mobile-menu a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.8);
+        text-transform: uppercase;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.25s ease;
+      }
+
+      .vr-navbar__mobile-menu a:hover {
+        color: rgba(255,255,255,1);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-navbar {
+          padding: 18px 6vw;
+        }
+        
+        .vr-navbar__links {
+          display: none;
+        }
+        
+        .vr-navbar__hamburger {
+          display: flex;
+        }
+        
+        .vr-navbar__logo {
+          flex: 0 0 auto;
+        }
+        
+        .vr-navbar__logo img {
+          width: 90px;
+        }
+        
+        /* Push CTA and hamburger to the right */
+        .vr-navbar__cta {
+          padding: 8px 18px;
+          font-size: 12px;
+          margin-left: auto;
+          margin-right: 12px;
+        }
+      }
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+
+
+
+
+
+
+
+
+        
+        .section {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+        }
+        
+        /* Background image handling for different devices */
+        .bg-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 110%;
+            object-fit: cover;
+            opacity: 1;
+            will-change: transform;
+            transition: transform 0.1s linear;
+        }
+        
+        /* Background video handling */
+        .bg-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 1;
+        }
+        
+        /* Default background for desktop */
+        .desktop-bg {
+            display: block;
+        }
+        
+        .tablet-bg, .mobile-bg {
+            display: none;
+        }
+        
+        @media only screen and (max-width: 1023px) and (min-width: 769px) {
+            .desktop-bg {
+                display: none;
+            }
+            
+            .tablet-bg {
+                display: block;
+            }
+            
+            .mobile-bg {
+                display: none;
+            }
+            
+            /* Tablet-specific content positioning */
+            .section {
+                align-items: flex-start;
+                padding-top: 120px;
+            }
+        }
+        
+        /* Mobile-specific background (up to 767px) */
+        @media only screen and (max-width: 767px) {
+            .desktop-bg {
+                display: none;
+            }
+            
+            .tablet-bg {
+                display: none;
+            }
+            
+            .mobile-bg {
+                display: block;
+            }
+            
+            /* Mobile-specific content positioning */
+            .section {
+                align-items: flex-start;
+                padding-top: 100px;
+            }
+        }
+        
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: left;
+            max-width: 1000px;
+            padding-left: 10%;
+        }
+        
+        h1 {
+            font-size: 25px;
+            line-height: 1.5;
+            max-width: 900px;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            max-width: 500px;
+            line-height: 1.4;
+        }
+        
+        /* Content positioning for tablet and mobile */
+        @media only screen and (max-width: 1023px) {
+            .content {
+                text-align: center;
+                padding-left: 0;
+                padding-right: 0;
+                margin: 0 auto;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                right: 0;
+                align-items: center;
+                justify-content: center;
+            }
+            
+            h1 {
+                font-size: 25px;
+                line-height: 1.5;
+                max-width: 900px;
+            }
+            
+            h2 {
+                font-size: 1rem;
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        
+        .btn {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 10px 26px;
+          background: rgba(255, 255, 255, 0.12);
+          color: #fff;
+          border: 1px solid rgba(255, 255, 255, 0.35);
+          border-radius: 999px;
+          text-decoration: none;
+          text-transform: uppercase;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          margin: 0.75rem 1rem 0.75rem 0;
+          transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+          backdrop-filter: blur(12px);
+        }
+
+        .btn:hover {
+          background: rgba(255, 255, 255, 0.25);
+          border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .btnDark {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 10px 26px;
+          background: rgba(0, 0, 0, 0.08);
+          color: #000;
+          border: 1px solid rgba(0, 0, 0, 0.35);
+          border-radius: 999px;
+          text-decoration: none;
+          text-transform: uppercase;
+          font-size: 13px;
+          font-weight: 600;
+          letter-spacing: 1px;
+          margin: 0.75rem 1rem 0.75rem 0;
+          transition: background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+          backdrop-filter: blur(12px);
+        }
+
+        .btnDark:hover {
+          background: rgba(0, 0, 0, 0.18);
+          border-color: rgba(0, 0, 0, 0.55);
+        }
+        
+        .button-container {
+            display: flex;
+        }
+        
+        @media only screen and (max-width: 1023px) {
+            .button-container {
+                justify-content: center;
+                margin-top: 10px;
+            }
+            
+            .btn {
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .btnDark {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            text-decoration: none;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: white;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            color: #0000007a;
+        }
+        
+        .copyright {
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            h2 {
+                font-size: 0.5rem;
+            }
+            
+            .content {
+                padding-left: 5%;
+                padding-right: 5%;
+                max-width: 95%;
+                text-align: center;
+                position: absolute;
+                top: 100px;
+            }
+            
+            .btn {
+                margin: 0 auto;
+                display: inline-block;
+            }
+        }
+
+        
+
+        /* Footer */
+        /* ===== FOOTER (WHITE THEME) ===== */
+      .vr-footer {
+        background: #000000ff;
+        color: #ffffffff;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        padding: 60px 8vw;
+        font-size: 0.85rem;
+      }
+
+      .vr-footer-split {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .vr-footer-right img {
+        height: 22px;
+        width: auto;
+        opacity: 0.9;
+      }
+
+      @media (max-width: 768px) {
+        .vr-footer-split {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .vr-footer-right img {
+          height: 20px;
+        }
+      }
+
+
+      @media (max-width: 768px) {
+        .vr-footer {
+        text-align: center;
+        }
+      }
+      @media (max-width: 768px) {
+        .vr-core-header h2 {
+          margin-bottom: 10px;
+        }
+      }
+      @media (max-width: 768px) {
+        .vr-core-text h3 {
+          margin-bottom: 8px;
+        }
+        .vr-core-text {
+          gap: 12px;
+        }
+      }
+        /* Footer */
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <nav class="vr-navbar">
+      <div class="vr-navbar__logo">
+        <a href="index.html"><img src="images/Renders/WebP/WhiteLogo1.webp" alt="Vanar Robots"></a>
+      </div>
+      <div class="vr-navbar__links">
+        <a href="Gen1.php">Generation 1</a>
+        <a href="indistinguishability.php">Vision</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="interest.php" class="vr-navbar__cta">Join Beta</a>
+      <button class="vr-navbar__hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile Dropdown Menu -->
+    <div class="vr-navbar__mobile-menu">
+      <a href="Gen1.php">Generation 1</a>
+      <a href="indistinguishability.php">Vision</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <script>
+      const hamburger = document.querySelector('.vr-navbar__hamburger');
+      const mobileMenu = document.querySelector('.vr-navbar__mobile-menu');
+      const navbar = document.querySelector('.vr-navbar');
+      
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        
+        // Add scrolled class to navbar when menu opens
+        if (mobileMenu.classList.contains('active')) {
+          navbar.classList.add('scrolled');
+        } else {
+          // Only remove if user hasn't scrolled
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+      
+      // Close menu when clicking on a link
+      document.querySelectorAll('.vr-navbar__mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          
+          // Remove scrolled class if at top of page
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.vr-navbar')) {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          
+          // Remove scrolled class if at top of page
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+      
+      // Handle scroll events (assuming you already have this)
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          // Only remove if menu is not active
+          if (!mobileMenu.classList.contains('active')) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+    </script>
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <!-- Navbar -->
+
+
+    <!-- Vanar Generation 1 -->
+    <section class="section dark-section">
+        <!-- Multiple background images for different device sizes -->
+        <img src="images/Renders/WebP/File177PC.webp" class="bg-image desktop-bg">
+        <img src="images/Renders/WebP/File177Tab.webp" class="bg-image tablet-bg">
+        <img src="images/Renders/WebP/File177Mob.webp" class="bg-image mobile-bg">
+        
+        <div class="content">
+            <h1>The Next Evolution of Labor. <br><b>Vanar Generation 1.</b></h1>
+            <div class="button-container">
+                <a href="Gen1.php" class="btn w3-round-xxlarge">Learn more</a>
+            </div>
+        </div>
+    </section>
+    <!-- Vanar Generation 1 -->
+
+    <!-- Indistinguishability -->
+    <section class="section dark-section parallax-section">
+        <!-- Multiple background images for different device sizes -->
+        <img src="images/Renders/WebP/File177PC.webp" class="bg-image desktop-bg parallax-bg">
+        <img src="images/Renders/WebP/File177Tab.webp" class="bg-image tablet-bg parallax-bg">
+        <img src="images/Renders/WebP/File177Mob.webp" class="bg-image mobile-bg parallax-bg">
+        
+        <div class="content" style="color: black;">
+            <h1>Vanars For Home.<br><b>Indistinguishability.</b></h1>
+            <div class="button-container">
+                <a href="indistinguishability.php" class="btnDark w3-round-xxlarge">Learn more</a>
+            </div>
+        </div>
+    </section>
+    <!-- Indistinguishability -->
+
+
+
+
+
+    <!-- Footer -->
+    <footer class="vr-footer vr-footer-split">
+      <div class="vr-footer-left">
+        2025 © Vanar Robots Private Limited
+      </div>
+      <div class="vr-footer-right">
+        <img src="images/Renders/WebP/India.webp" alt="Made in India">
+      </div>
+    </footer>
+    <!-- Footer -->
+
+
+    <script>
+        // Simple parallax effect for background images and videos
+        window.addEventListener('scroll', function() {
+            updateLogoColor();
+            
+            const sections = document.querySelectorAll('.parallax-section');
+            sections.forEach(section => {
+                let bgElement;
+                
+                if (window.innerWidth <= 767) {
+                    bgElement = section.querySelector('.mobile-bg');
+                } else if (window.innerWidth <= 1023) {
+                    bgElement = section.querySelector('.tablet-bg');
+                } else {
+                    bgElement = section.querySelector('.desktop-bg');
+                }
+                
+                if (bgElement) {
+                    const scrollPosition = window.pageYOffset;
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.offsetHeight;
+                    
+                    if (scrollPosition + window.innerHeight > sectionTop && 
+                        scrollPosition < sectionTop + sectionHeight) {
+                        const yPos = (scrollPosition - sectionTop) * 0.3;
+                        bgElement.style.transform = `translateY(${yPos}px)`;
+                    }
+                }
+            });
+        });
+        
+        // Initialize logo color on page load
+        window.addEventListener('load', updateLogoColor);
+        
+        // Update background visibility on window resize
+        window.addEventListener('resize', function() {
+            window.dispatchEvent(new Event('scroll'));
+        });
+        // Fade-in animation for sections
+        const fadeInSections = document.querySelectorAll('.fade-in-section');
+
+        function handleFadeInOnScroll() {
+            fadeInSections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                const isVisible = rect.top <= window.innerHeight * 0.9;
+                if (isVisible) {
+                    section.classList.add('visible');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', handleFadeInOnScroll);
+        window.addEventListener('load', handleFadeInOnScroll);
+    </script>
+
+
+</body></html>

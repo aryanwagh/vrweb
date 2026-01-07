@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="icon" type="image/gif" href="images/Renders/WebP/profile.webp" />
+<title>Contact - Vanar Robots</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f5f5f5;
+  color: #000000ff;
+  overflow-x: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-weight: 400;
+}
+
+
+
+
+
+
+
+/* ===== FUTURISTIC NAVBAR ===== */
+    .vr-navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 24px 8vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+
+      /* Glass effect */
+      background: rgba(255, 255, 255, 0);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+
+    .vr-navbar.scrolled {
+      background: rgba(255, 255, 255, 0.332);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    .vr-navbar__logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .vr-navbar__logo img {
+      width: 110px;
+      display: block;
+      filter: none;
+    }
+
+    .vr-navbar__links {
+      display: flex;
+      gap: 40px;
+    }
+
+    .vr-navbar__links a {
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: rgba(79, 79, 79, 0.6);
+      text-transform: uppercase;
+      position: relative;
+      transition: opacity 0.25s ease;
+    }
+
+    .vr-navbar__links a:hover {
+      opacity: 1;
+      color: #000000;
+      transition: 1s;
+    }
+
+    .vr-navbar__cta {
+      padding: 10px 26px;
+      border-radius: 30px;
+      border: 1px solid #000000;
+      color: #000000;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .vr-navbar__cta:hover {
+      background: #000000;
+      color: #ffffff;
+    }
+
+    /* Hamburger Menu */
+    .vr-navbar__hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 1001;
+      position: relative;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .vr-navbar__hamburger span {
+      width: 22px;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.8);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 2px;
+      display: block;
+    }
+
+    .vr-navbar__hamburger:hover span {
+      background: rgba(0, 0, 0, 1);
+    }
+
+    .vr-navbar__hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .vr-navbar__hamburger.active span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+
+    .vr-navbar__hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Mobile Dropdown */
+    .vr-navbar__mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.332);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 20px 6vw;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .vr-navbar__mobile-menu.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .vr-navbar__mobile-menu a {
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: rgba(79, 79, 79, 0.8);
+      text-transform: uppercase;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      transition: color 0.25s ease;
+    }
+
+    .vr-navbar__mobile-menu a:hover {
+      color: #000000;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .vr-navbar {
+        padding: 18px 6vw;
+      }
+      
+      .vr-navbar__links {
+        display: none;
+      }
+
+      .vr-navbar__hamburger {
+        display: flex;
+      }
+
+      .vr-navbar__logo {
+        flex: 0 0 auto;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+      }
+
+      .vr-navbar__cta {
+        padding: 8px 18px;
+        font-size: 12px;
+        margin-left: auto;
+        margin-right: 12px;
+      }
+    }
+    /* ===== FUTURISTIC NAVBAR ===== */
+
+
+
+
+
+
+
+
+/* ===== CONTACT SECTION ===== */
+.contact-section {
+  min-height: 100vh;
+  display: flex;
+  align-items:center;
+  justify-content: center;
+  padding: 120px 8vw 80px;
+}
+
+.contact-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 100px;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.contact-left {
+  flex: 1;
+  max-width: 600px;
+}
+
+.contact-left h1 {
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin-bottom: 32px;
+  color: #000;
+}
+
+.contact-left p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #333;
+  font-weight: 300;
+}
+
+.contact-right {
+  background: #fff;
+  padding: 48px;
+  border-radius: 16px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
+  min-width: 400px;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.contact-item:last-child {
+  margin-bottom: 0;
+}
+
+.contact-item:hover {
+  color: #000;
+}
+
+.contact-item i {
+  font-size: 20px;
+  width: 24px;
+  color: #666;
+}
+
+.contact-item span {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+/* ===== FOOTER ===== */
+.vr-footer {
+  background: #ffffffff;
+  color: #000000ff;
+  border-top: 1px solid rgba(0,0,0,0.1);
+  padding: 60px 8vw;
+  font-size: 0.85rem;
+}
+
+.vr-footer-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.vr-footer-right img {
+  height: 22px;
+  width: auto;
+  opacity: 0.9;
+}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 1024px) {
+  .contact-container {
+    gap: 60px;
+  }
+  
+  .contact-left h1 {
+    font-size: 56px;
+  }
+}
+
+@media (max-width: 768px) {
+  .vr-navbar {
+    padding: 18px 6vw;
+  }
+  
+  .vr-navbar__links {
+    display: none;
+  }
+  
+  .vr-navbar__logo img {
+    width: 90px;
+  }
+  
+  .vr-navbar__cta {
+    padding: 8px 18px;
+    font-size: 12px;
+  }
+  
+  .contact-section {
+    padding: 100px 6vw 60px;
+  }
+  
+  .contact-container {
+    flex-direction: column;
+    gap: 48px;
+  }
+  
+  .contact-left h1 {
+    font-size: 48px;
+  }
+  
+  .contact-left p {
+    font-size: 16px;
+  }
+  
+  .contact-right {
+    min-width: auto;
+    width: 100%;
+    padding: 36px;
+  }
+  
+  .vr-footer-split {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .vr-footer {
+    text-align: center;
+  }
+  
+  .vr-footer-right img {
+    height: 20px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+    <nav class="vr-navbar">
+      <div class="vr-navbar__logo">
+        <a href="index.html"><img src="images/BlackLogo1.png" alt="Vanar Robots"></a>
+      </div>
+
+      <div class="vr-navbar__links">
+        <a href="Gen1.html">Generation 1</a>
+        <a href="indistinguishability.html">Vision</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <a href="interest.html" class="vr-navbar__cta">Join Beta</a>
+      
+      <button class="vr-navbar__hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile Dropdown Menu -->
+    <div class="vr-navbar__mobile-menu">
+      <a href="Gen1.html">Generation 1</a>
+      <a href="indistinguishability.html">Vision</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <script>
+      const hamburger = document.querySelector('.vr-navbar__hamburger');
+      const mobileMenu = document.querySelector('.vr-navbar__mobile-menu');
+      const navbar = document.querySelector('.vr-navbar');
+      
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        
+        // Add scrolled class to navbar when menu opens
+        if (mobileMenu.classList.contains('active')) {
+          navbar.classList.add('scrolled');
+        } else {
+          // Only remove if user hasn't scrolled
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+      
+      // Close menu when clicking on a link
+      document.querySelectorAll('.vr-navbar__mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          
+          // Remove scrolled class if at top of page
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.vr-navbar')) {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          
+          // Remove scrolled class if at top of page
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+      
+      // Handle scroll events
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          // Only remove if menu is not active
+          if (!mobileMenu.classList.contains('active')) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+    </script>
+    <!-- Navbar -->
+
+
+
+    
+
+<!-- Contact Section -->
+<section class="contact-section">
+  <div class="contact-container">
+    <div class="contact-left">
+      <h1>Let's talk.</h1>
+      <p>Vanar Robots is built by people who care deeply about how technology fits into the real world. If you're curious,
+        thoughtful, or building something meaningful, reach out directly.</p>
+    </div>
+    
+    <div class="contact-right">
+      <a href="mailto:hello@vanarrobots.com" class="contact-item">
+        <i class="far fa-envelope"></i>
+        <span>hello@vanarrobots.com</span>
+      </a>
+      
+      <a href="https://x.com/vanar_robots" target="_blank" class="contact-item">
+        <i class="fab fa-x-twitter"></i>
+        <span>@vanar_robots</span>
+      </a>
+      
+      <a href="https://linkedin.com/company/vanar-robots" target="_blank" class="contact-item">
+        <i class="fab fa-linkedin"></i>
+        <span>Vanar Robots</span>
+      </a>
+      
+      <a href="https://youtube.com/@vanarrobots" target="_blank" class="contact-item">
+        <i class="fab fa-youtube"></i>
+        <span>Vanar Robots</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="vr-footer vr-footer-split">
+  <div class="vr-footer-left">
+    2026 © Vanar Robots Private Limited
+  </div>
+  <div class="vr-footer-right">
+    <img src="images/Renders/WebP/India.webp" alt="Made in India">
+  </div>
+</footer>
+
+</body>
+</html>

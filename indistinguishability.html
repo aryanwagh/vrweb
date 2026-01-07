@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vanar - Indistinguishability</title>
+    <link rel="icon" type="image/gif" href="images/Renders/WebP/profile.webp" /> 
+
+    <style>
+      :root {
+        --bg: #0b0c0e;
+        --fg: #ffffff;
+        --muted: #9aa0a6;
+        --accent: #6cf2c2;
+      }
+
+      img {
+        will-change: transform;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        background: #ffffff;
+        color: #000000;
+        overflow-x: hidden;
+      }
+
+
+
+
+    /* ===== FUTURISTIC NAVBAR ===== */
+    .vr-navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 24px 8vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+
+      /* Glass effect */
+      background: rgba(255, 255, 255, 0);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      transition: background 0.4s ease, backdrop-filter 0.4s ease;
+    }
+
+    .vr-navbar.scrolled {
+      background: rgba(255, 255, 255, 0.332);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+    }
+
+    .vr-navbar__logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .vr-navbar__logo img {
+      width: 110px;
+      display: block;
+      filter: none;
+    }
+
+    .vr-navbar__links {
+      display: flex;
+      gap: 40px;
+    }
+
+    .vr-navbar__links a {
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: rgba(79, 79, 79, 0.6);
+      text-transform: uppercase;
+      position: relative;
+      transition: opacity 0.25s ease;
+    }
+
+    .vr-navbar__links a:hover {
+      opacity: 1;
+      color: #000000;
+      transition: 1s;
+    }
+
+    .vr-navbar__cta {
+      padding: 10px 26px;
+      border-radius: 30px;
+      border: 1px solid #000000;
+      color: #000000;
+      font-size: 13px;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .vr-navbar__cta:hover {
+      background: #000000;
+      color: #ffffff;
+    }
+
+    /* Hamburger Menu */
+    .vr-navbar__hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 1001;
+      position: relative;
+      width: 40px;
+      height: 40px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .vr-navbar__hamburger span {
+      width: 22px;
+      height: 2px;
+      background: rgba(0, 0, 0, 0.8);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      border-radius: 2px;
+      display: block;
+    }
+
+    .vr-navbar__hamburger:hover span {
+      background: rgba(0, 0, 0, 1);
+    }
+
+    .vr-navbar__hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translate(6px, 6px);
+    }
+
+    .vr-navbar__hamburger.active span:nth-child(2) {
+      opacity: 0;
+      transform: translateX(10px);
+    }
+
+    .vr-navbar__hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    /* Mobile Dropdown */
+    .vr-navbar__mobile-menu {
+      display: none;
+      position: fixed;
+      top: 70px;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.332);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 20px 6vw;
+      flex-direction: column;
+      gap: 20px;
+      z-index: 999;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .vr-navbar__mobile-menu.active {
+      display: flex;
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .vr-navbar__mobile-menu a {
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: rgba(79, 79, 79, 0.8);
+      text-transform: uppercase;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      transition: color 0.25s ease;
+    }
+
+    .vr-navbar__mobile-menu a:hover {
+      color: #000000;
+    }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      .vr-navbar {
+        padding: 18px 6vw;
+      }
+      
+      .vr-navbar__links {
+        display: none;
+      }
+
+      .vr-navbar__hamburger {
+        display: flex;
+      }
+
+      .vr-navbar__logo {
+        flex: 0 0 auto;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+      }
+
+      .vr-navbar__cta {
+        padding: 8px 18px;
+        font-size: 12px;
+        margin-left: auto;
+        margin-right: 12px;
+      }
+    }
+    /* ===== FUTURISTIC NAVBAR ===== */
+
+
+      
+
+      /* ===== PHILOSOPHY SECTION ===== */
+      .vision-divider {
+        display: flex;
+        justify-content: center;
+        padding: 80px 0;
+      }
+
+      .vision-divider span {
+        width: 6px;
+        height: 6px;
+        background: #000;
+        border-radius: 50%;
+        opacity: 0.4;
+      }
+
+      .vision-philosophy {
+        padding-bottom: 100px;
+        padding-top: 200px;
+        background: linear-gradient(180deg, #ffffff 0%, #f4f6f8 100%);
+      }
+
+      .philosophy-content {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+
+      .philosophy-content h2 {
+        font-size: 40px;
+        font-weight: 400;
+        line-height: 1.3;
+        margin: 0 0 40px 0;
+        letter-spacing: -0.5px;
+        max-width: 760px;
+        text-align: left;
+      }
+
+      .date-text {
+        font-size: 0.8rem;
+        color: #444;
+        font-weight: 300;
+        max-width: 760px;
+        text-align: left;
+      }
+
+      .philosophy-text {
+        font-size: 1.1rem;
+        line-height: 1.9;
+        color: #444;
+        font-weight: 300;
+        margin-bottom: 32px;
+        max-width: 760px;
+        text-align: left;
+      }
+
+        .vision-image {
+        padding-top: 50px;
+        width: 100%;
+        max-width: 1200px;
+        height: 600px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
+
+        .vision-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        }
+
+      @media (max-width: 768px) {
+        .vision-philosophy {
+            padding-bottom: 100px;
+            padding-top: 150px;
+            background: linear-gradient(180deg, #ffffff 0%, #f4f6f8 100%);
+        }
+
+        .philosophy-content h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 400;
+            line-height: 1.3;
+            letter-spacing: -0.5px;
+            max-width: 90%;
+            text-align: left;
+        }
+
+        .date-text {
+            font-size: 0.8rem;
+            color: #444;
+            font-weight: 300;
+            max-width: 90%;
+            text-align: left;
+        }
+
+        .philosophy-text {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            color: #444;
+            font-weight: 300;
+            margin-bottom: 32px;
+            max-width: 90%;
+            text-align: left;
+        }
+
+        .vision-image {
+        padding-top: 50px;
+        width: 100%;
+        height: 500px;
+        }
+
+        .vision-image img {
+        width: 100%;
+        }
+        }
+
+        /* Tablet */
+        @media (min-width: 769px) and (max-width: 1024px) {
+          .philosophy-content {
+            max-width: 90%;
+            margin: 0 auto;
+          }
+        }
+
+
+
+
+
+
+      /* ===== VISION CARDS ===== */
+      .vision-cards {
+        padding: 100px 8vw;
+        background: #ffffff;
+      }
+
+      .cards-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 32px;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .vision-card {
+        padding: 48px 36px;
+        border-radius: 20px;
+        background: transparent;
+        border: none;
+        transition: all 0.4s ease;
+        position: relative;
+      }
+
+      .vision-card::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 2px;
+        height: 100%;
+        background: linear-gradient(180deg, rgba(108,242,194,0.6), transparent);
+      }
+
+      .vision-card:hover {
+        transform: translateY(-6px);
+        box-shadow: none;
+      }
+
+      .vision-card h3 {
+        font-size: 1.4rem;
+        font-weight: 500;
+        margin: 0 0 16px 0;
+        color: #000;
+        transition: letter-spacing 0.3s ease;
+      }
+
+      .vision-card:hover h3 {
+        letter-spacing: 0.5px;
+      }
+
+      .vision-card p {
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #666;
+        margin: 0;
+        font-weight: 300;
+      }
+
+      /* ===== CLOSING SECTION ===== */
+      .vision-closing {
+        padding: 120px 8vw;
+        background: radial-gradient(800px 400px at 50% 0%, rgba(108,242,194,0.15), transparent 60%),
+                    linear-gradient(180deg, #0b0c0e 0%, #121316 100%);
+        color: #ffffff;
+        text-align: center;
+      }
+
+      .vision-closing h2 {
+        font-size: clamp(2rem, 4vw, 3.5rem);
+        font-weight: 300;
+        line-height: 1.3;
+        margin: 0 0 24px 0;
+        letter-spacing: -0.5px;
+      }
+
+      .vision-closing p {
+        font-size: 1.2rem;
+        color: rgba(255,255,255,0.7);
+        max-width: 700px;
+        margin: 0 auto 48px;
+        line-height: 1.8;
+        font-weight: 300;
+      }
+
+      .vision-closing .cta-button {
+        display: inline-block;
+        padding: 16px 48px;
+        border-radius: 40px;
+        background: var(--accent);
+        color: #000;
+        text-decoration: none;
+        font-size: 1rem;
+        font-weight: 500;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+      }
+
+      .vision-closing .cta-button:hover {
+        transform: translateY(-2px);
+      }
+
+      /* ===== FOOTER (WHITE THEME) ===== */
+      .vr-footer {
+        background: #f5f5f5;
+        color: #000000;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        padding: 60px 8vw;
+        font-size: 0.85rem;
+      }
+
+      .vr-footer-split {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .vr-footer-right img {
+        height: 22px;
+        width: auto;
+        opacity: 0.9;
+      }
+
+      @media (max-width: 768px) {
+        .vr-footer-split {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .vr-footer-right img {
+          height: 20px;
+        }
+
+        .vr-footer {
+          text-align: center;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .vision-hero {
+          padding: 120px 6vw 80px;
+        }
+
+        .vision-hero-bg {
+          background-image:
+            linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.6) 50%, transparent 100%),
+        }
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(24px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+
+
+
+      /* ===== VISION CONCLUSION (SOCIAL + CONTACT) ===== */
+      .vision-conclusion {
+        padding: 140px 8vw 160px;
+        background: radial-gradient(800px 400px at 50% 0%, rgba(255, 255, 255, 0.12), transparent 60%),
+                    linear-gradient(180deg, #ffffffff 0%, #ffffffff 100%);
+        color: black;
+      }
+
+      .vision-conclusion-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+      }
+
+      .vision-conclusion-box h3 {
+        font-size: 1.8rem;
+        font-weight: 400;
+        margin-bottom: 16px;
+        letter-spacing: -0.4px;
+        text-align: left;
+      }
+
+      .vision-conclusion-box p {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: rgba(0, 0, 0, 0.75);
+        font-weight: 300;
+        margin-bottom: 28px;
+        max-width: 550px;
+        text-align: left;
+      }
+
+      .vision-link {
+        font-size: 1.05rem;
+        line-height: 1.8;
+        color: rgba(0, 87, 128, 0.75);
+        font-weight: 300;
+        margin-bottom: 28px;
+        max-width: 420px;
+        text-decoration: none;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vision-link:hover {
+        opacity: 1;
+        transform: translateX(4px);
+      }
+
+      .vision-social-links {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+      }
+
+      .vision-social-links a {
+        font-size: 0.9rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #000000ff;
+        text-decoration: none;
+        opacity: 0.7;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vision-social-links a:hover {
+        opacity: 1;
+        transform: translateX(4px);
+      }
+
+      .vision-social-inline {
+        display: flex;
+        gap: 36px;
+        align-items: center;
+      }
+
+      .vision-social-inline a {
+        font-size: 0.95rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #000000;
+        text-decoration: none;
+        opacity: 0.7;
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vision-social-inline a:hover {
+        opacity: 1;
+        transform: translateY(-2px);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vision-conclusion {
+          padding: 90px 6vw 120px;
+          text-align: center;
+        }
+
+        .vision-conclusion-grid {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+
+        .vision-social-links a {
+          text-align: center;
+        }
+
+        .vision-social-links {
+          text-align: center;
+        }
+
+        .vision-link{
+          text-align: center;
+        }
+
+        .vision-conclusion-box p {
+          text-align: center;
+          max-width: 90%;
+        }
+
+        .vision-conclusion-box h3 {
+          text-align: center;
+        }
+
+        .vision-social-inline {
+          gap: 24px;
+          text-align: center;
+          justify-content: center;
+        }
+
+        .vision-social-inline a {
+          text-align: center;
+          justify-content: center;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- Navbar -->
+    <nav class="vr-navbar">
+      <div class="vr-navbar__logo">
+        <a href="index.html"><img src="images/BlackLogo1.png" alt="Vanar Robots"></a>
+      </div>
+
+      <div class="vr-navbar__links">
+        <a href="Gen1.html">Generation 1</a>
+        <a href="indistinguishability.html">Vision</a>
+        <a href="contact.html">Contact</a>
+      </div>
+
+      <a href="interest.html" class="vr-navbar__cta">Join Beta</a>
+      
+      <button class="vr-navbar__hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile Dropdown Menu -->
+    <div class="vr-navbar__mobile-menu">
+      <a href="Gen1.html">Generation 1</a>
+      <a href="indistinguishability.html">Vision</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <script>
+      const hamburger = document.querySelector('.vr-navbar__hamburger');
+      const mobileMenu = document.querySelector('.vr-navbar__mobile-menu');
+      const navbar = document.querySelector('.vr-navbar');
+      
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        
+        // Add scrolled class to navbar when menu opens
+        if (mobileMenu.classList.contains('active')) {
+          navbar.classList.add('scrolled');
+        } else {
+          // Only remove if user hasn't scrolled
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+      
+      // Close menu when clicking on a link
+      document.querySelectorAll('.vr-navbar__mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          
+          // Remove scrolled class if at top of page
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.vr-navbar')) {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          
+          // Remove scrolled class if at top of page
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+      
+      // Handle scroll events
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          // Only remove if menu is not active
+          if (!mobileMenu.classList.contains('active')) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+    </script>
+    <!-- Navbar -->
+
+
+
+
+    <!-- Philosophy Section -->
+    <section class="vision-philosophy">
+      <div class="philosophy-content">
+        <center>
+        <h2>Vanars For Home</h2>
+
+        <p class="philosophy-text">
+          Every evolution of Vanar brings us closer to a future where humanoids don’t feel like machines placed inside homes,
+          but like beings that belong there. Designed to exist naturally within our daily lives, Vanars are imagined not as tools,
+          but as presences, quietly integrating into the rhythm of home, family, and routine.
+        </p>
+        </center>
+      </div>
+
+      <center>
+        <div class="vision-image">
+          <img src="images/Renders/File185.png" width="100%">
+          </div>
+    </center>
+
+      <div class="philosophy-content" style="padding-top: 80px;">
+        <center>
+          <p class="philosophy-text">
+            <b>The Indistinguishability Plan</b><br>
+            Indistinguishability is our long-term pursuit of building humanoids that look, move, respond, and understand in ways that feel human.
+            Not to replace people, but to dissolve the friction that exists when humans interact with machines. When form, behavior, and intention
+            align closely with human norms, interaction stops feeling artificial and starts feeling intuitive.
+            <br><br>
+
+            <b>Why Indistinguishability Matters?</b><br>
+            A machine that feels mechanical is tolerated. A machine that feels human is trusted.
+            For Vanars to coexist inside homes, they must evoke comfort, familiarity, and emotional ease. Indistinguishability allows interactions to
+            feel natural, conversations without hesitation, assistance without discomfort, and presence without intimidation. Only then can a humanoid
+            become a genuine part of the household, not an object within it.
+            <br><br>
+
+            <b>Life with Vanars at Home</b><br>
+            A mother carrying the invisible weight of endless responsibilities. A curious child with ideas larger than their resources.
+            An aging parent waiting patiently for help with the simplest tasks. These are not edge cases, they are everyday human realities.
+            A capable humanoid that understands, assists, and adapts can quietly transform these lives. By blending into the family rather than standing apart,
+            Vanars can restore time, dignity, independence, and hope. This is not automation for convenience, it is technology shaped by empathy.
+          </p>
+        </center>
+      </div>
+
+      <center>
+        <div class="vision-image">
+          <img src="images/Renders/File178.png" width="100%">
+          </div>
+    </center>
+
+    <div class="philosophy-content" style="padding-top: 80px;">
+        <center>
+          <p class="philosophy-text">
+            <b>The Path to Indistinguishability</b><br>
+            The journey begins with Vanar Generation 1, a deliberately mechanical humanoid built to learn before it resembles.
+            Gen 1 is the foundation: a 5’9” physical intelligence stepping into the real world during its beta deployments in 2026–27,
+            taking on tasks that are difficult, unsafe, or dehumanizing for people. This phase is observation, experience, and learning.
+            With every deployment, Vanar gathers real-world feedback— how humans move, speak, hesitate, trust, and adapt. Each subsequent
+            evolution refines form, perception, and interaction, bringing Vanar closer to human-like understanding and presence.
+            Indistinguishability is not a single leap. It is a careful, responsible progression, one generation at a time, towards a future
+            where humanoids coexist with humanity, not as replacements, but as companions shaped by the world they serve.
+            <br><br>
+          </p>
+        </center>
+      </div>
+    </section>
+
+<!-- Vision Conclusion -->
+<section class="vision-conclusion">
+  <center>
+  <div class="vision-conclusion-grid">
+    
+    <div class="vision-conclusion-box">
+      <h3>Have questions?</h3>
+      <p>
+        Conversations shape clarity. Reach out to understand our work, philosophy,
+        or deployment approach.
+      </p>
+      <p>Write to us at <span style="color: #00588e;">hello@vanarrobots.com</span>
+      </a></p>
+    </div>
+
+    <div class="vision-conclusion-box">
+      <h3>We make rapid developments</h3>
+      <p>
+        Vanars evolve through continuous learning and deployment.
+        Follow our progress as it unfolds.
+      </p>
+      <center>
+      <div class="vision-social-inline">
+        <a href="https://x.com/vanar_robots" target="_blank" style="color: #00588e;">X</a>
+        <a href="https://linkedin.com/company/vanar-robots" target="_blank" style="color: #00588e;">LinkedIn</a>
+        <a href="https://youtube.com/@vanarrobots" target="_blank" style="color: #00588e;">YouTube</a>
+      </div>
+      </center>
+    </div>
+
+  </div>
+  </center>
+</section>
+
+
+
+    <!-- Footer -->
+    <footer class="vr-footer vr-footer-split">
+      <div class="vr-footer-left">
+        2026 © Vanar Robots Private Limited
+      </div>
+      <div class="vr-footer-right">
+        <img src="images/India.png" alt="Made in India">
+      </div>
+    </footer>
+
+    <script>
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    const reveals = document.querySelectorAll(
+      '.vision-gallery, .vision-philosophy, .vision-cards, .vision-closing'
+    );
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.15 });
+
+    reveals.forEach(section => {
+      section.classList.add('reveal');
+      observer.observe(section);
+    });
+    </script>
+  </body>
+</html>

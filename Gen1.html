@@ -1,0 +1,2072 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Vanar Generation 1</title>
+    <link rel="icon" type="image/gif" href="images/Renders/WebP/profile.webp" /> 
+
+    <style>
+      :root {
+        --bg: #0b0c0e;
+        --fg: #ffffff;
+        --muted: #9aa0a6;
+        --accent: #6cf2c2;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+        background: var(--bg);
+        color: var(--fg);
+      }
+
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+      .vr-navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 24px 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      }
+
+      .vr-navbar.scrolled {
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .vr-navbar__logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+        display: block;
+      }
+
+      .vr-navbar__links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .vr-navbar__links a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        position: relative;
+        transition: opacity 0.25s ease;
+      }
+
+      .vr-navbar__links a:hover {
+        opacity: 1;
+        color: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__links a:not(:hover) {
+        opacity: 0.65;
+      }
+
+      .vr-navbar__cta {
+        padding: 10px 26px;
+        border-radius: 30px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .vr-navbar__cta:hover {
+        background: #ffffff;
+        color: #000;
+        border-color: #ffffff;
+      }
+
+      /* Hamburger Menu */
+      .vr-navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 10px;
+        z-index: 1001;
+        position: relative;
+        width: 40px;
+        height: 40px;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .vr-navbar__hamburger span {
+        width: 22px;
+        height: 2px;
+        background: rgba(255,255,255,0.9);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        border-radius: 2px;
+        display: block;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      /* Mobile Dropdown */
+      .vr-navbar__mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 20px 6vw;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vr-navbar__mobile-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vr-navbar__mobile-menu a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.8);
+        text-transform: uppercase;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.25s ease;
+      }
+
+      .vr-navbar__mobile-menu a:hover {
+        color: rgba(255,255,255,1);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-navbar {
+          padding: 18px 6vw;
+        }
+        
+        .vr-navbar__links {
+          display: none;
+        }
+        
+        .vr-navbar__hamburger {
+          display: flex;
+        }
+        
+        .vr-navbar__logo {
+          flex: 0 0 auto;
+        }
+        
+        .vr-navbar__logo img {
+          width: 90px;
+        }
+        
+        /* Push CTA and hamburger to the right */
+        .vr-navbar__cta {
+          padding: 8px 18px;
+          font-size: 12px;
+          margin-left: auto;
+          margin-right: 12px;
+        }
+      }.vr-navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 24px 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      }
+
+      .vr-navbar.scrolled {
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .vr-navbar__logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+        display: block;
+      }
+
+      .vr-navbar__links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .vr-navbar__links a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        position: relative;
+        transition: opacity 0.25s ease;
+      }
+
+      .vr-navbar__links a:hover {
+        opacity: 1;
+        color: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__links a:not(:hover) {
+        opacity: 0.65;
+      }
+
+      .vr-navbar__cta {
+        padding: 10px 26px;
+        border-radius: 30px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .vr-navbar__cta:hover {
+        background: #ffffff;
+        color: #000;
+        border-color: #ffffff;
+      }
+
+      /* Hamburger Menu */
+      .vr-navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+      }
+
+      .vr-navbar__hamburger span {
+        width: 24px;
+        height: 2px;
+        transition: all 0.3s ease;
+        border-radius: 2px;
+        background: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(6px, 6px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(6px, -6px);
+      }
+
+      /* Mobile Dropdown */
+      .vr-navbar__mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 20px 6vw;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vr-navbar__mobile-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vr-navbar__mobile-menu a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.8);
+        text-transform: uppercase;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.25s ease;
+      }
+
+      .vr-navbar__mobile-menu a:hover {
+        color: rgba(255,255,255,1);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-navbar {
+          padding: 18px 6vw;
+        }
+        
+        .vr-navbar__links {
+          display: none;
+        }
+        
+        .vr-navbar__hamburger {
+          display: flex;
+        }
+        
+        .vr-navbar__logo {
+          flex: 0 0 auto;
+        }
+        
+        .vr-navbar__logo img {
+          width: 90px;
+        }
+        
+        /* Push CTA and hamburger to the right */
+        .vr-navbar__cta {
+          padding: 8px 18px;
+          font-size: 12px;
+          margin-left: auto;
+          margin-right: 12px;
+        }
+      }.vr-navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        padding: 24px 8vw;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        transition: background 0.4s ease, backdrop-filter 0.4s ease;
+      }
+
+      .vr-navbar.scrolled {
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+      }
+
+      .vr-navbar__logo {
+        display: flex;
+        align-items: center;
+      }
+
+      .vr-navbar__logo img {
+        width: 110px;
+        display: block;
+      }
+
+      .vr-navbar__links {
+        display: flex;
+        gap: 40px;
+      }
+
+      .vr-navbar__links a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.6);
+        text-transform: uppercase;
+        position: relative;
+        transition: opacity 0.25s ease;
+      }
+
+      .vr-navbar__links a:hover {
+        opacity: 1;
+        color: rgba(255,255,255,1);
+      }
+
+      .vr-navbar__links a:not(:hover) {
+        opacity: 0.65;
+      }
+
+      .vr-navbar__cta {
+        padding: 10px 26px;
+        border-radius: 30px;
+        border: 1px solid var(--accent);
+        color: var(--accent);
+        font-size: 13px;
+        letter-spacing: 1px;
+        text-decoration: none;
+        transition: all 0.3s ease;
+      }
+
+      .vr-navbar__cta:hover {
+        background: #ffffff;
+        color: #000;
+        border-color: #ffffff;
+      }
+
+      /* Hamburger Menu */
+      .vr-navbar__hamburger {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        z-index: 1001;
+      }
+
+      .vr-navbar__hamburger span {
+        width: 24px;
+        height: 2px;
+        background: rgba(255,255,255,0.8);
+        transition: all 0.3s ease;
+        border-radius: 2px;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(1) {
+        transform: rotate(45deg) translate(7px, 7px);
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .vr-navbar__hamburger.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -7px);
+      }
+
+      /* Mobile Dropdown */
+      .vr-navbar__mobile-menu {
+        display: none;
+        position: fixed;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background: rgba(11, 12, 14, 0.65);
+        backdrop-filter: blur(14px);
+        border-bottom: 1px solid rgba(255,255,255,0.08);
+        padding: 20px 6vw;
+        flex-direction: column;
+        gap: 20px;
+        z-index: 999;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: opacity 0.3s ease, transform 0.3s ease;
+      }
+
+      .vr-navbar__mobile-menu.active {
+        display: flex;
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vr-navbar__mobile-menu a {
+        text-decoration: none;
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: rgba(255,255,255,0.8);
+        text-transform: uppercase;
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+        transition: color 0.25s ease;
+      }
+
+      .vr-navbar__mobile-menu a:hover {
+        color: rgba(255,255,255,1);
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-navbar {
+          padding: 18px 6vw;
+        }
+        
+        .vr-navbar__links {
+          display: none;
+        }
+        
+        .vr-navbar__hamburger {
+          display: flex;
+        }
+        
+        .vr-navbar__logo {
+          flex: 0 0 auto;
+        }
+        
+        .vr-navbar__logo img {
+          width: 90px;
+        }
+        
+        /* Push CTA and hamburger to the right */
+        .vr-navbar__cta {
+          padding: 8px 18px;
+          font-size: 12px;
+          margin-left: auto;
+          margin-right: 12px;
+        }
+      }
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+
+
+
+
+
+
+      /* ===== ANIMATIONS ===== */
+      @keyframes vr-fade-up {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes vr-glow {
+        0% { text-shadow: 0 0 0 rgba(108,242,194,0); }
+        50% { text-shadow: 0 0 20px rgba(108,242,194,0.6); }
+        100% { text-shadow: 0 0 0 rgba(108,242,194,0); }
+      }
+
+      .vr-reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+      }
+
+      .vr-reveal.vr-active {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .vr-hero h1 span {
+        animation: vr-glow 3s ease-in-out infinite;
+      }
+
+      /* ===== GLOBAL ===== */
+      .vr-section {
+        padding: 140px 8vw;
+      }
+
+      h1, h2, h3 {
+        margin: 0;
+        font-weight: 400;
+      }
+
+      p {
+        color: var(--muted);
+        max-width: 680px;
+        line-height: 1.7;
+      }
+
+      /* ===== STATEMENT ===== */
+      .vr-statement {
+        font-size: 1.2rem;
+        max-width: 900px;
+        margin: 80px auto;
+        text-align: left;
+      }
+
+      /* Tablet */
+      @media (max-width: 1024px) {
+        .vr-statement-section {
+          padding-top: 140px;
+          text-align: left;
+          font-size: 1rem;
+        }
+
+        .vr-statement {
+          font-size: 1.25rem;
+          line-height: 1.6;
+          text-align: left;
+        }
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-statement-section {
+          padding-top: 140px;
+          text-align: left;
+          font-size: 1rem;
+        }
+
+        .vr-statement {
+          font-size: 1.15rem;
+          text-align: left;
+          padding-bottom:100px;
+        }
+      }
+
+
+
+
+
+
+
+
+      /* Make jobs section full screen width, content centered */
+      .vr-jobs-section {
+        position: relative;
+        width: 100vw;
+        margin-left: calc(-50vw + 50%);
+        margin-right: calc(-50vw + 50%);
+        padding-bottom: 100px;
+        text-align: center;
+        overflow: hidden;
+      }
+
+      .vr-jobs-section > .vr-jobs-header {
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 0 8vw;
+      }
+
+      .vr-jobs-section::before,
+      .vr-jobs-section::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        width: 90px;
+        height: 100%;
+        z-index: 20;
+        pointer-events: none;
+      }
+
+      .vr-jobs-section::before {
+        left: 0;
+        background: linear-gradient(
+          90deg,
+          rgba(11,12,14,1) 0%,
+          rgba(11,12,14,0.9) 30%,
+          rgba(11,12,14,0.6) 55%,
+          rgba(11,12,14,0.0) 100%
+        );
+      }
+
+      .vr-jobs-section::after {
+        right: 0;
+        background: linear-gradient(
+          270deg,
+          rgba(11,12,14,1) 0%,
+          rgba(11,12,14,0.9) 30%,
+          rgba(11,12,14,0.6) 55%,
+          rgba(11,12,14,0.0) 100%
+        );
+      }
+
+
+      @media (max-width: 768px) {
+        .vr-jobs-section::before,
+        .vr-jobs-section::after {
+          display: none;
+        }
+
+        .vr-jobs-section {
+          width: 100%;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+        .vr-jobs-section > .vr-jobs-header {
+          width: 90vw;
+          max-width: 90vw;
+          margin: 0 auto;
+          padding: 0;
+        }
+
+        .vr-jobs-header h2,
+        .vr-jobs-header p {
+          width: 100%;
+        }
+
+        .vr-jobs-strip {
+          padding-left: 6vw;
+          padding-right: 6vw;
+        }
+      }
+
+
+
+
+      .vr-jobs-header {
+        max-width: 720px;
+        margin: 0 auto 80px;
+      }
+
+      .vr-jobs-header h2 {
+        font-size: 3rem;
+        margin-bottom: 24px;
+      }
+
+      .vr-jobs-header p {
+        color: var(--muted);
+        font-size: 1.05rem;
+        margin: 0 auto;
+      }
+
+      /* slideshow container */
+      .vr-jobs-slider {
+        position: relative;
+        width: 100%;
+        height: 420px;
+        overflow: hidden;
+        border-radius: 24px;
+      }
+
+      /* individual slide */
+      .vr-job-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: opacity 1s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .vr-job-slide.active {
+        opacity: 1;
+      }
+
+      /* overlay for readability */
+      .vr-job-slide::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          180deg,
+          rgba(11,12,14,0.35),
+          rgba(11,12,14,0.85)
+        );
+      }
+
+      /* job title */
+      .vr-job-slide h3 {
+        position: relative;
+        z-index: 2;
+        font-size: 2.8rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+
+      /* ===== JOBS SLIDESHOW ===== */
+      .vr-statement-video {
+        padding-top: 100px;
+        display: flex;
+        justify-content: center;
+        margin-top: 80px;
+      }
+
+      /* ===== CINEMATIC STATEMENT SLIDESHOW ===== */
+      .vr-statement-slideshow {
+        position: relative;
+        width: 100%;
+        height: 600px;
+        border-radius: 22px;
+        overflow: hidden;
+        box-shadow: 0 40px 80px rgba(0,0,0,0.45);
+      }
+
+      .vr-slide {
+        position: absolute;
+        inset: 0;
+        background-size: cover;
+        background-position: center;
+        opacity: 0;
+        transition: opacity 1.8s ease;
+      }
+
+      .vr-slide.active {
+        opacity: 1;
+      }
+
+      /* tablet */
+      @media (max-width: 1024px) {
+        .vr-statement-slideshow {
+          width: 100%;
+        }
+      }
+
+      /* mobile */
+      @media (max-width: 768px) {
+        .vr-statement-slideshow {
+          width: 100%;
+          height: 300px;
+        }
+
+        .vr-jobs-header {
+          max-width: 100%;
+          margin: 0 auto 80px;
+        }
+
+        .vr-jobs-header h2 {
+          font-size: 3rem;
+          margin-bottom: 24px;
+          text-align: left;
+        }
+
+        .vr-jobs-header p {
+          text-align: left;
+        }
+
+      }
+
+      /* ===== HERO (RESPONSIVE IMAGES) ===== */
+      .vr-hero {
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        background: url('images/Renders/WebP/File153.webp') center / cover no-repeat;
+      }
+
+      /* Tablet */
+      @media (max-width: 1024px) {
+        .vr-hero {
+          background: url('images/Renders/WebP/File154.webp') center / cover no-repeat;
+          height: 85vh;
+          align-items: flex-end;
+          padding-bottom: 80px;
+        }
+      }
+
+      /* Mobile */
+      @media (max-width: 768px) {
+        .vr-hero {
+          height: 85vh;
+          text-align: left;
+          align-items: flex-end;
+          padding-bottom: 80px;
+          background: url('images/Renders/WebP/File176.webp') center / cover no-repeat;
+        }
+
+        .vr-hero h1 {
+        font-size: 50px;
+        line-height: 1.05;
+        max-width: 900px;
+        text-align: center;
+        margin: 0 auto;
+      }
+      }
+
+      .vr-hero h1 {
+        font-size: 50px;
+        line-height: 1.05;
+        max-width: 900px;
+      }
+
+      .vr-hero span {
+        color: var(--accent);
+      }
+
+      /* ===== STATEMENT ===== */
+      .vr-statement {
+        font-size: 1.6rem;
+        max-width: 900px;
+      }
+
+      /* ===== CAPABILITIES ===== */
+      .vr-capabilities-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 80px;
+      }
+
+
+      /* ===== EXAMPLE JOBS (COMPACT VISUAL STRIP) ===== */
+      .vr-jobs-section {
+        padding-top: 150px;
+      }
+
+      .vr-jobs-header {
+        text-align: center;
+        max-width: 720px;
+        margin: 0 auto 40px;
+      }
+
+      .vr-jobs-header h2 {
+        font-size: 2.6rem;
+        margin-bottom: 14px;
+      }
+
+      .vr-jobs-header p {
+        font-size: 1rem;
+        color: var(--muted);
+        margin: 0 auto;
+      }
+
+      /* horizontal visual strip */
+      .vr-jobs-strip {
+        display: flex;
+        gap: 24px;
+        overflow-x: auto;
+        padding: 20px 0;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+        mask-image: linear-gradient(
+          to right,
+          transparent 0%,
+          black 12%,
+          black 88%,
+          transparent 100%
+        );
+      }
+
+      .vr-job-card {
+        scroll-snap-align: start;
+        min-width: 380px;
+        height: 460px;
+        border-radius: 26px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      .vr-job-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 22px;
+      }
+
+      .vr-job-card h3 {
+        position: absolute;
+        bottom: 36px;
+        left: 36px;
+        right: 36px;
+        z-index: 2;
+        font-size: 1rem;
+      }
+
+      /* hide scrollbar */
+      .vr-jobs-strip::-webkit-scrollbar {
+        display: none;
+      }
+
+      /* ===== CORE INTELLIGENCE ===== */
+      .vr-core-section {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 120px;
+        max-width: 1100px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      @media (max-width: 768px) {
+        .vr-core-section {
+          max-width: 100%;
+        }
+      }
+
+      .vr-core-header {
+        max-width: 720px;
+        margin: 0 auto;
+        text-align: center;
+        margin-bottom: -50px;
+      }
+
+      .vr-core-header h2 {
+        font-size: 2.5rem;
+        font-weight: 300;
+        letter-spacing: -0.5px;
+      }
+
+      .vr-core-header p {
+        font-size: 1.05rem;
+        color: var(--muted);
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .vr-core-item {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: center;
+      }
+
+      .vr-core-item:nth-child(even) {
+        direction: rtl;
+      }
+
+      .vr-core-item:nth-child(even) * {
+        direction: ltr;
+      }
+
+      .vr-core-text h3 {
+        font-size: 1.6rem;
+        margin-bottom: 12px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        color: rgba(255,255,255,0.9);
+      }
+
+      .vr-core-text p {
+        font-size: 1.05rem;
+        max-width: 520px;
+      }
+
+      .vr-core-image {
+        width: 100%;
+        height: 420px;
+        border-radius: 20px;
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+      }
+
+      
+
+
+
+      /* ===== VERTICAL SPECS (CINEMATIC) ===== */
+      .vr-specs-vertical-section {
+        padding: 120px 8vw 60px;
+      }
+
+      .vr-specs-vertical {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1.5fr 0.5fr;
+        gap: 100px;
+        align-items: center;
+      }
+
+      .vr-specs-left {
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
+      }
+
+      .vr-spec-vertical span {
+        display: block;
+        font-size: 0.65rem;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        color: rgba(255,255,255,0.45);
+        margin-bottom: 10px;
+      }
+
+      .vr-spec-vertical h3 {
+        font-size: 2.4rem;
+        font-weight: 300;
+        margin: 0;
+      }
+
+      .vr-specs-image {
+        width: 100%;
+        height: 540px;
+        border-radius: 10px;
+        background-size: cover;
+        background-position: center;
+        box-shadow: 0 60px 120px rgba(0,0,0,0.55);
+      }
+
+      /* Tablet */
+      @media (max-width: 1024px) {
+        .vr-specs-vertical {
+          grid-template-columns: 1fr;
+          gap: 60px;
+        }
+
+        .vr-specs-left {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 32px 24px;
+          align-items: start;
+        }
+
+        .vr-spec-vertical span {
+          font-size: 0.7rem;
+          letter-spacing: 3px;
+        }
+
+        .vr-spec-vertical h3 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .vr-specs-vertical-section {
+          padding: 0;
+        }
+
+        .vr-specs-vertical {
+          display: block;
+          width: 100%;
+          max-width: none;
+        }
+
+        .vr-specs-right {
+          width: 100%;
+        }
+
+        .vr-specs-image {
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          border-radius: 0 !important;
+
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+        }
+
+        .vr-specs-left {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          padding: 28px 4vw;
+        }
+
+        .vr-spec-vertical span {
+          font-size: 0.75rem;
+          letter-spacing: 3.2px;
+        }
+
+        .vr-spec-vertical h3 {
+          font-size: 1.5rem;
+        }
+      }
+
+
+
+
+
+
+
+      .vr-jobs-strip {
+        display: flex;
+        gap: 24px;
+        overflow-x: auto;
+        padding: 40px 0;
+      }
+
+      .vr-job-card {
+        min-width: 360px;
+        height: 460px;
+        border-radius: 26px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        flex-shrink: 0;
+      }
+
+      /* Spacer cards (empty cards used only for spacing) */
+      .vr-job-card:empty {
+        min-width: 100px;
+        height: 1px;
+        background: transparent;
+        box-shadow: none;
+      }
+
+      .vr-job-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 22px;
+        background: linear-gradient(
+          180deg,
+          rgba(11,12,14,0.0),
+          rgba(11, 12, 14, 0.281)
+        );
+      }
+
+      .vr-job-card h3 {
+        position: absolute;
+        bottom: 36px;
+        left: 36px;
+        right: 36px;
+        z-index: 2;
+        font-size: 1.35rem;
+        font-weight: 500;
+        letter-spacing: 0.4px;
+      }
+
+      /* hide scrollbar but allow scroll */
+      .vr-jobs-strip::-webkit-scrollbar {
+        display: none;
+      }
+
+
+      /* ===== CTA (WHITE THEME) ===== */
+      .vr-cta {
+        background: #f5f5f5;
+        color: #000;
+        padding-top: 140px;
+        padding-bottom: 140px;
+        text-align: center;
+      }
+
+      .vr-cta-inner {
+        max-width: 720px;
+        margin: 0 auto;
+      }
+
+      .vr-cta h2 {
+        color: #000;
+        font-size: 2.6rem;
+        margin: 20px 0 24px;
+        font-weight: 400;
+      }
+
+      .vr-cta h2 {
+        color: #000;
+        font-size: 2.6rem;
+        margin: 20px 0 24px;
+        font-weight: 400;
+      }
+
+      .vr-cta-meta {
+        font-size: 0.85rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(0,0,0,0.55);
+        margin-bottom: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .vr-cta-sep {
+        font-size: 1rem;
+        opacity: 0.6;
+      }
+
+      .vr-cta button {
+        background: transparent;
+        border: 1px solid #000;
+        color: #000;
+        padding: 16px 40px;
+        border-radius: 40px;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .vr-cta button:hover {
+        background: #000;
+        color: #fff;
+      }
+
+      /* ===== CTA — MOBILE FIX ===== */
+      @media (max-width: 768px) {
+        .vr-cta {
+          padding-top: 100px;
+          padding-bottom: 100px;
+        }
+
+        .vr-cta-inner {
+          max-width: 100%;
+          padding: 0 6vw;
+        }
+
+        .vr-cta h2 {
+          font-size: 2rem;
+          line-height: 1.2;
+          margin-bottom: 20px;
+        }
+
+        .vr-cta-meta {
+          font-size: 0.75rem;
+          letter-spacing: 1.5px;
+          gap: 12px;
+          margin-bottom: 32px;
+          text-align: center;
+        }
+
+        .vr-cta button {
+          width: 100%;
+          max-width: 320px;
+          padding: 16px 0;
+          font-size: 0.95rem;
+        }
+      }
+
+      /* ===== FOOTER (WHITE THEME) ===== */
+      .vr-footer {
+        background: #f5f5f5;
+        color: #000000;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        padding: 60px 8vw;
+        font-size: 0.85rem;
+      }
+
+      .vr-footer-split {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 24px;
+      }
+
+      .vr-footer-right img {
+        height: 22px;
+        width: auto;
+        opacity: 0.9;
+      }
+
+      @media (max-width: 768px) {
+        .vr-footer-split {
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        .vr-footer-right img {
+          height: 20px;
+        }
+      }
+
+
+      @media (max-width: 768px) {
+        .vr-footer {
+        text-align: center;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .vr-core-header h2 {
+          margin-top: -20px;
+          margin-bottom: 10px;
+          text-align: left;
+          font-size: 2rem;
+        }
+        .vr-core-header p {
+          text-align: left;
+        }
+        .vr-core-text h3 {
+          margin-bottom: 8px;
+          text-align: left;
+        }
+        .vr-core-text {
+          gap: 12px;
+        }
+      }
+
+      @media (max-width: 768px) {
+
+        .vr-section {
+          padding: 100px 6vw;
+        }
+
+        h1 {
+          font-size: 2.2rem;
+          line-height: 1.15;
+        }
+
+        h2 {
+          font-size: 2rem;
+        }
+
+        p {
+          font-size: 0.95rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .vr-hero {
+          height: 85vh;
+          align-items: flex-end;
+          padding-bottom: 80px;
+        }
+
+        .vr-hero h1 {
+          font-size: 1.7rem;
+          max-width: 100%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .vr-statement {
+          font-size: 1.4rem;
+          margin: 40px auto;
+        }
+
+        .vr-statement-video {
+          padding-top: 120px;
+          margin-top: 40px;
+        }
+      }
+
+      @media (max-width: 768px) {
+
+        .vr-jobs-header h2 {
+          font-size: 2rem;
+        }
+
+        .vr-jobs-strip {
+          gap: 16px;
+        }
+
+        .vr-job-card {
+          min-width: 280px;
+          height: 360px;
+          border-radius: 20px;
+        }
+
+        .vr-job-card h3 {
+          font-size: 1.1rem;
+          bottom: 24px;
+          left: 24px;
+          right: 24px;
+        }
+      }
+
+      @media (max-width: 900px) {
+
+        .vr-core-item {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+
+        .vr-core-item:nth-child(even) {
+          direction: ltr;
+        }
+
+        .vr-core-image {
+          height: 300px;
+        }
+      }
+
+
+      /* ===== SPECS — MOBILE REDESIGN (CLEAN & PREMIUM) ===== */
+      @media (max-width: 768px) {
+
+        .vr-spec {
+          padding: 18px 0;
+        }
+
+        .vr-spec::after {
+          display: none;
+        }
+
+        .vr-spec:not(:last-child) {
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+      }
+
+
+
+            .faq-container {
+              max-width: 80%;
+              width: 80%;
+              margin: 0 auto;
+              display: grid;
+              grid-template-columns: 1fr 2fr;
+              gap: 60px;
+              align-items: start;
+              padding: 80px 80px 100px;
+              background: #141518;
+              border-radius: 32px;
+              box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
+            }
+
+            .faq-wrapper {
+              padding: 120px 8vw;
+            }
+
+            .faq-title {
+              font-size: 2.3rem;
+              font-weight: 400;
+              line-height: 1.25;
+              letter-spacing: 1px;
+              color: #ffffff;
+            }
+
+            .faq-list {
+                display: flex;
+                flex-direction: column;
+                gap: 0;
+            }
+
+            .faq-item {
+              border-bottom: 1px solid rgba(255,255,255,0.12);
+            }
+
+            .faq-question {
+                width: 100%;
+                background: none;
+                border: none;
+                color: #fff;
+                font-size: 1rem;
+                text-align: left;
+                padding: 24px 40px 24px 0;
+                cursor: pointer;
+                position: relative;
+                transition: opacity 0.3s;
+            }
+
+            .faq-question:hover {
+                opacity: 0.7;
+            }
+
+            .faq-question::after {
+                content: '+';
+                position: absolute;
+                right: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1.5rem;
+                transition: transform 0.3s;
+            }
+
+            .faq-question.active::after {
+                content: '−';
+            }
+
+            .faq-answer {
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+                padding: 0 40px 0 0;
+                color: #999;
+                line-height: 1.6;
+            }
+
+            .faq-answer.active {
+                max-height: 300px;
+                padding: 0 40px 24px 0;
+            }
+
+            /* ===== FAQ — TABLET FIX ===== */
+            @media (max-width: 1024px) and (min-width: 769px) {
+              .faq-wrapper {
+                padding: 100px 6vw;
+              }
+
+              .faq-container {
+                width: 90%;
+                max-width: 1000px;
+                grid-template-columns: 1fr;
+                gap: 48px;
+                padding: 72px 64px 88px;
+              }
+
+              .faq-title {
+                font-size: 2.1rem;
+                text-align: center;
+              }
+
+              .faq-question {
+                font-size: 1rem;
+                padding: 22px 36px 22px 0;
+              }
+
+              .faq-answer {
+                font-size: 0.95rem;
+              }
+
+              .faq-answer.active {
+                padding: 0 36px 22px 0;
+              }
+            }
+
+            /* ===== FAQ — MOBILE FIX ===== */
+            @media (max-width: 768px) {
+              .faq-wrapper {
+                padding: 80px 6vw;
+              }
+
+              .faq-container {
+                width: 100%;
+                max-width: 100%;
+                grid-template-columns: 1fr;
+                gap: 32px;
+                padding: 48px 24px 56px;
+                border-radius: 24px;
+              }
+
+              .faq-title {
+                font-size: 1.9rem;
+                text-align: left;
+                letter-spacing: 0.5px;
+              }
+
+              .faq-question {
+                font-size: 0.95rem;
+                padding: 18px 32px 18px 0;
+              }
+
+              .faq-question::after {
+                font-size: 1.3rem;
+              }
+
+              .faq-answer {
+                font-size: 0.9rem;
+                padding: 0 32px 0 0;
+              }
+
+              .faq-answer.active {
+                padding: 0 32px 18px 0;
+              }
+            }
+
+            @media (max-width: 480px) {
+
+                .faq-title {
+                    font-size: 1.75rem;
+                }
+
+                .faq-question {
+                    font-size: 0.9rem;
+                    padding: 18px 30px 18px 0;
+                }
+            }
+    </style>
+  </head>
+
+  <body>
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <nav class="vr-navbar">
+      <div class="vr-navbar__logo">
+        <a href="index.html"><img src="images/Renders/WebP/WhiteLogo1.webp" alt="Vanar Robots"></a>
+      </div>
+      <div class="vr-navbar__links">
+        <a href="Gen1.html">Generation 1</a>
+        <a href="indistinguishability.html">Vision</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="interest.html" class="vr-navbar__cta">Join Beta</a>
+      <button class="vr-navbar__hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </nav>
+
+    <!-- Mobile Dropdown Menu -->
+    <div class="vr-navbar__mobile-menu">
+      <a href="Gen1.html">Generation 1</a>
+      <a href="indistinguishability.html">Vision</a>
+      <a href="contact.html">Contact</a>
+    </div>
+
+    <script>
+      const hamburger = document.querySelector('.vr-navbar__hamburger');
+      const mobileMenu = document.querySelector('.vr-navbar__mobile-menu');
+      const navbar = document.querySelector('.vr-navbar');
+      
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+        
+        // Add scrolled class to navbar when menu opens
+        if (mobileMenu.classList.contains('active')) {
+          navbar.classList.add('scrolled');
+        } else {
+          // Only remove if user hasn't scrolled
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+      
+      // Close menu when clicking on a link
+      document.querySelectorAll('.vr-navbar__mobile-menu a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          
+          // Remove scrolled class if at top of page
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        });
+      });
+      
+      // Close menu when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.vr-navbar')) {
+          hamburger.classList.remove('active');
+          mobileMenu.classList.remove('active');
+          
+          // Remove scrolled class if at top of page
+          if (window.scrollY === 0) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+      
+      // Handle scroll events (assuming you already have this)
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+          navbar.classList.add('scrolled');
+        } else {
+          // Only remove if menu is not active
+          if (!mobileMenu.classList.contains('active')) {
+            navbar.classList.remove('scrolled');
+          }
+        }
+      });
+    </script>
+    <!-- Navbar -->
+    <!-- Navbar -->
+    <!-- Navbar -->
+
+    <!-- First Section -->
+    <section class="vr-section vr-hero vr-reveal">
+      <h1>
+        The Next Evolution of Labor.<br/>
+        <span>Vanar Generation 1.</span>
+      </h1>
+    </section>
+    <!-- First Section -->
+
+    <!-- Statement & Specs-->
+    <section class="vr-section vr-reveal vr-statement-section">
+      <p class="vr-statement">
+        Vanar Generation 1 is a general-purpose humanoid robot designed to operate in human environments.
+        It uses human-like movement to perform tasks in the same spaces people work.
+        Vanar is built for work that is repetitive, physically demanding, or unsustainable for humans over long periods.
+        It enables organizations to maintain continuity while people focus on oversight, judgment, and decision-making.
+        Vanar extends human capability by taking on work that should not rely on constant human effort.
+      </p>
+
+      <section class="vr-reveal vr-specs-vertical-section">
+        <div class="vr-specs-vertical">
+
+        <div class="vr-specs-right">
+            <div class="vr-specs-image"
+              style="background-image:url('images/Renders/WebP/File188.webp');">
+            </div>
+          </div>
+
+          <div class="vr-specs-left">
+            <div class="vr-spec-vertical">
+              <span>HEIGHT</span>
+              <h3>5′9″</h3>
+            </div>
+
+            <div class="vr-spec-vertical">
+              <span>PAYLOAD</span>
+              <h3>20 kg</h3>
+            </div>
+
+            <div class="vr-spec-vertical">
+              <span>EXPECTED RUNTIME</span>
+              <h3>5h+</h3>
+            </div>
+
+            <div class="vr-spec-vertical">
+              <span>DESIGNED FOR</span>
+              <h3>Physical Work</h3>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </section>
+    <!-- Statement & Specs-->
+
+    <!-- What could it do for you? -->
+    <section class="vr-section vr-reveal vr-jobs-section">
+      <div class="vr-jobs-header">
+        <h2>What could it do for you?</h2>
+        <p>Examples of work our early partners intend to automate with Vanar.
+Focused on tasks that demand consistency, endurance, and physical reliability.</p>
+      </div>
+
+      <div class="vr-jobs-strip">
+        <div class="vr-job-card"></div>
+
+        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File155.webp')">
+          <h3>Material Handling</h3>
+        </div>
+
+        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File87.webp')">
+          <h3>Machine Tending</h3>
+        </div>
+
+        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File178.webp')">
+          <h3>Inspection & Patrol</h3>
+        </div>
+
+        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File179.webp')">
+          <h3>Site Cleaning</h3>
+        </div>
+
+        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File1.webp')">
+          <h3>Logistics Support</h3>
+        </div>
+
+        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File85.webp')">
+          <h3>Hazardous Operations</h3>
+        </div>
+
+        <div class="vr-job-card"></div>
+      </div>
+    </section>
+    <!-- What could it do for you? -->
+
+    <!-- Learns like human -->
+    <section class="vr-section vr-reveal">
+      <div class="vr-core-section">
+
+        <div class="vr-core-header">
+          <h2>Learns like a human</h2>
+          <p>
+            Vanar learns new tasks through observation and demonstration, just like a human would. It improves over time by refining movements and decisions with real-world feedback.
+          </p>
+        </div>
+
+        <div class="vr-core-item">
+          <div class="vr-core-text">
+            <p>
+              Step 1
+            </p>
+            <h3>Show how the task is done</h3>
+          </div>
+          <div class="vr-core-image"
+              style="background-image:url('images/Renders/WebP/File181.webp');">
+          </div>
+        </div>
+
+        <div class="vr-core-item">
+          <div class="vr-core-text">
+            <p>
+              Step 2
+            </p>
+            <h3>Supervise & correct</h3>
+          </div>
+          <div class="vr-core-image"
+              style="background-image:url('images/Renders/WebP/File183.webp');">
+          </div>
+        </div>
+
+        <div class="vr-core-item">
+          <div class="vr-core-text">
+            <p>
+              Step 3
+            </p>
+            <h3>Vanar constantly improves itself</h3>
+          </div>
+          <div class="vr-core-image"
+              style="background-image:url('images/Renders/WebP/File177.webp');">
+          </div>
+        </div>
+
+      </div>
+    </section>
+    <!-- Learns like human -->
+
+    <!-- FAQ -->
+    <section class="faq-wrapper vr-reveal">
+      <div class="faq-container">
+            <h2 class="faq-title">FREQUENTLY<br>ASKED QUESTIONS</h2>
+            
+            <div class="faq-list">
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Why humanoids and not task specific robots?
+                    </button>
+                    <div class="faq-answer">
+                      Human environments are already designed around the human body. Humanoid robots can use existing tools, navigate human spaces, and adapt to changing tasks without requiring infrastructure redesign. This makes them far more flexible than task‑specific machines.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Can it perform tasks at multiple locations?
+                    </button>
+                    <div class="faq-answer">
+                      Yes. Vanar can be deployed across multiple sites and managed centrally. Each unit operates independently while sharing performance data and updates to improve reliability and coordination.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Does it need breaks or vacations?
+                    </button>
+                    <div class="faq-answer">
+                      Vanar does not require breaks, vacations, or shift changes. It is designed for continuous operation, with planned maintenance cycles to ensure long‑term performance and safety.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Does it charge on it's own?
+                    </button>
+                    <div class="faq-answer">
+                      Yes. Vanar can autonomously return to its charging station when battery levels are low and resume work once sufficient charge is restored.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What will humans do if Vanars take over?
+                    </button>
+                    <div class="faq-answer">
+                      Vanars are built to free humans from inhuman work, tasks that are harmful, physically exhausting, unsafe, or strip away dignity. Vanars work alongside humans, handling repetitive and demanding labor, while people focus on human-friendly tasks.
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Will it be difficult to teach a skill to Vanar?
+                    </button>
+                    <div class="faq-answer">
+                      No. Vanar learns through demonstration and guided supervision. Skills are taught by showing the task and correcting it over time, similar to training a human worker.
+                    </div>
+                </div>
+            </div>
+      </div>
+    </section>
+    <!-- FAQ -->
+
+    <!-- CTA -->
+    <section class="vr-section vr-cta">
+      <div class="vr-cta-inner">
+        <h2>Transform your workspace</h2>
+        <p class="vr-cta-meta">
+          STARTING RS. 20,000 / MONTH <span class="vr-cta-sep">·</span> BETA deployment In 2026-27
+        </p>
+        <a href="interest.html"><button>Join the BETA list</button></a>
+      </div>
+    </section>
+    <!-- CTA -->
+
+    <!-- Footer -->
+    <footer class="vr-footer vr-footer-split">
+      <div class="vr-footer-left">
+        2026 © Vanar Robots Private Limited · Vanar Generation 1
+      </div>
+      <div class="vr-footer-right">
+        <img src="images/Renders/WebP/India.webp" alt="Made in India">
+      </div>
+    </footer>
+    <!-- Footer -->
+
+    <script>
+      const vrReveals = document.querySelectorAll('.vr-reveal');
+
+      const vrObserver = new IntersectionObserver(
+        entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('vr-active');
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      vrReveals.forEach(section => vrObserver.observe(section));
+    </script>
+    <script>
+      const slides = document.querySelectorAll('.vr-slide');
+      let currentSlide = 0;
+
+      setInterval(() => {
+        slides[currentSlide].classList.remove('active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('active');
+      }, 4000);
+    </script>
+    <script>
+    const jobsStrip = document.querySelector('.vr-jobs-strip');
+
+    let scrollAmount = 0;
+    let scrollDirection = 1;
+
+    setInterval(() => {
+      const maxScroll =
+        jobsStrip.scrollWidth - jobsStrip.clientWidth;
+
+      scrollAmount += scrollDirection * 420;
+
+      if (scrollAmount >= maxScroll || scrollAmount <= 0) {
+        scrollDirection *= -1;
+      }
+
+      jobsStrip.scrollTo({
+        left: scrollAmount,
+        behavior: 'smooth'
+      });
+    }, 3000);
+    </script>
+    <script>
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 40) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+    </script>
+    <script>
+            const faqQuestions = document.querySelectorAll('.faq-question');
+
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const isActive = question.classList.contains('active');
+                    
+                    // Close all other answers
+                    faqQuestions.forEach(q => {
+                        q.classList.remove('active');
+                        q.nextElementSibling.classList.remove('active');
+                    });
+
+                    // Toggle current answer
+                    if (!isActive) {
+                        question.classList.add('active');
+                        question.nextElementSibling.classList.add('active');
+                    }
+                });
+            });
+    </script>
+  </body>
+</html>
