@@ -1,2072 +1,584 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Vanar Generation 1</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/gif" href="images/Renders/WebP/profile.webp" /> 
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Adobe Fonts -->
+    <link href="https://fonts.adobe.com/fonts/neue-haas-grotesk-display" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/Gen1.css">
 
-    <style>
-      :root {
-        --bg: #0b0c0e;
-        --fg: #ffffff;
-        --muted: #9aa0a6;
-        --accent: #6cf2c2;
-      }
-
-      * {
-        box-sizing: border-box;
-      }
-
-      body {
-        margin: 0;
-        font-family: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
-        background: var(--bg);
-        color: var(--fg);
-      }
-
-      /* ===== FUTURISTIC NAVBAR ===== */
-      /* ===== FUTURISTIC NAVBAR ===== */
-      /* ===== FUTURISTIC NAVBAR ===== */
-      .vr-navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        padding: 24px 8vw;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 1000;
-        transition: background 0.4s ease, backdrop-filter 0.4s ease;
-      }
-
-      .vr-navbar.scrolled {
-        background: rgba(11, 12, 14, 0.65);
-        backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-      }
-
-      .vr-navbar__logo {
-        display: flex;
-        align-items: center;
-      }
-
-      .vr-navbar__logo img {
-        width: 110px;
-        display: block;
-      }
-
-      .vr-navbar__links {
-        display: flex;
-        gap: 40px;
-      }
-
-      .vr-navbar__links a {
-        text-decoration: none;
-        font-size: 13px;
-        letter-spacing: 2px;
-        color: rgba(255,255,255,0.6);
-        text-transform: uppercase;
-        position: relative;
-        transition: opacity 0.25s ease;
-      }
-
-      .vr-navbar__links a:hover {
-        opacity: 1;
-        color: rgba(255,255,255,1);
-      }
-
-      .vr-navbar__links a:not(:hover) {
-        opacity: 0.65;
-      }
-
-      .vr-navbar__cta {
-        padding: 10px 26px;
-        border-radius: 30px;
-        border: 1px solid var(--accent);
-        color: var(--accent);
-        font-size: 13px;
-        letter-spacing: 1px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-
-      .vr-navbar__cta:hover {
-        background: #ffffff;
-        color: #000;
-        border-color: #ffffff;
-      }
-
-      /* Hamburger Menu */
-      .vr-navbar__hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 6px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 10px;
-        z-index: 1001;
-        position: relative;
-        width: 40px;
-        height: 40px;
-        justify-content: center;
-        align-items: center;
-      }
-
-      .vr-navbar__hamburger span {
-        width: 22px;
-        height: 2px;
-        background: rgba(255,255,255,0.9);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border-radius: 2px;
-        display: block;
-      }
-
-      .vr-navbar__hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(7px, 7px);
-      }
-
-      .vr-navbar__hamburger.active span:nth-child(2) {
-        opacity: 0;
-      }
-
-      .vr-navbar__hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -7px);
-      }
-
-      /* Mobile Dropdown */
-      .vr-navbar__mobile-menu {
-        display: none;
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: rgba(11, 12, 14, 0.65);
-        backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        padding: 20px 6vw;
-        flex-direction: column;
-        gap: 20px;
-        z-index: 999;
-        opacity: 0;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-      }
-
-      .vr-navbar__mobile-menu.active {
-        display: flex;
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .vr-navbar__mobile-menu a {
-        text-decoration: none;
-        font-size: 13px;
-        letter-spacing: 2px;
-        color: rgba(255,255,255,0.8);
-        text-transform: uppercase;
-        padding: 12px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        transition: color 0.25s ease;
-      }
-
-      .vr-navbar__mobile-menu a:hover {
-        color: rgba(255,255,255,1);
-      }
-
-      /* Mobile */
-      @media (max-width: 768px) {
-        .vr-navbar {
-          padding: 18px 6vw;
-        }
-        
-        .vr-navbar__links {
-          display: none;
-        }
-        
-        .vr-navbar__hamburger {
-          display: flex;
-        }
-        
-        .vr-navbar__logo {
-          flex: 0 0 auto;
-        }
-        
-        .vr-navbar__logo img {
-          width: 90px;
-        }
-        
-        /* Push CTA and hamburger to the right */
-        .vr-navbar__cta {
-          padding: 8px 18px;
-          font-size: 12px;
-          margin-left: auto;
-          margin-right: 12px;
-        }
-      }.vr-navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        padding: 24px 8vw;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 1000;
-        transition: background 0.4s ease, backdrop-filter 0.4s ease;
-      }
-
-      .vr-navbar.scrolled {
-        background: rgba(11, 12, 14, 0.65);
-        backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-      }
-
-      .vr-navbar__logo {
-        display: flex;
-        align-items: center;
-      }
-
-      .vr-navbar__logo img {
-        width: 110px;
-        display: block;
-      }
-
-      .vr-navbar__links {
-        display: flex;
-        gap: 40px;
-      }
-
-      .vr-navbar__links a {
-        text-decoration: none;
-        font-size: 13px;
-        letter-spacing: 2px;
-        color: rgba(255,255,255,0.6);
-        text-transform: uppercase;
-        position: relative;
-        transition: opacity 0.25s ease;
-      }
-
-      .vr-navbar__links a:hover {
-        opacity: 1;
-        color: rgba(255,255,255,1);
-      }
-
-      .vr-navbar__links a:not(:hover) {
-        opacity: 0.65;
-      }
-
-      .vr-navbar__cta {
-        padding: 10px 26px;
-        border-radius: 30px;
-        border: 1px solid var(--accent);
-        color: var(--accent);
-        font-size: 13px;
-        letter-spacing: 1px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-
-      .vr-navbar__cta:hover {
-        background: #ffffff;
-        color: #000;
-        border-color: #ffffff;
-      }
-
-      /* Hamburger Menu */
-      .vr-navbar__hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 8px;
-        z-index: 1001;
-      }
-
-      .vr-navbar__hamburger span {
-        width: 24px;
-        height: 2px;
-        transition: all 0.3s ease;
-        border-radius: 2px;
-        background: rgba(255,255,255,1);
-      }
-
-      .vr-navbar__hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(6px, 6px);
-      }
-
-      .vr-navbar__hamburger.active span:nth-child(2) {
-        opacity: 0;
-        transform: translateX(10px);
-      }
-
-      .vr-navbar__hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(6px, -6px);
-      }
-
-      /* Mobile Dropdown */
-      .vr-navbar__mobile-menu {
-        display: none;
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: rgba(11, 12, 14, 0.65);
-        backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        padding: 20px 6vw;
-        flex-direction: column;
-        gap: 20px;
-        z-index: 999;
-        opacity: 0;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-      }
-
-      .vr-navbar__mobile-menu.active {
-        display: flex;
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .vr-navbar__mobile-menu a {
-        text-decoration: none;
-        font-size: 13px;
-        letter-spacing: 2px;
-        color: rgba(255,255,255,0.8);
-        text-transform: uppercase;
-        padding: 12px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        transition: color 0.25s ease;
-      }
-
-      .vr-navbar__mobile-menu a:hover {
-        color: rgba(255,255,255,1);
-      }
-
-      /* Mobile */
-      @media (max-width: 768px) {
-        .vr-navbar {
-          padding: 18px 6vw;
-        }
-        
-        .vr-navbar__links {
-          display: none;
-        }
-        
-        .vr-navbar__hamburger {
-          display: flex;
-        }
-        
-        .vr-navbar__logo {
-          flex: 0 0 auto;
-        }
-        
-        .vr-navbar__logo img {
-          width: 90px;
-        }
-        
-        /* Push CTA and hamburger to the right */
-        .vr-navbar__cta {
-          padding: 8px 18px;
-          font-size: 12px;
-          margin-left: auto;
-          margin-right: 12px;
-        }
-      }.vr-navbar {
-        position: fixed;
-        top: 0;
-        width: 100%;
-        padding: 24px 8vw;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 1000;
-        transition: background 0.4s ease, backdrop-filter 0.4s ease;
-      }
-
-      .vr-navbar.scrolled {
-        background: rgba(11, 12, 14, 0.65);
-        backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-      }
-
-      .vr-navbar__logo {
-        display: flex;
-        align-items: center;
-      }
-
-      .vr-navbar__logo img {
-        width: 110px;
-        display: block;
-      }
-
-      .vr-navbar__links {
-        display: flex;
-        gap: 40px;
-      }
-
-      .vr-navbar__links a {
-        text-decoration: none;
-        font-size: 13px;
-        letter-spacing: 2px;
-        color: rgba(255,255,255,0.6);
-        text-transform: uppercase;
-        position: relative;
-        transition: opacity 0.25s ease;
-      }
-
-      .vr-navbar__links a:hover {
-        opacity: 1;
-        color: rgba(255,255,255,1);
-      }
-
-      .vr-navbar__links a:not(:hover) {
-        opacity: 0.65;
-      }
-
-      .vr-navbar__cta {
-        padding: 10px 26px;
-        border-radius: 30px;
-        border: 1px solid var(--accent);
-        color: var(--accent);
-        font-size: 13px;
-        letter-spacing: 1px;
-        text-decoration: none;
-        transition: all 0.3s ease;
-      }
-
-      .vr-navbar__cta:hover {
-        background: #ffffff;
-        color: #000;
-        border-color: #ffffff;
-      }
-
-      /* Hamburger Menu */
-      .vr-navbar__hamburger {
-        display: none;
-        flex-direction: column;
-        gap: 5px;
-        background: none;
-        border: none;
-        cursor: pointer;
-        padding: 8px;
-        z-index: 1001;
-      }
-
-      .vr-navbar__hamburger span {
-        width: 24px;
-        height: 2px;
-        background: rgba(255,255,255,0.8);
-        transition: all 0.3s ease;
-        border-radius: 2px;
-      }
-
-      .vr-navbar__hamburger.active span:nth-child(1) {
-        transform: rotate(45deg) translate(7px, 7px);
-      }
-
-      .vr-navbar__hamburger.active span:nth-child(2) {
-        opacity: 0;
-      }
-
-      .vr-navbar__hamburger.active span:nth-child(3) {
-        transform: rotate(-45deg) translate(7px, -7px);
-      }
-
-      /* Mobile Dropdown */
-      .vr-navbar__mobile-menu {
-        display: none;
-        position: fixed;
-        top: 70px;
-        left: 0;
-        right: 0;
-        background: rgba(11, 12, 14, 0.65);
-        backdrop-filter: blur(14px);
-        border-bottom: 1px solid rgba(255,255,255,0.08);
-        padding: 20px 6vw;
-        flex-direction: column;
-        gap: 20px;
-        z-index: 999;
-        opacity: 0;
-        transform: translateY(-10px);
-        transition: opacity 0.3s ease, transform 0.3s ease;
-      }
-
-      .vr-navbar__mobile-menu.active {
-        display: flex;
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .vr-navbar__mobile-menu a {
-        text-decoration: none;
-        font-size: 13px;
-        letter-spacing: 2px;
-        color: rgba(255,255,255,0.8);
-        text-transform: uppercase;
-        padding: 12px 0;
-        border-bottom: 1px solid rgba(255,255,255,0.05);
-        transition: color 0.25s ease;
-      }
-
-      .vr-navbar__mobile-menu a:hover {
-        color: rgba(255,255,255,1);
-      }
-
-      /* Mobile */
-      @media (max-width: 768px) {
-        .vr-navbar {
-          padding: 18px 6vw;
-        }
-        
-        .vr-navbar__links {
-          display: none;
-        }
-        
-        .vr-navbar__hamburger {
-          display: flex;
-        }
-        
-        .vr-navbar__logo {
-          flex: 0 0 auto;
-        }
-        
-        .vr-navbar__logo img {
-          width: 90px;
-        }
-        
-        /* Push CTA and hamburger to the right */
-        .vr-navbar__cta {
-          padding: 8px 18px;
-          font-size: 12px;
-          margin-left: auto;
-          margin-right: 12px;
-        }
-      }
-      /* ===== FUTURISTIC NAVBAR ===== */
-      /* ===== FUTURISTIC NAVBAR ===== */
-      /* ===== FUTURISTIC NAVBAR ===== */
-
-
-
-
-
-
-      /* ===== ANIMATIONS ===== */
-      @keyframes vr-fade-up {
-        from {
-          opacity: 0;
-          transform: translateY(40px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-
-      @keyframes vr-glow {
-        0% { text-shadow: 0 0 0 rgba(108,242,194,0); }
-        50% { text-shadow: 0 0 20px rgba(108,242,194,0.6); }
-        100% { text-shadow: 0 0 0 rgba(108,242,194,0); }
-      }
-
-      .vr-reveal {
-        opacity: 0;
-        transform: translateY(40px);
-        transition: opacity 0.8s ease, transform 0.8s ease;
-      }
-
-      .vr-reveal.vr-active {
-        opacity: 1;
-        transform: translateY(0);
-      }
-
-      .vr-hero h1 span {
-        animation: vr-glow 3s ease-in-out infinite;
-      }
-
-      /* ===== GLOBAL ===== */
-      .vr-section {
-        padding: 140px 8vw;
-      }
-
-      h1, h2, h3 {
-        margin: 0;
-        font-weight: 400;
-      }
-
-      p {
-        color: var(--muted);
-        max-width: 680px;
-        line-height: 1.7;
-      }
-
-      /* ===== STATEMENT ===== */
-      .vr-statement {
-        font-size: 1.2rem;
-        max-width: 900px;
-        margin: 80px auto;
-        text-align: left;
-      }
-
-      /* Tablet */
-      @media (max-width: 1024px) {
-        .vr-statement-section {
-          padding-top: 140px;
-          text-align: left;
-          font-size: 1rem;
-        }
-
-        .vr-statement {
-          font-size: 1.25rem;
-          line-height: 1.6;
-          text-align: left;
-        }
-      }
-
-      /* Mobile */
-      @media (max-width: 768px) {
-        .vr-statement-section {
-          padding-top: 140px;
-          text-align: left;
-          font-size: 1rem;
-        }
-
-        .vr-statement {
-          font-size: 1.15rem;
-          text-align: left;
-          padding-bottom:100px;
-        }
-      }
-
-
-
-
-
-
-
-
-      /* Make jobs section full screen width, content centered */
-      .vr-jobs-section {
-        position: relative;
-        width: 100vw;
-        margin-left: calc(-50vw + 50%);
-        margin-right: calc(-50vw + 50%);
-        padding-bottom: 100px;
-        text-align: center;
-        overflow: hidden;
-      }
-
-      .vr-jobs-section > .vr-jobs-header {
-        max-width: 1200px;
-        margin-left: auto;
-        margin-right: auto;
-        padding: 0 8vw;
-      }
-
-      .vr-jobs-section::before,
-      .vr-jobs-section::after {
-        content: "";
-        position: absolute;
-        top: 0;
-        width: 90px;
-        height: 100%;
-        z-index: 20;
-        pointer-events: none;
-      }
-
-      .vr-jobs-section::before {
-        left: 0;
-        background: linear-gradient(
-          90deg,
-          rgba(11,12,14,1) 0%,
-          rgba(11,12,14,0.9) 30%,
-          rgba(11,12,14,0.6) 55%,
-          rgba(11,12,14,0.0) 100%
-        );
-      }
-
-      .vr-jobs-section::after {
-        right: 0;
-        background: linear-gradient(
-          270deg,
-          rgba(11,12,14,1) 0%,
-          rgba(11,12,14,0.9) 30%,
-          rgba(11,12,14,0.6) 55%,
-          rgba(11,12,14,0.0) 100%
-        );
-      }
-
-
-      @media (max-width: 768px) {
-        .vr-jobs-section::before,
-        .vr-jobs-section::after {
-          display: none;
-        }
-
-        .vr-jobs-section {
-          width: 100%;
-          max-width: 100%;
-          margin: 0;
-          padding: 0;
-        }
-
-        .vr-jobs-section > .vr-jobs-header {
-          width: 90vw;
-          max-width: 90vw;
-          margin: 0 auto;
-          padding: 0;
-        }
-
-        .vr-jobs-header h2,
-        .vr-jobs-header p {
-          width: 100%;
-        }
-
-        .vr-jobs-strip {
-          padding-left: 6vw;
-          padding-right: 6vw;
-        }
-      }
-
-
-
-
-      .vr-jobs-header {
-        max-width: 720px;
-        margin: 0 auto 80px;
-      }
-
-      .vr-jobs-header h2 {
-        font-size: 3rem;
-        margin-bottom: 24px;
-      }
-
-      .vr-jobs-header p {
-        color: var(--muted);
-        font-size: 1.05rem;
-        margin: 0 auto;
-      }
-
-      /* slideshow container */
-      .vr-jobs-slider {
-        position: relative;
-        width: 100%;
-        height: 420px;
-        overflow: hidden;
-        border-radius: 24px;
-      }
-
-      /* individual slide */
-      .vr-job-slide {
-        position: absolute;
-        inset: 0;
-        background-size: cover;
-        background-position: center;
-        opacity: 0;
-        transition: opacity 1s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .vr-job-slide.active {
-        opacity: 1;
-      }
-
-      /* overlay for readability */
-      .vr-job-slide::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(
-          180deg,
-          rgba(11,12,14,0.35),
-          rgba(11,12,14,0.85)
-        );
-      }
-
-      /* job title */
-      .vr-job-slide h3 {
-        position: relative;
-        z-index: 2;
-        font-size: 2.8rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-      }
-
-      /* ===== JOBS SLIDESHOW ===== */
-      .vr-statement-video {
-        padding-top: 100px;
-        display: flex;
-        justify-content: center;
-        margin-top: 80px;
-      }
-
-      /* ===== CINEMATIC STATEMENT SLIDESHOW ===== */
-      .vr-statement-slideshow {
-        position: relative;
-        width: 100%;
-        height: 600px;
-        border-radius: 22px;
-        overflow: hidden;
-        box-shadow: 0 40px 80px rgba(0,0,0,0.45);
-      }
-
-      .vr-slide {
-        position: absolute;
-        inset: 0;
-        background-size: cover;
-        background-position: center;
-        opacity: 0;
-        transition: opacity 1.8s ease;
-      }
-
-      .vr-slide.active {
-        opacity: 1;
-      }
-
-      /* tablet */
-      @media (max-width: 1024px) {
-        .vr-statement-slideshow {
-          width: 100%;
-        }
-      }
-
-      /* mobile */
-      @media (max-width: 768px) {
-        .vr-statement-slideshow {
-          width: 100%;
-          height: 300px;
-        }
-
-        .vr-jobs-header {
-          max-width: 100%;
-          margin: 0 auto 80px;
-        }
-
-        .vr-jobs-header h2 {
-          font-size: 3rem;
-          margin-bottom: 24px;
-          text-align: left;
-        }
-
-        .vr-jobs-header p {
-          text-align: left;
-        }
-
-      }
-
-      /* ===== HERO (RESPONSIVE IMAGES) ===== */
-      .vr-hero {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        background: url('images/Renders/WebP/File153.webp') center / cover no-repeat;
-      }
-
-      /* Tablet */
-      @media (max-width: 1024px) {
-        .vr-hero {
-          background: url('images/Renders/WebP/File154.webp') center / cover no-repeat;
-          height: 85vh;
-          align-items: flex-end;
-          padding-bottom: 80px;
-        }
-      }
-
-      /* Mobile */
-      @media (max-width: 768px) {
-        .vr-hero {
-          height: 85vh;
-          text-align: left;
-          align-items: flex-end;
-          padding-bottom: 80px;
-          background: url('images/Renders/WebP/File176.webp') center / cover no-repeat;
-        }
-
-        .vr-hero h1 {
-        font-size: 50px;
-        line-height: 1.05;
-        max-width: 900px;
-        text-align: center;
-        margin: 0 auto;
-      }
-      }
-
-      .vr-hero h1 {
-        font-size: 50px;
-        line-height: 1.05;
-        max-width: 900px;
-      }
-
-      .vr-hero span {
-        color: var(--accent);
-      }
-
-      /* ===== STATEMENT ===== */
-      .vr-statement {
-        font-size: 1.6rem;
-        max-width: 900px;
-      }
-
-      /* ===== CAPABILITIES ===== */
-      .vr-capabilities-grid {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 80px;
-      }
-
-
-      /* ===== EXAMPLE JOBS (COMPACT VISUAL STRIP) ===== */
-      .vr-jobs-section {
-        padding-top: 150px;
-      }
-
-      .vr-jobs-header {
-        text-align: center;
-        max-width: 720px;
-        margin: 0 auto 40px;
-      }
-
-      .vr-jobs-header h2 {
-        font-size: 2.6rem;
-        margin-bottom: 14px;
-      }
-
-      .vr-jobs-header p {
-        font-size: 1rem;
-        color: var(--muted);
-        margin: 0 auto;
-      }
-
-      /* horizontal visual strip */
-      .vr-jobs-strip {
-        display: flex;
-        gap: 24px;
-        overflow-x: auto;
-        padding: 20px 0;
-        scroll-snap-type: x mandatory;
-        scroll-behavior: smooth;
-        mask-image: linear-gradient(
-          to right,
-          transparent 0%,
-          black 12%,
-          black 88%,
-          transparent 100%
-        );
-      }
-
-      .vr-job-card {
-        scroll-snap-align: start;
-        min-width: 380px;
-        height: 460px;
-        border-radius: 26px;
-        background-size: cover;
-        background-position: center;
-        position: relative;
-        flex-shrink: 0;
-      }
-
-      .vr-job-card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 22px;
-      }
-
-      .vr-job-card h3 {
-        position: absolute;
-        bottom: 36px;
-        left: 36px;
-        right: 36px;
-        z-index: 2;
-        font-size: 1rem;
-      }
-
-      /* hide scrollbar */
-      .vr-jobs-strip::-webkit-scrollbar {
-        display: none;
-      }
-
-      /* ===== CORE INTELLIGENCE ===== */
-      .vr-core-section {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 120px;
-        max-width: 1100px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      @media (max-width: 768px) {
-        .vr-core-section {
-          max-width: 100%;
-        }
-      }
-
-      .vr-core-header {
-        max-width: 720px;
-        margin: 0 auto;
-        text-align: center;
-        margin-bottom: -50px;
-      }
-
-      .vr-core-header h2 {
-        font-size: 2.5rem;
-        font-weight: 300;
-        letter-spacing: -0.5px;
-      }
-
-      .vr-core-header p {
-        font-size: 1.05rem;
-        color: var(--muted);
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .vr-core-item {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 80px;
-        align-items: center;
-      }
-
-      .vr-core-item:nth-child(even) {
-        direction: rtl;
-      }
-
-      .vr-core-item:nth-child(even) * {
-        direction: ltr;
-      }
-
-      .vr-core-text h3 {
-        font-size: 1.6rem;
-        margin-bottom: 12px;
-        font-weight: 500;
-        letter-spacing: 0.3px;
-        color: rgba(255,255,255,0.9);
-      }
-
-      .vr-core-text p {
-        font-size: 1.05rem;
-        max-width: 520px;
-      }
-
-      .vr-core-image {
-        width: 100%;
-        height: 420px;
-        border-radius: 20px;
-        background-size: cover;
-        background-position: center;
-        box-shadow: 0 40px 80px rgba(0,0,0,0.4);
-      }
-
-      
-
-
-
-      /* ===== VERTICAL SPECS (CINEMATIC) ===== */
-      .vr-specs-vertical-section {
-        padding: 120px 8vw 60px;
-      }
-
-      .vr-specs-vertical {
-        max-width: 1200px;
-        margin: 0 auto;
-        display: grid;
-        grid-template-columns: 1.5fr 0.5fr;
-        gap: 100px;
-        align-items: center;
-      }
-
-      .vr-specs-left {
-        display: flex;
-        flex-direction: column;
-        gap: 48px;
-      }
-
-      .vr-spec-vertical span {
-        display: block;
-        font-size: 0.65rem;
-        letter-spacing: 3px;
-        text-transform: uppercase;
-        color: rgba(255,255,255,0.45);
-        margin-bottom: 10px;
-      }
-
-      .vr-spec-vertical h3 {
-        font-size: 2.4rem;
-        font-weight: 300;
-        margin: 0;
-      }
-
-      .vr-specs-image {
-        width: 100%;
-        height: 540px;
-        border-radius: 10px;
-        background-size: cover;
-        background-position: center;
-        box-shadow: 0 60px 120px rgba(0,0,0,0.55);
-      }
-
-      /* Tablet */
-      @media (max-width: 1024px) {
-        .vr-specs-vertical {
-          grid-template-columns: 1fr;
-          gap: 60px;
-        }
-
-        .vr-specs-left {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 32px 24px;
-          align-items: start;
-        }
-
-        .vr-spec-vertical span {
-          font-size: 0.7rem;
-          letter-spacing: 3px;
-        }
-
-        .vr-spec-vertical h3 {
-          font-size: 1.6rem;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .vr-specs-vertical-section {
-          padding: 0;
-        }
-
-        .vr-specs-vertical {
-          display: block;
-          width: 100%;
-          max-width: none;
-        }
-
-        .vr-specs-right {
-          width: 100%;
-        }
-
-        .vr-specs-image {
-          width: 100%;
-          aspect-ratio: 1 / 1;
-          border-radius: 0 !important;
-
-          background-size: cover;
-          background-position: center;
-          background-repeat: no-repeat;
-        }
-
-        .vr-specs-left {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          padding: 28px 4vw;
-        }
-
-        .vr-spec-vertical span {
-          font-size: 0.75rem;
-          letter-spacing: 3.2px;
-        }
-
-        .vr-spec-vertical h3 {
-          font-size: 1.5rem;
-        }
-      }
-
-
-
-
-
-
-
-      .vr-jobs-strip {
-        display: flex;
-        gap: 24px;
-        overflow-x: auto;
-        padding: 40px 0;
-      }
-
-      .vr-job-card {
-        min-width: 360px;
-        height: 460px;
-        border-radius: 26px;
-        background-size: cover;
-        background-position: center;
-        position: relative;
-        flex-shrink: 0;
-      }
-
-      /* Spacer cards (empty cards used only for spacing) */
-      .vr-job-card:empty {
-        min-width: 100px;
-        height: 1px;
-        background: transparent;
-        box-shadow: none;
-      }
-
-      .vr-job-card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        border-radius: 22px;
-        background: linear-gradient(
-          180deg,
-          rgba(11,12,14,0.0),
-          rgba(11, 12, 14, 0.281)
-        );
-      }
-
-      .vr-job-card h3 {
-        position: absolute;
-        bottom: 36px;
-        left: 36px;
-        right: 36px;
-        z-index: 2;
-        font-size: 1.35rem;
-        font-weight: 500;
-        letter-spacing: 0.4px;
-      }
-
-      /* hide scrollbar but allow scroll */
-      .vr-jobs-strip::-webkit-scrollbar {
-        display: none;
-      }
-
-
-      /* ===== CTA (WHITE THEME) ===== */
-      .vr-cta {
-        background: #f5f5f5;
-        color: #000;
-        padding-top: 140px;
-        padding-bottom: 140px;
-        text-align: center;
-      }
-
-      .vr-cta-inner {
-        max-width: 720px;
-        margin: 0 auto;
-      }
-
-      .vr-cta h2 {
-        color: #000;
-        font-size: 2.6rem;
-        margin: 20px 0 24px;
-        font-weight: 400;
-      }
-
-      .vr-cta h2 {
-        color: #000;
-        font-size: 2.6rem;
-        margin: 20px 0 24px;
-        font-weight: 400;
-      }
-
-      .vr-cta-meta {
-        font-size: 0.85rem;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: rgba(0,0,0,0.55);
-        margin-bottom: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        flex-wrap: wrap;
-      }
-
-      .vr-cta-sep {
-        font-size: 1rem;
-        opacity: 0.6;
-      }
-
-      .vr-cta button {
-        background: transparent;
-        border: 1px solid #000;
-        color: #000;
-        padding: 16px 40px;
-        border-radius: 40px;
-        font-size: 1rem;
-        cursor: pointer;
-      }
-
-      .vr-cta button:hover {
-        background: #000;
-        color: #fff;
-      }
-
-      /* ===== CTA — MOBILE FIX ===== */
-      @media (max-width: 768px) {
-        .vr-cta {
-          padding-top: 100px;
-          padding-bottom: 100px;
-        }
-
-        .vr-cta-inner {
-          max-width: 100%;
-          padding: 0 6vw;
-        }
-
-        .vr-cta h2 {
-          font-size: 2rem;
-          line-height: 1.2;
-          margin-bottom: 20px;
-        }
-
-        .vr-cta-meta {
-          font-size: 0.75rem;
-          letter-spacing: 1.5px;
-          gap: 12px;
-          margin-bottom: 32px;
-          text-align: center;
-        }
-
-        .vr-cta button {
-          width: 100%;
-          max-width: 320px;
-          padding: 16px 0;
-          font-size: 0.95rem;
-        }
-      }
-
-      /* ===== FOOTER (WHITE THEME) ===== */
-      .vr-footer {
-        background: #f5f5f5;
-        color: #000000;
-        border-top: 1px solid rgba(0,0,0,0.1);
-        padding: 60px 8vw;
-        font-size: 0.85rem;
-      }
-
-      .vr-footer-split {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 24px;
-      }
-
-      .vr-footer-right img {
-        height: 22px;
-        width: auto;
-        opacity: 0.9;
-      }
-
-      @media (max-width: 768px) {
-        .vr-footer-split {
-          flex-direction: column;
-          gap: 12px;
-        }
-
-        .vr-footer-right img {
-          height: 20px;
-        }
-      }
-
-
-      @media (max-width: 768px) {
-        .vr-footer {
-        text-align: center;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .vr-core-header h2 {
-          margin-top: -20px;
-          margin-bottom: 10px;
-          text-align: left;
-          font-size: 2rem;
-        }
-        .vr-core-header p {
-          text-align: left;
-        }
-        .vr-core-text h3 {
-          margin-bottom: 8px;
-          text-align: left;
-        }
-        .vr-core-text {
-          gap: 12px;
-        }
-      }
-
-      @media (max-width: 768px) {
-
-        .vr-section {
-          padding: 100px 6vw;
-        }
-
-        h1 {
-          font-size: 2.2rem;
-          line-height: 1.15;
-        }
-
-        h2 {
-          font-size: 2rem;
-        }
-
-        p {
-          font-size: 0.95rem;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .vr-hero {
-          height: 85vh;
-          align-items: flex-end;
-          padding-bottom: 80px;
-        }
-
-        .vr-hero h1 {
-          font-size: 1.7rem;
-          max-width: 100%;
-        }
-      }
-
-      @media (max-width: 768px) {
-        .vr-statement {
-          font-size: 1.4rem;
-          margin: 40px auto;
-        }
-
-        .vr-statement-video {
-          padding-top: 120px;
-          margin-top: 40px;
-        }
-      }
-
-      @media (max-width: 768px) {
-
-        .vr-jobs-header h2 {
-          font-size: 2rem;
-        }
-
-        .vr-jobs-strip {
-          gap: 16px;
-        }
-
-        .vr-job-card {
-          min-width: 280px;
-          height: 360px;
-          border-radius: 20px;
-        }
-
-        .vr-job-card h3 {
-          font-size: 1.1rem;
-          bottom: 24px;
-          left: 24px;
-          right: 24px;
-        }
-      }
-
-      @media (max-width: 900px) {
-
-        .vr-core-item {
-          grid-template-columns: 1fr;
-          gap: 40px;
-        }
-
-        .vr-core-item:nth-child(even) {
-          direction: ltr;
-        }
-
-        .vr-core-image {
-          height: 300px;
-        }
-      }
-
-
-      /* ===== SPECS — MOBILE REDESIGN (CLEAN & PREMIUM) ===== */
-      @media (max-width: 768px) {
-
-        .vr-spec {
-          padding: 18px 0;
-        }
-
-        .vr-spec::after {
-          display: none;
-        }
-
-        .vr-spec:not(:last-child) {
-          border-bottom: 1px solid rgba(255,255,255,0.08);
-        }
-      }
-
-
-
-            .faq-container {
-              max-width: 80%;
-              width: 80%;
-              margin: 0 auto;
-              display: grid;
-              grid-template-columns: 1fr 2fr;
-              gap: 60px;
-              align-items: start;
-              padding: 80px 80px 100px;
-              background: #141518;
-              border-radius: 32px;
-              box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06);
-            }
-
-            .faq-wrapper {
-              padding: 120px 8vw;
-            }
-
-            .faq-title {
-              font-size: 2.3rem;
-              font-weight: 400;
-              line-height: 1.25;
-              letter-spacing: 1px;
-              color: #ffffff;
-            }
-
-            .faq-list {
-                display: flex;
-                flex-direction: column;
-                gap: 0;
-            }
-
-            .faq-item {
-              border-bottom: 1px solid rgba(255,255,255,0.12);
-            }
-
-            .faq-question {
-                width: 100%;
-                background: none;
-                border: none;
-                color: #fff;
-                font-size: 1rem;
-                text-align: left;
-                padding: 24px 40px 24px 0;
-                cursor: pointer;
-                position: relative;
-                transition: opacity 0.3s;
-            }
-
-            .faq-question:hover {
-                opacity: 0.7;
-            }
-
-            .faq-question::after {
-                content: '+';
-                position: absolute;
-                right: 0;
-                top: 50%;
-                transform: translateY(-50%);
-                font-size: 1.5rem;
-                transition: transform 0.3s;
-            }
-
-            .faq-question.active::after {
-                content: '−';
-            }
-
-            .faq-answer {
-                max-height: 0;
-                overflow: hidden;
-                transition: max-height 0.3s ease-out, padding 0.3s ease-out;
-                padding: 0 40px 0 0;
-                color: #999;
-                line-height: 1.6;
-            }
-
-            .faq-answer.active {
-                max-height: 300px;
-                padding: 0 40px 24px 0;
-            }
-
-            /* ===== FAQ — TABLET FIX ===== */
-            @media (max-width: 1024px) and (min-width: 769px) {
-              .faq-wrapper {
-                padding: 100px 6vw;
-              }
-
-              .faq-container {
-                width: 90%;
-                max-width: 1000px;
-                grid-template-columns: 1fr;
-                gap: 48px;
-                padding: 72px 64px 88px;
-              }
-
-              .faq-title {
-                font-size: 2.1rem;
-                text-align: center;
-              }
-
-              .faq-question {
-                font-size: 1rem;
-                padding: 22px 36px 22px 0;
-              }
-
-              .faq-answer {
-                font-size: 0.95rem;
-              }
-
-              .faq-answer.active {
-                padding: 0 36px 22px 0;
-              }
-            }
-
-            /* ===== FAQ — MOBILE FIX ===== */
-            @media (max-width: 768px) {
-              .faq-wrapper {
-                padding: 80px 6vw;
-              }
-
-              .faq-container {
-                width: 100%;
-                max-width: 100%;
-                grid-template-columns: 1fr;
-                gap: 32px;
-                padding: 48px 24px 56px;
-                border-radius: 24px;
-              }
-
-              .faq-title {
-                font-size: 1.9rem;
-                text-align: left;
-                letter-spacing: 0.5px;
-              }
-
-              .faq-question {
-                font-size: 0.95rem;
-                padding: 18px 32px 18px 0;
-              }
-
-              .faq-question::after {
-                font-size: 1.3rem;
-              }
-
-              .faq-answer {
-                font-size: 0.9rem;
-                padding: 0 32px 0 0;
-              }
-
-              .faq-answer.active {
-                padding: 0 32px 18px 0;
-              }
-            }
-
-            @media (max-width: 480px) {
-
-                .faq-title {
-                    font-size: 1.75rem;
-                }
-
-                .faq-question {
-                    font-size: 0.9rem;
-                    padding: 18px 30px 18px 0;
-                }
-            }
-    </style>
   </head>
-
   <body>
+    <!-- Navbar -->
+      <!-- Navbar -->
+        <!-- Navbar -->
+            <!-- Navbar -->
+        <div class="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">
+            <img src="images/WhiteLogo1.png" width="90px">
+            </div>
 
-    <!-- Navbar -->
-    <!-- Navbar -->
-    <!-- Navbar -->
-    <nav class="vr-navbar">
-      <div class="vr-navbar__logo">
-        <a href="index.html"><img src="images/Renders/WebP/WhiteLogo1.webp" alt="Vanar Robots"></a>
-      </div>
-      <div class="vr-navbar__links">
-        <a href="Gen1.html">Generation 1</a>
-        <a href="indistinguishability.html">Vision</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <a href="interest.html" class="vr-navbar__cta">Join Beta</a>
-      <button class="vr-navbar__hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </nav>
+            <div class="nav-links" id="navLinks">
+            <a href="Gen1.html">Generation 1</a>
+            <a href="indistinguishability.html">Vision</a>
+            <a href="contact.html">Contact</a>
+            <a href="interest.html" class="nav-cta">Join Beta</a>
+            </div>
 
-    <!-- Mobile Dropdown Menu -->
-    <div class="vr-navbar__mobile-menu">
-      <a href="Gen1.html">Generation 1</a>
-      <a href="indistinguishability.html">Vision</a>
-      <a href="contact.html">Contact</a>
+            <div class="nav-toggle" onclick="toggleNav()">
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            </div>
+        </div>
+        </div>
+        <script>
+        function toggleNav() {
+        document.getElementById("navLinks").classList.toggle("active");
+        }
+        </script>
+        <!-- Navbar -->
+    <!-- Navbar -->
+      <!-- Navbar -->
+        <!-- Navbar -->
+
+    <center>
+
+      <div class="FiftyPercent_div" style="margin-top: 200px;">
+        <h1 class="page-title">The Next Evolution of Labor<br><em>Vanar Generation 1</em></h1>
+      </div>
+
+
+      <div class="FiftyPercent_div" style="margin-top: 50px;">
+        <p style="color: #828282;">Vanar Generation 1 is our first general-purpose humanoid system <span style="color: white;">built to work inside real human environments</span>.
+          It is designed around the spaces, tools, and workflows that already exist, so it can operate where people work without requiring those environments to be rebuilt around machines.
+          The goal is simple: <span style="color: white;">a physical system that can move, adapt, and perform useful tasks in everyday industrial settings</span>.
+          <br><br>
+          At Vanar Robots, we follow a deployment-first approach. Every actuator, structural element, manipulator, control system, and software is built with
+          reliability, simplicity, and cost in mind. The focus is not on demonstration robots, but on machines that can be manufactured, deployed, and used for real work.
+          <br><br>
+          Our systems are intended for tasks that are repetitive, physically demanding, or require long hours of consistent effort.
+          By handling this kind of work, the robot becomes a practical tool that supports human teams, increases output, and keeps operations running smoothly.
+          <br><br>
+          Generation 1 is the foundation of that direction: a humanoid platform built to be useful, understandable, and ready to work alongside people in real environments.</p>
+      </div>
+
+      <br><br>
+
+      <div class="SeventyPercent_div">
+        <div class="hero-media">
+            <img src="images/Renders/WebP/File100PC.webp" width="100%">
+        </div>
+      </div>
+
+
+
+
+      <!-- Card Deck Slideshow: What can it do? -->
+      <!-- Card Deck Slideshow: What can it do? -->
+      <!-- Card Deck Slideshow: What can it do? -->
+      <div class="slideshow-container">
+        <h2 class="specs-title">Phase One: Structured Industrial Tasks</h2>
+        <p style="color: #828282; text-align: left; line-height: 2.5rem; margin-top: 50px;">
+            Early beta deployment will remain sharply focused on specific categories of work. This approach allows the system to mature in real-world
+            conditions while delivering reliable, measurable value to early partners. Initial use cases will center around tasks that demand consistency, endurance,
+            and physical reliability, environments where repeatable motion, long operating hours, and predictable workflows are essential.
+            Examples of work our early partners intend to automate with Vanar Gen 1:</p>
+        <br>
+
+          <div class="card-stack" id="cardStack">
+              <div class="card">
+                  <div class="card-content">
+                      <img src="images/Renders/WebP/File155.webp" width="100%">
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-content">
+                      <img src="images/Renders/WebP/File87.webp" width="100%">
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-content">
+                      <img src="images/Renders/WebP/File177.webp" width="100%">
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-content">
+                      <img src="images/Renders/WebP/File179.webp" width="100%">
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-content">
+                      <img src="images/Renders/WebP/File1.webp" width="100%">
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-content">
+                      <img src="images/Renders/WebP/File85.webp" width="100%">
+                  </div>
+              </div>
+          </div>
+
+          <div class="controls">
+              <div class="category-label" id="categoryLabel">Material Handling</div>
+              <div class="nav-buttons">
+                  <button class="nav-btn" id="prevBtn">←</button>
+                  <button class="nav-btn" id="nextBtn">→</button>
+              </div>
+          </div>
+      </div>
+
+      <script>
+          const cardStack = document.getElementById('cardStack');
+          const cards = Array.from(cardStack.children);
+          const categoryLabel = document.getElementById('categoryLabel');
+          const prevBtn = document.getElementById('prevBtn');
+          const nextBtn = document.getElementById('nextBtn');
+          
+          let cardOrder = [0, 1, 2, 3, 4, 5];
+          let isAnimating = false;
+
+          const categories = [
+              'Material Handling',
+              'Machine Tending',
+              'Inspection & Patrol',
+              'Site Cleaning',
+              'Logistics Support',
+              'Hazardous Operations'
+          ];
+
+          function updateCardPositions() {
+              cards.forEach((card, originalIndex) => {
+                  const position = cardOrder.indexOf(originalIndex);
+                  // Remove all classes
+                  card.classList.remove('active', 'next-1', 'next-2', 'hidden');
+                  if (position === 0) {
+                      card.classList.add('active');
+                  } else if (position === 1) {
+                      card.classList.add('next-1');
+                  } else if (position === 2) {
+                      card.classList.add('next-2');
+                  } else {
+                      card.classList.add('hidden');
+                  }
+              });
+              categoryLabel.textContent = categories[cardOrder[0]];
+          }
+
+          function nextCard() {
+              if (isAnimating) return;
+              isAnimating = true;
+
+              const movedCard = cardOrder.shift();
+              cardOrder.push(movedCard);
+
+              updateCardPositions(true);
+
+              setTimeout(() => {
+                  isAnimating = false;
+              }, 600);
+          }
+
+          function prevCard() {
+              if (isAnimating) return;
+              isAnimating = true;
+
+              const movedCard = cardOrder.pop();
+              cardOrder.unshift(movedCard);
+
+              updateCardPositions(true);
+
+              setTimeout(() => {
+                  isAnimating = false;
+              }, 600);
+          }
+
+          nextBtn.addEventListener('click', nextCard);
+          prevBtn.addEventListener('click', prevCard);
+
+          // Keyboard navigation
+          document.addEventListener('keydown', (e) => {
+              if (e.key === 'ArrowRight') nextCard();
+              if (e.key === 'ArrowLeft') prevCard();
+          });
+
+          // Touch swipe support
+          let touchStartX = 0;
+          let touchEndX = 0;
+
+          cardStack.addEventListener('touchstart', (e) => {
+              touchStartX = e.changedTouches[0].screenX;
+          });
+
+          cardStack.addEventListener('touchend', (e) => {
+              touchEndX = e.changedTouches[0].screenX;
+              handleSwipe();
+          });
+
+          function handleSwipe() {
+              if (touchEndX < touchStartX - 50) nextCard();
+              if (touchEndX > touchStartX + 50) prevCard();
+          }
+
+          // Initialize
+          updateCardPositions();
+      </script>
+      <!-- Card Deck Slideshow: What can it do? -->
+      <!-- Card Deck Slideshow: What can it do? -->
+      <!-- Card Deck Slideshow: What can it do? -->
+
+      <hr style="background-color: #383838; width: 50%; border: none; height: 1px;">
+
+
+      <!-- Specs Section -->
+       <!-- Specs Section -->
+        <!-- Specs Section -->
+      <div class="specs-section">
+        <h2 class="specs-title">Specifications</h2>
+
+        <table class="specs-table">
+          <tr>
+            <td class="specs-label">Height</td>
+            <td class="specs-value">5’9”</td>
+          </tr>
+          <tr>
+            <td class="specs-label">Weight</td>
+            <td class="specs-value">~60 kg</td>
+          </tr>
+          <tr>
+            <td class="specs-label">Payload Capacity</td>
+            <td class="specs-value">20 kg</td>
+          </tr>
+          <tr>
+            <td class="specs-label">Expected Runtime</td>
+            <td class="specs-value">5+ hours</td>
+          </tr>
+          <tr>
+            <td class="specs-label">Degrees of Freedom</td>
+            <td class="specs-value">38</td>
+          </tr>
+        </table>
+        <p style="color: #828282; text-align: left; line-height: 2.5rem; margin-top: 50px;">Target specifications for the current generation. These numbers improve with every prototype cycle as strength, efficiency, and control systems evolve.</p>
+      </div>
+      <!-- Specs Section -->
+       <!-- Specs Section -->
+        <!-- Specs Section -->
+
+
+
+
+      <hr style="background-color: #383838; width: 50%; border: none; height: 1px;">
+
+
+
+
+
+      <!-- Built In-House Section -->
+       <!-- Built In-House Section -->
+        <!-- Built In-House Section -->
+      <div class="builtInHouse_div">
+          <h2>Built In-house</h2>
+          <p style="color: #828282; text-align: left; line-height: 2.5rem; margin-top: 50px;">Every major part of Vanar Generation 1 is designed and built by us: actuators,
+            manipulators, structure, and the core software stack. This keeps the system tightly integrated and lets us iterate quickly as we learn from each prototype.
+            Instead of assembling off-the-shelf parts, we engineer components specifically for our humanoid platform, so performance, reliability, and cost improve with every generation.
+            It also means collaborators and engineers work directly with the real system, not a collection of black-box modules.</p>
+
+            <br>
+
+            <div class="actuators-section-module">
+              <div class="actuators-section-container">
+                  <div class="actuators-section-wrapper">
+                      <!-- Left Column: Title -->
+                      <div class="actuators-title-column">
+                          <p class="actuators-main-title">Actuators</p>
+                      </div>
+
+                      <!-- Right Column: Description and Images -->
+                      <div class="actuators-content-column">
+                          <div class="actuators-description">
+                              <p>We design and build our actuators from scratch, tuned for the specific demands of Vanar's movement, from high-speed joints to high-strength load-bearing ones. This gives us direct control over torque, response, efficiency, and cost, instead of adapting our designs around off-the-shelf motors. Every actuator is built to match the dynamics of the joint it drives, allowing tighter integration with our control systems and faster iteration across generations.</p>
+                              
+                              <p>To validate real-world strength, we tested one of our actuators by attempting to pull an SUV. The actuator held and pulled, but the wall attachment failed before the actuator did, demonstrating the level of force these systems are designed to handle. <a href="https://x.com/ironwagh/status/1916622689537867814?s=20" class="buildlog-link" target="_blank" rel="noopener noreferrer">https://x.com/ironwagh/status/1916622689537867814?s=20</a></p>
+                          </div>
+
+                          <!-- Images Grid -->
+                          <div class="actuators-images-grid">
+                              <div class="actuators-image-container">
+                                  <img src="images/Renders/WebP/350NmActuator.webp">
+                              </div>
+                              <div class="actuators-image-container">
+                                  <img src="images/Renders/WebP/ArmActuator.webp">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <br>
+
+              <div class="actuators-section-container">
+                  <div class="actuators-section-wrapper">
+                      <!-- Left Column: Title -->
+                      <div class="actuators-title-column">
+                          <p class="actuators-main-title">Manipulators</p>
+                      </div>
+
+                      <!-- Right Column: Description and Images -->
+                      <div class="actuators-content-column">
+                          <div class="actuators-description">
+                              <p>We continuously design, test, and refine our manipulators to balance strength, adaptability, and simplicity.
+                                Each finger is built with an under-actuated tendon-based mechanism that can handle roughly 5–7 kg of load, allowing the hand to naturally
+                                conform to objects of different shapes while maintaining a strong grip. When combined across four fingers, this results in a manipulator
+                                capable of handling significant weight for its size.</p>
+                                
+                                <p>These designs are still evolving, and every iteration improves strength, control, and reliability.
+                                What exists today is only the starting point for much more capable hands in the coming generations.</p>
+                          </div>
+
+                          <!-- Images Grid -->
+                          <div class="actuators-images-grid">
+                              <div class="actuators-image-container">
+                                  <img src="images/Renders/WebP/Manipulator.webp">
+                              </div>
+                              <div class="actuators-image-container">
+                                  <img src="images/Renders/WebP/ManipulatorSide.webp">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <br>
+
+              <div class="actuators-section-container">
+                  <div class="actuators-section-wrapper">
+                      <!-- Left Column: Title -->
+                      <div class="actuators-title-column">
+                          <p class="actuators-main-title">Structure</p>
+                      </div>
+
+                      <!-- Right Column: Description and Images -->
+                      <div class="actuators-content-column">
+                          <div class="actuators-description">
+                              <p>We constantly experiment with different materials, geometries, and structural combinations to shape a body that is both strong and flexible.
+                                Every part of the frame is designed with real-world deployment in mind, not just lab demonstrations. That means focusing on durability, serviceability,
+                                and forms that can withstand continuous use.</p>
+                                
+                                <p>Our structural designs evolve with each prototype, as we test new configurations and manufacturing approaches.
+                                  The goal is to develop a physique that is lightweight, resilient, and practical to build at scale while maintaining the strength required for real tasks.</p></p>
+                          </div>
+
+                          <!-- Images Grid -->
+                          <div class="actuators-images-grid">
+                              <div class="actuators-image-container">
+                                  <img src="images/Renders/WebP/HumanoidMain.webp">
+                              </div>
+                              <div class="actuators-image-container">
+                                  <img src="images/Renders/WebP/HumanoidBack.webp">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <!-- Built In-House Section -->
+         <!-- Built In-House Section -->
+          <!-- Built In-House Section -->
+
+
+
+
+      <hr style="background-color: #383838; width: 50%; border: none; height: 1px;">
+
+
+
+
+
+      <!-- Software & Control Section -->
+       <!-- Software & Control Section -->
+        <!-- Software & Control Section -->
+      <div class="softwareAndControl_div">
+        <h2>Software & Control</h2>
+        <p>We develop and train our own control models in-house, with the goal of making our robots move and react as naturally as possible. Instead of depending on a large number of external sensors or complex vision peripherals, we focus on combining intelligent software with well-designed mechanics, closer to how humans rely on their own body and perception.</p>
+          <p>Our approach is to let the software learn how to control the hardware efficiently, reducing system complexity while improving adaptability. As the mechanical design evolves, the control models evolve with it, forming a tightly integrated system that becomes more capable and human-like with every training cycle.</p>
+
+          <img src="images/Renders/File173.png" width="100%" style="margin-top: 40px;">
+      </div>
+      <!-- Software & Control Section -->
+       <!-- Software & Control Section -->
+        <!-- Software & Control Section -->
+
+
+
+
+      <hr style="background-color: #383838; width: 50%; border: none; height: 1px;">
+
+
+
+
+
+      <!-- BuildLog Section -->
+       <!-- BuildLog Section -->
+        <!-- BuildLog Section -->
+         <!-- BuildLog Section -->
+        <div class="buildlog-section-module">
+          <div class="buildlog-container">
+              <!-- Header -->
+              <div class="buildlog-header">
+                  <h2 class="buildlog-title">Build Log</h2>
+                  <p class="buildlog-intro">Our progress is documented, step by step. The build log is a live record of our milestones, experiments, successes, and failures as we develop each generation of Vanar.</p>
+              </div>
+
+              <!-- Timeline -->
+              <div class="buildlog-timeline">
+                  <!-- Entry 1 -->
+                  <div class="buildlog-entry">
+                      <div class="buildlog-date"><p>Oct 2024</p></div>
+                      <div class="buildlog-content">
+                          <p class="buildlog-milestone-title">Foundation</p>
+                          <p class="buildlog-description">
+                              Laid the foundation of Vanar Robots. Initial designs and core concepts were finalized to set the stage for development. 
+                              <a href="https://x.com/ironwagh/status/1845364485587898708?s=20" class="buildlog-link" target="_blank" rel="noopener noreferrer">https://x.com/ironwagh/status/1845364485587898708?s=20</a>
+                          </p>
+                      </div>
+                  </div>
+
+                  <!-- Entry 2 -->
+                  <div class="buildlog-entry">
+                      <div class="buildlog-date"><p>Apr 2025</p></div>
+                      <div class="buildlog-content">
+                          <p class="buildlog-milestone-title">Hardware Tests & Improvements</p>
+                          <p class="buildlog-description">
+                              Conducted extensive hardware tests and implemented key improvements, enhancing hardware performance and overall stability. 
+                              <a href="https://x.com/vanar_robots/status/1921681487469981780?s=20" class="buildlog-link" target="_blank" rel="noopener noreferrer">https://x.com/vanar_robots/status/1921681487469981780?s=20</a>
+                          </p>
+                      </div>
+                  </div>
+
+                  <!-- Entry 3 -->
+                  <div class="buildlog-entry">
+                      <div class="buildlog-date"><p>Sep 2025</p></div>
+                      <div class="buildlog-content">
+                          <p class="buildlog-milestone-title">Initial Locomotion</p>
+                          <p class="buildlog-description">
+                              Achieved initial locomotion, successfully testing basic walking capabilities on Vanar Generation 1 Prototype. 
+                              <a href="https://x.com/ironwagh/status/1971205893908988319?s=20" class="buildlog-link" target="_blank" rel="noopener noreferrer">https://x.com/ironwagh/status/1971205893908988319?s=20</a>
+                          </p>
+                      </div>
+                  </div>
+
+                  <!-- Entry 4 -->
+                  <div class="buildlog-entry">
+                      <div class="buildlog-date"><p>Feb 2026</p></div>
+                      <div class="buildlog-content">
+                          <p class="buildlog-milestone-title">Manipulators & Training</p>
+                          <p class="buildlog-description">
+                              Developing and refining manipulators for enhanced dexterity while training models to interact with, map, and understand the environment for complex task execution. 
+                          </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- BuildLog Section -->
+       <!-- BuildLog Section -->
+        <!-- BuildLog Section -->
+
+
+
+
+        <div class="SeventyPercent_div">
+        <div class="hero-media1">
+            <img src="images/Renders/WebP/File178.webp" width="100%">
+        </div>
+      </div>
+
+
+
+
+
+      <!-- Collab & Beta -->
+      <!-- Collab & Beta -->
+      <!-- Collab & Beta -->
+       <div class="CollabBeta_maindiv">
+        <div class="CollabBeta_div">
+            <br><br><br>
+            <h2 style="color: black;">Collaborate with us</h2>
+            <p>We are building humanoid robots from the ground up and are always looking to work with engineers, researchers, manufacturers, and partners who want to
+                push the boundaries of robotics. If you are interested in contributing, experimenting, or building something together, we would love to connect.
+                <a href="contact.html" class="buildlog-link" target="_blank" rel="noopener noreferrer">Write to us ></a></p>
+                
+        </div>
+
+        <div class="CollabBeta_div">
+            <h2 style="color: black;">Beta Program</h2>
+            <p>For industries, factories, and organizations seeking early access to our Vanar Generation 1. Deploy in real environments, evaluate performance in your workflows,
+                and work directly with our team as we refine the system. Expected late 2026–early 2027, starting at ₹20,000+ per month per unit.
+            <a href="interest.html" class="buildlog-link" target="_blank" rel="noopener noreferrer">Join the Beta Program ></a></p>
+                <br><br><br>
+        </div>
+      </div>
+      <!-- Collab & Beta -->
+      <!-- Collab & Beta -->
+      <!-- Collab & Beta -->
+
+
+
+
+
+    </center>
+</center>
+
+<footer class="journal-footer">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <div class="footer-logo"><img src="images/BlackLogo1.png" width="120px"></div>
+      <!--<p class="footer-tag">
+        Humanoid systems engineered for real-world deployment.
+      </p>-->
     </div>
 
-    <script>
-      const hamburger = document.querySelector('.vr-navbar__hamburger');
-      const mobileMenu = document.querySelector('.vr-navbar__mobile-menu');
-      const navbar = document.querySelector('.vr-navbar');
-      
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        
-        // Add scrolled class to navbar when menu opens
-        if (mobileMenu.classList.contains('active')) {
-          navbar.classList.add('scrolled');
-        } else {
-          // Only remove if user hasn't scrolled
-          if (window.scrollY === 0) {
-            navbar.classList.remove('scrolled');
-          }
-        }
-      });
-      
-      // Close menu when clicking on a link
-      document.querySelectorAll('.vr-navbar__mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('active');
-          mobileMenu.classList.remove('active');
-          
-          // Remove scrolled class if at top of page
-          if (window.scrollY === 0) {
-            navbar.classList.remove('scrolled');
-          }
-        });
-      });
-      
-      // Close menu when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('.vr-navbar')) {
-          hamburger.classList.remove('active');
-          mobileMenu.classList.remove('active');
-          
-          // Remove scrolled class if at top of page
-          if (window.scrollY === 0) {
-            navbar.classList.remove('scrolled');
-          }
-        }
-      });
-      
-      // Handle scroll events (assuming you already have this)
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add('scrolled');
-        } else {
-          // Only remove if menu is not active
-          if (!mobileMenu.classList.contains('active')) {
-            navbar.classList.remove('scrolled');
-          }
-        }
-      });
-    </script>
-    <!-- Navbar -->
-    <!-- Navbar -->
-    <!-- Navbar -->
-
-    <!-- First Section -->
-    <section class="vr-section vr-hero vr-reveal">
-      <h1>
-        The Next Evolution of Labor.<br/>
-        <span>Vanar Generation 1.</span>
-      </h1>
-    </section>
-    <!-- First Section -->
-
-    <!-- Statement & Specs-->
-    <section class="vr-section vr-reveal vr-statement-section">
-      <p class="vr-statement">
-        Vanar Generation 1 is a general-purpose humanoid robot designed to operate in human environments.
-        It uses human-like movement to perform tasks in the same spaces people work.
-        Vanar is built for work that is repetitive, physically demanding, or unsustainable for humans over long periods.
-        It enables organizations to maintain continuity while people focus on oversight, judgment, and decision-making.
-        Vanar extends human capability by taking on work that should not rely on constant human effort.
-      </p>
-
-      <section class="vr-reveal vr-specs-vertical-section">
-        <div class="vr-specs-vertical">
-
-        <div class="vr-specs-right">
-            <div class="vr-specs-image"
-              style="background-image:url('images/Renders/WebP/File188.webp');">
-            </div>
-          </div>
-
-          <div class="vr-specs-left">
-            <div class="vr-spec-vertical">
-              <span>HEIGHT</span>
-              <h3>5′9″</h3>
-            </div>
-
-            <div class="vr-spec-vertical">
-              <span>PAYLOAD</span>
-              <h3>20 kg</h3>
-            </div>
-
-            <div class="vr-spec-vertical">
-              <span>EXPECTED RUNTIME</span>
-              <h3>5h+</h3>
-            </div>
-
-            <div class="vr-spec-vertical">
-              <span>DESIGNED FOR</span>
-              <h3>Physical Work</h3>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-    </section>
-    <!-- Statement & Specs-->
-
-    <!-- What could it do for you? -->
-    <section class="vr-section vr-reveal vr-jobs-section">
-      <div class="vr-jobs-header">
-        <h2>What could it do for you?</h2>
-        <p>Examples of work our early partners intend to automate with Vanar.
-Focused on tasks that demand consistency, endurance, and physical reliability.</p>
+    <div class="footer-right">
+      <div class="footer-column">
+        <div class="footer-label">Navigation</div>
+        <a href="index.html">Home</a>
+        <a href="indistinguishability.html">Vision</a>
+        <a href="interest.html">Join Beta</a>
+        <a href="contact.html">Contact us</a>
       </div>
 
-      <div class="vr-jobs-strip">
-        <div class="vr-job-card"></div>
-
-        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File155.webp')">
-          <h3>Material Handling</h3>
-        </div>
-
-        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File87.webp')">
-          <h3>Machine Tending</h3>
-        </div>
-
-        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File178.webp')">
-          <h3>Inspection & Patrol</h3>
-        </div>
-
-        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File179.webp')">
-          <h3>Site Cleaning</h3>
-        </div>
-
-        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File1.webp')">
-          <h3>Logistics Support</h3>
-        </div>
-
-        <div class="vr-job-card" style="background-image:url('images/Renders/WebP/File85.webp')">
-          <h3>Hazardous Operations</h3>
-        </div>
-
-        <div class="vr-job-card"></div>
+      <div class="footer-column">
+        <div class="footer-label">Social</div>
+        <a href="https://x.com/vanar_robots?s=20">X</a>
+        <a href="https://www.linkedin.com/company/vanar-robots/">LinkedIn</a>
+        <a href="https://www.instagram.com/vanar_robots?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==">Instagram</a>
+        <a href="https://www.youtube.com/@VanarRobots">YouTube</a>
       </div>
-    </section>
-    <!-- What could it do for you? -->
 
-    <!-- Learns like human -->
-    <section class="vr-section vr-reveal">
-      <div class="vr-core-section">
-
-        <div class="vr-core-header">
-          <h2>Learns like a human</h2>
-          <p>
-            Vanar learns new tasks through observation and demonstration, just like a human would. It improves over time by refining movements and decisions with real-world feedback.
-          </p>
-        </div>
-
-        <div class="vr-core-item">
-          <div class="vr-core-text">
-            <p>
-              Step 1
-            </p>
-            <h3>Show how the task is done</h3>
-          </div>
-          <div class="vr-core-image"
-              style="background-image:url('images/Renders/WebP/File181.webp');">
-          </div>
-        </div>
-
-        <div class="vr-core-item">
-          <div class="vr-core-text">
-            <p>
-              Step 2
-            </p>
-            <h3>Supervise & correct</h3>
-          </div>
-          <div class="vr-core-image"
-              style="background-image:url('images/Renders/WebP/File183.webp');">
-          </div>
-        </div>
-
-        <div class="vr-core-item">
-          <div class="vr-core-text">
-            <p>
-              Step 3
-            </p>
-            <h3>Vanar constantly improves itself</h3>
-          </div>
-          <div class="vr-core-image"
-              style="background-image:url('images/Renders/WebP/File177.webp');">
-          </div>
-        </div>
-
+      <div class="footer-column">
+        <div class="footer-label">Contact</div>
+        <a href="mailto:hello@vanarrobots.com">hello@vanarrobots.com</a>
       </div>
-    </section>
-    <!-- Learns like human -->
+    </div>
+  </div>
 
-    <!-- FAQ -->
-    <section class="faq-wrapper vr-reveal">
-      <div class="faq-container">
-            <h2 class="faq-title">FREQUENTLY<br>ASKED QUESTIONS</h2>
-            
-            <div class="faq-list">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        Why humanoids and not task specific robots?
-                    </button>
-                    <div class="faq-answer">
-                      Human environments are already designed around the human body. Humanoid robots can use existing tools, navigate human spaces, and adapt to changing tasks without requiring infrastructure redesign. This makes them far more flexible than task‑specific machines.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        Can it perform tasks at multiple locations?
-                    </button>
-                    <div class="faq-answer">
-                      Yes. Vanar can be deployed across multiple sites and managed centrally. Each unit operates independently while sharing performance data and updates to improve reliability and coordination.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        Does it need breaks or vacations?
-                    </button>
-                    <div class="faq-answer">
-                      Vanar does not require breaks, vacations, or shift changes. It is designed for continuous operation, with planned maintenance cycles to ensure long‑term performance and safety.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        Does it charge on it's own?
-                    </button>
-                    <div class="faq-answer">
-                      Yes. Vanar can autonomously return to its charging station when battery levels are low and resume work once sufficient charge is restored.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        What will humans do if Vanars take over?
-                    </button>
-                    <div class="faq-answer">
-                      Vanars are built to free humans from inhuman work, tasks that are harmful, physically exhausting, unsafe, or strip away dignity. Vanars work alongside humans, handling repetitive and demanding labor, while people focus on human-friendly tasks.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        Will it be difficult to teach a skill to Vanar?
-                    </button>
-                    <div class="faq-answer">
-                      No. Vanar learns through demonstration and guided supervision. Skills are taught by showing the task and correcting it over time, similar to training a human worker.
-                    </div>
-                </div>
-            </div>
-      </div>
-    </section>
-    <!-- FAQ -->
-
-    <!-- CTA -->
-    <section class="vr-section vr-cta">
-      <div class="vr-cta-inner">
-        <h2>Transform your workspace</h2>
-        <p class="vr-cta-meta">
-          STARTING RS. 20,000 / MONTH <span class="vr-cta-sep">·</span> BETA deployment In 2026-27
-        </p>
-        <a href="interest.html"><button>Join the BETA list</button></a>
-      </div>
-    </section>
-    <!-- CTA -->
-
-    <!-- Footer -->
-    <footer class="vr-footer vr-footer-split">
-      <div class="vr-footer-left">
-        2026 © Vanar Robots Private Limited · Vanar Generation 1
-      </div>
-      <div class="vr-footer-right">
-        <img src="images/Renders/WebP/India.webp" alt="Made in India">
-      </div>
-    </footer>
-    <!-- Footer -->
-
-    <script>
-      const vrReveals = document.querySelectorAll('.vr-reveal');
-
-      const vrObserver = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('vr-active');
-            }
-          });
-        },
-        { threshold: 0.15 }
-      );
-
-      vrReveals.forEach(section => vrObserver.observe(section));
-    </script>
-    <script>
-      const slides = document.querySelectorAll('.vr-slide');
-      let currentSlide = 0;
-
-      setInterval(() => {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-      }, 4000);
-    </script>
-    <script>
-    const jobsStrip = document.querySelector('.vr-jobs-strip');
-
-    let scrollAmount = 0;
-    let scrollDirection = 1;
-
-    setInterval(() => {
-      const maxScroll =
-        jobsStrip.scrollWidth - jobsStrip.clientWidth;
-
-      scrollAmount += scrollDirection * 420;
-
-      if (scrollAmount >= maxScroll || scrollAmount <= 0) {
-        scrollDirection *= -1;
-      }
-
-      jobsStrip.scrollTo({
-        left: scrollAmount,
-        behavior: 'smooth'
-      });
-    }, 3000);
-    </script>
-    <script>
-
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 40) {
-        navbar.classList.add('scrolled');
-      } else {
-        navbar.classList.remove('scrolled');
-      }
-    });
-    </script>
-    <script>
-            const faqQuestions = document.querySelectorAll('.faq-question');
-
-            faqQuestions.forEach(question => {
-                question.addEventListener('click', () => {
-                    const isActive = question.classList.contains('active');
-                    
-                    // Close all other answers
-                    faqQuestions.forEach(q => {
-                        q.classList.remove('active');
-                        q.nextElementSibling.classList.remove('active');
-                    });
-
-                    // Toggle current answer
-                    if (!isActive) {
-                        question.classList.add('active');
-                        question.nextElementSibling.classList.add('active');
-                    }
-                });
-            });
-    </script>
+  <div class="footer-bottom">
+    <span>© 2026 Vanar Robots Private Limited</span>
+    <div class="footer-country">
+      <img src="images/India.png" width="30px">
+    </div>
+  </div>
+</footer>
   </body>
 </html>
