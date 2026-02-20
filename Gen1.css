@@ -220,6 +220,7 @@ body {
         margin-bottom: 20px;
         color: var(--fg);
         text-align: left;
+        margin-top: 150px;
         }
 
         .page-title em {
@@ -241,6 +242,7 @@ body {
                 margin-bottom: 20px;
                 color: var(--fg);
                 text-align: left;
+                margin-top: 200px;
             }
         }
 
@@ -256,6 +258,7 @@ body {
                 margin-bottom: 20px;
                 color: var(--fg);
                 text-align: left;
+                margin-top: 200px;
             }
         }
 
@@ -1064,11 +1067,12 @@ body {
         }
 
         .buildlog-section-module {
+            margin-top: 100px;
+            margin-bottom: 50px;
             background-color: #000;
             color: #a0a0a0;
             font-family: Helvetica, Arial, sans-serif;
             line-height: 1.7;
-            padding: 80px 20px;
         }
 
         .buildlog-container {
@@ -1161,7 +1165,7 @@ body {
         /* Tablet styles */
         @media (max-width: 1024px) {
             .buildlog-section-module {
-                padding: 60px 20px;
+                margin-bottom: 100px;
             }
 
             .buildlog-entry {
@@ -1198,7 +1202,7 @@ body {
         /* Mobile styles */
         @media (max-width: 768px) {
             .buildlog-section-module {
-                padding: 50px 16px;
+                margin-bottom: 100px;
             }
 
             .buildlog-header {
