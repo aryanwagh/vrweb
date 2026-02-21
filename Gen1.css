@@ -873,7 +873,6 @@ body {
         @media (max-width: 1024px) {
             .builtInHouse_div {
                 width: 70%;
-                margin: 120px auto;
             }
 
             .builtInHouse_div h2 {
@@ -951,7 +950,7 @@ body {
 
             .actuators-images-grid {
                 display: grid;
-            grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(2, 1fr);
                 gap: 20px;
                 margin-top: 10px;
             }
@@ -986,7 +985,6 @@ body {
         @media (max-width: 768px) {
             .builtInHouse_div {
                 width: 90%;
-                margin: 60px auto;
             }
         }
 
@@ -994,7 +992,6 @@ body {
         @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
             .builtInHouse_div {
                 width: 70%;
-                margin: 120px auto;
             }
         }
 
@@ -1002,7 +999,6 @@ body {
         @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
             .builtInHouse_div {
                 width: 60%;
-                margin: 120px auto;
             }
         }
         /* ===== Built In House Section ===== */
