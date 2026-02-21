@@ -1566,10 +1566,10 @@ body {
 
 
 
-/* Footer */
-/* Footer */
-/* Footer */
-/* =====================
+    /* Footer */
+    /* Footer */
+    /* Footer */
+    /* =====================
        JOURNAL FOOTER
     ===================== */
     .journal-footer {
@@ -1590,14 +1590,12 @@ body {
       align-items: start;
     }
 
-    /* Left — logo */
     .footer-logo img {
       display: block;
       width: 100px;
       opacity: 0.85;
     }
 
-    /* Right — columns */
     .footer-right {
       display: flex;
       gap: 72px;
@@ -1627,7 +1625,6 @@ body {
 
     .footer-column a:hover { color: #111; }
 
-    /* Bottom bar */
     .footer-bottom {
       width: 62%;
       max-width: 1100px;
@@ -1670,12 +1667,10 @@ body {
       .footer-bottom {
         width: 86%;
       }
-
       .footer-inner {
         grid-template-columns: 1fr;
         gap: 44px;
       }
-
       .footer-right {
         display: grid;
         grid-template-columns: repeat(3, auto);
@@ -1686,43 +1681,110 @@ body {
 
     /* =====================
        MOBILE (≤767px)
+       Standard phones 360–430px wide
+       Handles 16:9, 18:9, 20:9
     ===================== */
     @media (max-width: 767px) {
+      .journal-footer {
+        padding: 52px 0 0 0;
+      }
       .footer-inner,
       .footer-bottom {
         width: 88%;
       }
-
       .footer-inner {
         grid-template-columns: 1fr;
         gap: 36px;
       }
-
       .footer-right {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 36px 28px;
+        gap: 32px 24px;
       }
-
       .footer-bottom {
         margin-top: 40px;
+        padding: 18px 0;
       }
     }
 
     /* =====================
-       SMALL MOBILE (≤420px)
+       SMALL MOBILE (≤390px)
+       iPhone SE 2/3, Galaxy A series,
+       18:9 and 20:9 narrower devices
     ===================== */
-    @media (max-width: 420px) {
+    @media (max-width: 390px) {
+      .journal-footer {
+        padding: 44px 0 0 0;
+      }
       .footer-inner,
       .footer-bottom {
         width: 90%;
       }
-
       .footer-right {
         grid-template-columns: 1fr 1fr;
-        gap: 28px 20px;
+        gap: 28px 16px;
+      }
+      .footer-logo img {
+        width: 88px;
+      }
+      .footer-column a {
+        font-size: 12px;
+      }
+      .footer-label {
+        font-size: 9px;
+        letter-spacing: 2px;
+      }
+      .footer-bottom {
+        margin-top: 32px;
+        padding: 16px 0;
+      }
+      .footer-copy {
+        font-size: 10px;
       }
     }
-/* Footer */
-/* Footer */
-/* Footer */
+
+    /* =====================
+       VERY SMALL MOBILE (≤320px)
+       iPhone SE 1st gen, Galaxy S5,
+       older 18:9 budget phones
+    ===================== */
+    @media (max-width: 320px) {
+      .journal-footer {
+        padding: 36px 0 0 0;
+      }
+      .footer-inner,
+      .footer-bottom {
+        width: 92%;
+      }
+      .footer-right {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px 12px;
+      }
+      .footer-logo img {
+        width: 80px;
+      }
+      .footer-column {
+        gap: 8px;
+      }
+      .footer-column a {
+        font-size: 11px;
+      }
+      .footer-label {
+        font-size: 9px;
+        letter-spacing: 1.5px;
+        margin-bottom: 4px;
+      }
+      .footer-bottom {
+        margin-top: 28px;
+        padding: 14px 0;
+      }
+      .footer-copy {
+        font-size: 10px;
+      }
+      .footer-country img {
+        height: 13px;
+      }
+    }
+    /* Footer */
+    /* Footer */
+    /* Footer */
