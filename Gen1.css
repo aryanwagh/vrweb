@@ -1590,12 +1590,6 @@ body {
       align-items: start;
     }
 
-    .footer-logo img {
-      display: block;
-      width: 100px;
-      opacity: 0.85;
-    }
-
     .footer-right {
       display: flex;
       gap: 72px;
@@ -1640,13 +1634,6 @@ body {
       font-size: 11px;
       color: rgba(17,17,17,0.38);
       letter-spacing: 0.3px;
-    }
-
-    .footer-country img {
-      display: block;
-      height: 16px;
-      width: auto;
-      opacity: 0.8;
     }
 
     /* =====================
