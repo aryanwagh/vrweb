@@ -535,172 +535,199 @@ body {
       /* ===== Slideshow ===== */
       /* ===== Slideshow ===== */
       /* ===== Slideshow ===== */
-        .slideshow-container {
-            margin-top: 100px;
-            margin-bottom: 100px;
-            position: relative;
-            width: 50%;
-            min-width: 320px;
+        .specs-title {
+        font-size: clamp(20px, 2.5vw, 28px);
+        font-weight: 600;
+        letter-spacing: -0.3px;
         }
 
+        /* =============================================
+        SLIDESHOW CONTAINER
+        Desktop  : 50% width, 16:9
+        Tab H    : 70% width, 4:3
+        Tab V    : 85% width, 3:4
+        Mobile   : 100% width, 3:4
+        ============================================= */
+        .slideshow-container {
+        margin-top: 100px;
+        margin-bottom: 100px;
+        position: relative;
+        /* Desktop default */
+        }
+
+        .slideshow-intro {
+        color: #828282;
+        text-align: left;
+        line-height: 2.5rem;
+        margin-top: 50px;
+        }
+
+        /* Card stack */
         .card-stack {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16/9;
-            perspective: 1000px;
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 9; /* Desktop */
+        perspective: 1000px;
+        margin-top: 32px;
         }
 
         .card {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 24px;
-            overflow: hidden;
-            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
-
-            will-change: transform, opacity;
-            backface-visibility: hidden;
-        }
-
-        .card img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.18);
+        will-change: transform, opacity;
+        backface-visibility: hidden;
+        transform-origin: center center;
         }
 
         .card-content {
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, #4a5568 0%, #2d3748 100%);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
+        position: absolute;
+        inset: 0;
         }
 
-        .card-icon {
-            font-size: 4rem;
-            margin-bottom: 1rem;
+        .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
         }
 
-        .card-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-        }
-
-        /* Card stacking positions */
-        .card {
-            transform-origin: center center;
-        }
-
+        /* Stack positions */
         .card.active {
-            z-index: 5;
-            transform: translateX(0) translateY(0) scale(1) rotateY(0deg);
+        z-index: 5;
+        transform: translateX(0) translateY(0) scale(1) rotateY(0deg);
         }
-
         .card.next-1 {
-            z-index: 4;
-            transform: translateX(5%) translateY(2%) scale(0.95) rotateY(-2deg);
+        z-index: 4;
+        transform: translateX(5%) translateY(2%) scale(0.95) rotateY(-2deg);
         }
-
         .card.next-2 {
-            z-index: 3;
-            transform: translateX(10%) translateY(4%) scale(0.9) rotateY(-4deg);
+        z-index: 3;
+        transform: translateX(10%) translateY(4%) scale(0.9) rotateY(-4deg);
         }
-
         .card.hidden {
-            z-index: 1;
-            transform: translateX(15%) translateY(6%) scale(0.85) rotateY(-6deg);
-            pointer-events: none;
+        z-index: 1;
+        transform: translateX(15%) translateY(6%) scale(0.85) rotateY(-6deg);
+        pointer-events: none;
         }
-
 
         /* Controls */
         .controls {
-            position: absolute;
-            bottom: 30px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 30px;
-            z-index: 10;
+        position: absolute;
+        bottom: 24px;
+        left: 0; right: 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 24px;
+        z-index: 10;
         }
 
         .category-label {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            padding: 12px 28px;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 500;
-            transition: all 0.3s ease;
+        background: rgba(255,255,255,0.12);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(255,255,255,0.28);
+        color: white;
+        padding: 10px 22px;
+        border-radius: 50px;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        transition: all 0.3s ease;
         }
 
         .nav-buttons {
-            display: flex;
-            gap: 10px;
+        display: flex;
+        gap: 8px;
         }
 
         .nav-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1.5rem;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.12);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1.5px solid rgba(255,255,255,0.28);
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.25s ease;
+        font-size: 18px;
+        line-height: 1;
         }
 
         .nav-btn:hover {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: scale(1.05);
+        background: rgba(255,255,255,0.22);
+        border-color: rgba(255,255,255,0.5);
+        transform: scale(1.06);
+        }
+        .nav-btn:active { transform: scale(0.95); }
+
+
+        /* =============================================
+        TABLET HORIZONTAL (992px – 1199px)
+        Width: 70%, Aspect: 4:3
+        ============================================= */
+        @media (max-width: 1199px) and (min-width: 992px) {
+        .card-stack {
+            aspect-ratio: 4 / 3;
+        }
         }
 
-        .nav-btn:active {
-            transform: scale(0.95);
+        /* =============================================
+        TABLET VERTICAL (768px – 991px)
+        Width: 85%, Aspect: 3:4
+        ============================================= */
+        @media (max-width: 991px) and (min-width: 768px) {
+        .card-stack {
+            aspect-ratio: 4 / 4;
+        }
+        .controls {
+            bottom: 20px;
+            padding: 0 20px;
+        }
         }
 
-        /* -------------------- */
-        /* Tablet: 4:3, 20% zoom */
-        /* -------------------- */
-        @media (min-width: 768px) {
-            .slideshow-container {
-                margin-top: 100px;
-                margin-bottom: 100px;
-                position: relative;
-                width: 50%;
-                min-width: 320px;
-            }
+        /* =============================================
+        MOBILE (≤767px)
+        Width: 100%, Aspect: 3:4
+        ============================================= */
+        @media (max-width: 767px) {
+        .slideshow-container {
+            margin-top: 60px;
+            margin-bottom: 60px;
         }
-
-        /* -------------------- */
-        /* Mob */
-        /* -------------------- */
-        @media (max-width: 768px) {
-            .slideshow-container {
-                margin-top: 100px;
-                margin-bottom: 100px;
-                position: relative;
-                width: 90%;
-                min-width: 320px;
-            }
+        .card-stack {
+            aspect-ratio: 4 / 4;
+        }
+        .controls {
+            bottom: 18px;
+            padding: 0 18px;
+        }
+        .category-label {
+            font-size: 12px;
+            padding: 8px 16px;
+        }
+        .nav-btn {
+            width: 38px;
+            height: 38px;
+            font-size: 16px;
+        }
         }
         /* ===== Slideshow ===== */
         /* ===== Slideshow ===== */
         /* ===== Slideshow ===== */
+
+
+
 
 
 
