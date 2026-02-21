@@ -87,152 +87,102 @@
       <!-- Card Deck Slideshow: What can it do? -->
       <!-- Card Deck Slideshow: What can it do? -->
       <!-- Card Deck Slideshow: What can it do? -->
-      <div class="slideshow-container">
-        <h2 class="specs-title">Phase One: Structured Industrial Tasks</h2>
-        <p style="color: #828282; text-align: left; line-height: 2.5rem; margin-top: 50px;">
-            Early beta deployment will remain sharply focused on specific categories of work. This approach allows the system to mature in real-world
-            conditions while delivering reliable, measurable value to early partners. Initial use cases will center around tasks that demand consistency, endurance,
-            and physical reliability, environments where repeatable motion, long operating hours, and predictable workflows are essential.
-            Examples of work our early partners intend to automate with Vanar Gen 1:</p>
-        <br>
+        <div class="FiftyPercent_div">
+        <div class="slideshow-container">
+            <h2 class="specs-title">Phase One: Structured Industrial Tasks</h2>
+            <p class="slideshow-intro">
+                Early beta deployment will remain sharply focused on specific categories of work. This approach allows the system to mature in real-world
+                conditions while delivering reliable, measurable value to early partners. Initial use cases will center around tasks that demand consistency, endurance,
+                and physical reliability, environments where repeatable motion, long operating hours, and predictable workflows are essential.
+                Examples of work our early partners intend to automate with Vanar Gen 1:
+            </p>
+            <br>
 
-          <div class="card-stack" id="cardStack">
-              <div class="card">
-                  <div class="card-content">
-                      <img src="images/Renders/WebP/File155.webp" width="100%">
-                  </div>
-              </div>
-              <div class="card">
-                  <div class="card-content">
-                      <img src="images/Renders/WebP/File87.webp" width="100%">
-                  </div>
-              </div>
-              <div class="card">
-                  <div class="card-content">
-                      <img src="images/Renders/WebP/File177.webp" width="100%">
-                  </div>
-              </div>
-              <div class="card">
-                  <div class="card-content">
-                      <img src="images/Renders/WebP/File179.webp" width="100%">
-                  </div>
-              </div>
-              <div class="card">
-                  <div class="card-content">
-                      <img src="images/Renders/WebP/File1.webp" width="100%">
-                  </div>
-              </div>
-              <div class="card">
-                  <div class="card-content">
-                      <img src="images/Renders/WebP/File85.webp" width="100%">
-                  </div>
-              </div>
-          </div>
+            <div class="card-stack" id="cardStack">
+                <div class="card"><div class="card-content"><img src="images/Renders/WebP/File155.webp"></div></div>
+                <div class="card"><div class="card-content"><img src="images/Renders/WebP/File87.webp"></div></div>
+                <div class="card"><div class="card-content"><img src="images/Renders/WebP/File177.webp"></div></div>
+                <div class="card"><div class="card-content"><img src="images/Renders/WebP/File179.webp"></div></div>
+                <div class="card"><div class="card-content"><img src="images/Renders/WebP/File1.webp"></div></div>
+                <div class="card"><div class="card-content"><img src="images/Renders/WebP/File85.webp"></div></div>
+            </div>
 
-          <div class="controls">
-              <div class="category-label" id="categoryLabel">Material Handling</div>
-              <div class="nav-buttons">
-                  <button class="nav-btn" id="prevBtn">←</button>
-                  <button class="nav-btn" id="nextBtn">→</button>
-              </div>
-          </div>
-      </div>
+            <div class="controls">
+                <div class="category-label" id="categoryLabel">Material Handling</div>
+                <div class="nav-buttons">
+                <button class="nav-btn" id="prevBtn">←</button>
+                <button class="nav-btn" id="nextBtn">→</button>
+                </div>
+            </div>
+            </div>
 
-      <script>
-          const cardStack = document.getElementById('cardStack');
-          const cards = Array.from(cardStack.children);
-          const categoryLabel = document.getElementById('categoryLabel');
-          const prevBtn = document.getElementById('prevBtn');
-          const nextBtn = document.getElementById('nextBtn');
-          
-          let cardOrder = [0, 1, 2, 3, 4, 5];
-          let isAnimating = false;
+            <script>
+            const cardStack = document.getElementById('cardStack');
+            const cards = Array.from(cardStack.children);
+            const categoryLabel = document.getElementById('categoryLabel');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
 
-          const categories = [
-              'Material Handling',
-              'Machine Tending',
-              'Inspection & Patrol',
-              'Site Cleaning',
-              'Logistics Support',
-              'Hazardous Operations'
-          ];
+            let cardOrder = [0, 1, 2, 3, 4, 5];
+            let isAnimating = false;
 
-          function updateCardPositions() {
-              cards.forEach((card, originalIndex) => {
-                  const position = cardOrder.indexOf(originalIndex);
-                  // Remove all classes
-                  card.classList.remove('active', 'next-1', 'next-2', 'hidden');
-                  if (position === 0) {
-                      card.classList.add('active');
-                  } else if (position === 1) {
-                      card.classList.add('next-1');
-                  } else if (position === 2) {
-                      card.classList.add('next-2');
-                  } else {
-                      card.classList.add('hidden');
-                  }
-              });
-              categoryLabel.textContent = categories[cardOrder[0]];
-          }
+            const categories = [
+                'Material Handling',
+                'Machine Tending',
+                'Inspection & Patrol',
+                'Site Cleaning',
+                'Logistics Support',
+                'Hazardous Operations'
+            ];
 
-          function nextCard() {
-              if (isAnimating) return;
-              isAnimating = true;
+            function updateCardPositions() {
+                cards.forEach((card, originalIndex) => {
+                const position = cardOrder.indexOf(originalIndex);
+                card.classList.remove('active', 'next-1', 'next-2', 'hidden');
+                if (position === 0)      card.classList.add('active');
+                else if (position === 1) card.classList.add('next-1');
+                else if (position === 2) card.classList.add('next-2');
+                else                     card.classList.add('hidden');
+                });
+                categoryLabel.textContent = categories[cardOrder[0]];
+            }
 
-              const movedCard = cardOrder.shift();
-              cardOrder.push(movedCard);
+            function nextCard() {
+                if (isAnimating) return;
+                isAnimating = true;
+                cardOrder.push(cardOrder.shift());
+                updateCardPositions();
+                setTimeout(() => { isAnimating = false; }, 600);
+            }
 
-              updateCardPositions(true);
+            function prevCard() {
+                if (isAnimating) return;
+                isAnimating = true;
+                cardOrder.unshift(cardOrder.pop());
+                updateCardPositions();
+                setTimeout(() => { isAnimating = false; }, 600);
+            }
 
-              setTimeout(() => {
-                  isAnimating = false;
-              }, 600);
-          }
+            nextBtn.addEventListener('click', nextCard);
+            prevBtn.addEventListener('click', prevCard);
 
-          function prevCard() {
-              if (isAnimating) return;
-              isAnimating = true;
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowRight') nextCard();
+                if (e.key === 'ArrowLeft')  prevCard();
+            });
 
-              const movedCard = cardOrder.pop();
-              cardOrder.unshift(movedCard);
+            let touchStartX = 0;
+            cardStack.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+            cardStack.addEventListener('touchend',   (e) => {
+                const diff = touchStartX - e.changedTouches[0].screenX;
+                if (diff > 50)  nextCard();
+                if (diff < -50) prevCard();
+            });
 
-              updateCardPositions(true);
-
-              setTimeout(() => {
-                  isAnimating = false;
-              }, 600);
-          }
-
-          nextBtn.addEventListener('click', nextCard);
-          prevBtn.addEventListener('click', prevCard);
-
-          // Keyboard navigation
-          document.addEventListener('keydown', (e) => {
-              if (e.key === 'ArrowRight') nextCard();
-              if (e.key === 'ArrowLeft') prevCard();
-          });
-
-          // Touch swipe support
-          let touchStartX = 0;
-          let touchEndX = 0;
-
-          cardStack.addEventListener('touchstart', (e) => {
-              touchStartX = e.changedTouches[0].screenX;
-          });
-
-          cardStack.addEventListener('touchend', (e) => {
-              touchEndX = e.changedTouches[0].screenX;
-              handleSwipe();
-          });
-
-          function handleSwipe() {
-              if (touchEndX < touchStartX - 50) nextCard();
-              if (touchEndX > touchStartX + 50) prevCard();
-          }
-
-          // Initialize
-          updateCardPositions();
-      </script>
+            updateCardPositions();
+            </script>
+        
+        </div>
       <!-- Card Deck Slideshow: What can it do? -->
       <!-- Card Deck Slideshow: What can it do? -->
       <!-- Card Deck Slideshow: What can it do? -->
@@ -243,33 +193,33 @@
       <!-- Specs Section -->
        <!-- Specs Section -->
         <!-- Specs Section -->
-      <div class="specs-section">
-        <h2 class="specs-title">Specifications</h2>
+            <div class="specs-section">
+                <h2 class="specs-title">Specifications</h2>
 
-        <table class="specs-table">
-          <tr>
-            <td class="specs-label">Height</td>
-            <td class="specs-value">5’9”</td>
-          </tr>
-          <tr>
-            <td class="specs-label">Weight</td>
-            <td class="specs-value">~60 kg</td>
-          </tr>
-          <tr>
-            <td class="specs-label">Payload Capacity</td>
-            <td class="specs-value">20 kg</td>
-          </tr>
-          <tr>
-            <td class="specs-label">Expected Runtime</td>
-            <td class="specs-value">5+ hours</td>
-          </tr>
-          <tr>
-            <td class="specs-label">Degrees of Freedom</td>
-            <td class="specs-value">38</td>
-          </tr>
-        </table>
-        <p style="color: #828282; text-align: left; line-height: 2.5rem; margin-top: 50px;">Target specifications for the current generation. These numbers improve with every prototype cycle as strength, efficiency, and control systems evolve.</p>
-      </div>
+                <table class="specs-table">
+                <tr>
+                    <td class="specs-label">Height</td>
+                    <td class="specs-value">5’9”</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Weight</td>
+                    <td class="specs-value">~60 kg</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Payload Capacity</td>
+                    <td class="specs-value">20 kg</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Expected Runtime</td>
+                    <td class="specs-value">5+ hours</td>
+                </tr>
+                <tr>
+                    <td class="specs-label">Degrees of Freedom</td>
+                    <td class="specs-value">38</td>
+                </tr>
+                </table>
+                <p style="color: #828282; text-align: left; line-height: 2.5rem; margin-top: 50px;">Target specifications for the current generation. These numbers improve with every prototype cycle as strength, efficiency, and control systems evolve.</p>
+            </div>
       <!-- Specs Section -->
        <!-- Specs Section -->
         <!-- Specs Section -->
