@@ -937,15 +937,18 @@ body {
 
             .actuators-main-title {
                 font-size: 1rem;
+                text-align: left;
             }
 
             .actuators-description {
                 font-size: 0.9375rem;
                 line-height: 1.7;
+                text-align: left;
             }
 
             .actuators-description p {
                 margin-bottom: 24px;
+                text-align: left;
             }
 
             .actuators-images-grid {
@@ -953,10 +956,12 @@ body {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 20px;
                 margin-top: 10px;
+                text-align: left;
             }
 
             .actuators-image-container {
                 padding: 15px;
+                text-align: left;
             }
         }
 
@@ -964,18 +969,22 @@ body {
         @media (max-width: 480px) {
             .builtInHouse_div h2 {
                 font-size: 1.625rem;
+                text-align: left;
             }
 
             .builtInHouse_div > p {
                 font-size: 0.9375rem;
+                text-align: left;
             }
 
             .actuators-main-title {
                 font-size: 0.9375rem;
+                text-align: left;
             }
 
             .actuators-description {
                 font-size: 0.875rem;
+                text-align: left;
             }
         }
 
@@ -985,6 +994,7 @@ body {
         @media (max-width: 768px) {
             .builtInHouse_div {
                 width: 90%;
+                text-align: left;
             }
         }
 
@@ -992,6 +1002,7 @@ body {
         @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
             .builtInHouse_div {
                 width: 70%;
+                text-align: left;
             }
         }
 
@@ -999,6 +1010,7 @@ body {
         @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
             .builtInHouse_div {
                 width: 60%;
+                text-align: left;
             }
         }
         /* ===== Built In House Section ===== */
@@ -1057,9 +1069,9 @@ body {
         /* ===== Build Log Section ===== */
         /* ===== Build Log Section ===== */
         .buildlog-section-module * {
-            margin: 0;
-            padding: 0;
+            margin-left: 0 auto;
             box-sizing: border-box;
+            text-align: left;
         }
 
         .buildlog-section-module {
@@ -1069,6 +1081,7 @@ body {
             color: #a0a0a0;
             font-family: Helvetica, Arial, sans-serif;
             line-height: 1.7;
+            text-align: left;
         }
 
         .buildlog-container {
@@ -1081,6 +1094,8 @@ body {
         @media (max-width: 768px) {
             .buildlog-container {
                 width: 90%;
+                margin: 0 auto;
+                text-align: left;
             }
         }
 
@@ -1088,6 +1103,8 @@ body {
         @media (min-width: 769px) and (max-width: 1024px) and (orientation: portrait) {
             .buildlog-container {
                 width: 70%;
+                margin: 0 auto;
+                text-align: left;
             }
         }
 
@@ -1095,22 +1112,27 @@ body {
         @media (min-width: 769px) and (max-width: 1024px) and (orientation: landscape) {
             .buildlog-container {
                 width: 60%;
+                margin: 0 auto;
+                text-align: left;
             }
         }
 
         .buildlog-header {
             margin-bottom: 40px;
+            text-align: left;
         }
 
         .buildlog-title {
             color: #fff;
             margin-bottom: 30px;
+            text-align: left;
         }
 
         .buildlog-intro {
             line-height: 2.5rem;
             color: #a0a0a0;
             margin-bottom: 0;
+            text-align: left;
         }
 
         .buildlog-timeline {
@@ -1118,6 +1140,7 @@ body {
             display: flex;
             flex-direction: column;
             gap: 60px;
+            text-align: left;
         }
 
         .buildlog-entry {
@@ -1125,52 +1148,61 @@ body {
             grid-template-columns: 200px 1fr;
             gap: 60px;
             align-items: start;
+            text-align: left;
         }
 
         .buildlog-date {
             color: #fff;
+            text-align: left;
         }
 
         .buildlog-content {
             display: flex;
             flex-direction: column;
             gap: 12px;
+            text-align: left;
         }
 
         .buildlog-milestone-title {
             color: #fff;
-            margin-bottom: 8px;
+            margin-bottom: 8px;text-align: left;
         }
 
         .buildlog-description {
             line-height: 2.5rem;
             color: #a0a0a0;
+            text-align: left;
         }
 
         .buildlog-link {
             color: #92b0d4;
             text-decoration: none;
             transition: color 0.2s ease;
+            text-align: left;
         }
 
         .buildlog-link:hover {
             color: #b8d0f0;
             text-decoration: underline;
+            text-align: left;
         }
 
         /* Tablet styles */
         @media (max-width: 1024px) {
             .buildlog-section-module {
                 margin-bottom: 100px;
+                text-align: left;
             }
 
             .buildlog-entry {
                 grid-template-columns: 180px 1fr;
                 gap: 40px;
+                text-align: left;
             }
 
             .buildlog-title {
                 font-size: 2.2rem;
+                text-align: left;
             }
 
             .buildlog-intro {
@@ -1199,45 +1231,54 @@ body {
         @media (max-width: 768px) {
             .buildlog-section-module {
                 margin-bottom: 100px;
+                text-align: left;
             }
 
             .buildlog-header {
                 margin-bottom: 30px;
+                text-align: left;
             }
 
             .buildlog-title {
                 font-size: 1.875rem;
                 margin-bottom: 24px;
+                text-align: left;
             }
 
             .buildlog-intro {
                 font-size: 1rem;
                 line-height: 1.7;
+                text-align: left;
             }
 
             .buildlog-timeline {
                 margin-top: 50px;
                 gap: 40px;
+                text-align: left;
             }
 
             .buildlog-entry {
                 grid-template-columns: 1fr;
                 gap: 12px;
+                text-align: left;
             }
 
             .buildlog-date {
                 font-size: 1rem;
                 padding-bottom: 4px;
+                text-align: left;
             }
 
             .buildlog-milestone-title {
                 font-size: 1.125rem;
                 margin-bottom: 6px;
+                text-align: left;
             }
 
             .buildlog-description {
                 font-size: 0.9375rem;
                 line-height: 1.7;
+                text-align: left;
             }
         }
 
@@ -1245,19 +1286,23 @@ body {
         @media (max-width: 480px) {
             .buildlog-section-module {
                 padding: 40px 16px;
+                text-align: left;
             }
 
             .buildlog-title {
                 font-size: 1.625rem;
+                text-align: left;
             }
 
             .buildlog-intro {
                 font-size: 0.9375rem;
+                text-align: left;
             }
 
             .buildlog-timeline {
                 margin-top: 40px;
                 gap: 36px;
+                text-align: left;
             }
         }
         /* ===== Build Log Section ===== */
