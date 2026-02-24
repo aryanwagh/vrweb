@@ -286,23 +286,33 @@
                       <!-- Right Column: Description and Images -->
                       <div class="actuators-content-column">
                           <div class="actuators-description">
-                              <p>
-                                We continuously design, test, and refine our manipulators to balance strength, adaptability, and simplicity.
-                                Each finger is built with a tendon-based mechanism capable of handling roughly 2–6 kg of load, allowing the hand to naturally
-                                conform to objects of different shapes while maintaining a secure grip. When combined across four fingers, this results in a manipulator
-                                capable of handling significant weight.
-                                </p>
-
                                 <p>
-                                The current version features true thumb opposition, the thumb can touch the tip of each finger.
-                                This capability is fundamental to dexterous manipulation. It enables precision grips (like holding a screw or tool),
-                                stable pinch grasps, and more human-like interaction with small or irregular objects.
-                                Without opposition, a hand can grasp; with opposition, it can manipulate.
+                                  We continuously design, test, and refine our manipulators to balance structural strength, adaptive grasping,
+                                  and cost-efficient deployment. Each finger is built on an underactuated, tendon-based architecture with a
+                                  theoretical torque capacity of approximately 8–9 kg per finger. For the prototype,
+                                  <a href="https://x.com/vanar_robots/status/2026032512448045458?s=20" class="buildlog-link" target="_blank" rel="noopener noreferrer">we demonstrated 5 kg</a>
+                                  as a safe working load to remain within the material limits of the current structure. When combined across
+                                  four fingers, this results in a manipulator capable of handling substantial payloads while maintaining mechanical simplicity.
                                 </p>
-
+                                
                                 <p>
-                                These designs are still evolving, and every iteration improves strength, control, and reliability.
-                                What exists today is only the starting point for much more capable hands in the coming generations.
+                                  The current version operates without dedicated tactile sensors. Instead, grip state is inferred through
+                                  intelligent control: analyzing motor current variations, positional noise, and load behavior in alignment
+                                  with the underactuated finger design. This enables adaptive gripping without complex sensing hardware, keeping system cost practical
+                                  while still delivering reliable performance in structured environments such as factories.
+                                </p>
+                                
+                                <p>
+                                  The hand features true thumb opposition: <a href="https://x.com/vanar_robots/status/2025194650030735695?s=20" class="buildlog-link" target="_blank" rel="noopener noreferrer">
+                                    the thumb can touch the tip of each finger</a>. This is fundamental to dexterous manipulation.
+                                  It enables precision grips (such as holding tools or fasteners), stable pinch grasps, and more human-like interaction with varied
+                                  object geometries. Without opposition, a hand can grasp; with opposition, it can manipulate.
+                                </p>
+                                
+                                <p>
+                                  We are actively exploring advanced sensing approaches for future versions. These developments aim to further improve precision,
+                                  strength and fine control in upcoming manipulator generations. What exists today is the beginning,
+                                  a foundation for increasingly capable and intelligent humanoid hands.
                                 </p>
                           </div>
 
