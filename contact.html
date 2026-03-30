@@ -3,525 +3,681 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="icon" type="image/gif" href="images/Renders/WebP/profile.webp" />
-<title>Contact - Vanar Robots</title>
+<title>Contact — Vanar Robots</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-body {
-  background-color: #f5f5f5;
-  color: #000000ff;
-  overflow-x: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  font-weight: 400;
-}
+  :root {
+    --black: #0a0a0a;
+    --dark: #111111;
+    --mid: #1a1a1a;
+    --border: rgba(255,255,255,0.08);
+    --white: #f0ede8;
+    --cream: #e8e4de;
+    --accent: #e4fffa;
+    --text-muted: rgba(240,237,232,0.45);
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+    --font-mono: 'Helvetica', monospace;
+  }
 
+  html { scroll-behavior: smooth; overflow-x: hidden; }
 
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
 
+  /* ===== NAVBAR ===== */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 52px;
+    background: rgba(0,0,0,0.35);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    z-index: 1000;
+    transition: background 0.3s ease;
+  }
 
+  .nav-inner {
+    max-width: 1200px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
+  .nav-center {
+    display: flex;
+    gap: 34px;
+    align-items: center;
+  }
 
+  .nav-center a {
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    transition: color .25s ease;
+    font-family: var(--font-mono);
+  }
 
-/* ===== FUTURISTIC NAVBAR ===== */
-    .vr-navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 24px 8vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
+  .nav-center a:hover { color: white; }
 
-      /* Glass effect */
-      background: rgba(255, 255, 255, 0);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      transition: background 0.4s ease, backdrop-filter 0.4s ease;
-    }
+  .nav-pill {
+    border: 1px solid rgba(255,255,255,.25);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: white;
+    font-family: var(--font-mono);
+    transition: all .25s ease;
+  }
 
-    .vr-navbar.scrolled {
-      background: rgba(255, 255, 255, 0.332);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-    }
+  .nav-pill:hover { background: white; color: black; }
 
-    .vr-navbar__logo {
-      display: flex;
-      align-items: center;
-    }
+  .nav-toggle {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 4px;
+    width: 28px; height: 28px;
+  }
 
-    .vr-navbar__logo img {
-      width: 110px;
-      display: block;
-      filter: none;
-    }
+  .nav-dot { width: 4px; height: 4px; background: #fff; border-radius: 50%; }
 
-    .vr-navbar__links {
-      display: flex;
-      gap: 40px;
-    }
-
-    .vr-navbar__links a {
-      text-decoration: none;
-      font-size: 13px;
-      letter-spacing: 2px;
-      color: rgba(79, 79, 79, 0.6);
-      text-transform: uppercase;
-      position: relative;
-      transition: opacity 0.25s ease;
-    }
-
-    .vr-navbar__links a:hover {
-      opacity: 1;
-      color: #000000;
-      transition: 1s;
-    }
-
-    .vr-navbar__cta {
-      padding: 10px 26px;
-      border-radius: 30px;
-      border: 1px solid #000000;
-      color: #000000;
-      font-size: 13px;
-      letter-spacing: 1px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .vr-navbar__cta:hover {
-      background: #000000;
-      color: #ffffff;
-    }
-
-    /* Hamburger Menu */
-    .vr-navbar__hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 10px;
-      z-index: 1001;
-      position: relative;
-      width: 40px;
-      height: 40px;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .vr-navbar__hamburger span {
-      width: 22px;
-      height: 2px;
-      background: rgba(0, 0, 0, 0.8);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: 2px;
-      display: block;
-    }
-
-    .vr-navbar__hamburger:hover span {
-      background: rgba(0, 0, 0, 1);
-    }
-
-    .vr-navbar__hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
-    }
-
-    .vr-navbar__hamburger.active span:nth-child(2) {
-      opacity: 0;
-      transform: translateX(10px);
-    }
-
-    .vr-navbar__hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    /* Mobile Dropdown */
-    .vr-navbar__mobile-menu {
-      display: none;
-      position: fixed;
-      top: 70px;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.332);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      padding: 20px 6vw;
+  @media (max-width: 900px) {
+    .nav-center {
+      position: absolute;
+      top: 52px; left: 0; right: 0;
+      background: #0a0a0a;
       flex-direction: column;
       gap: 20px;
-      z-index: 999;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      padding: 30px 0;
+      display: none;
+      border-bottom: 1px solid var(--border);
     }
-
-    .vr-navbar__mobile-menu.active {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .vr-navbar__mobile-menu a {
-      text-decoration: none;
-      font-size: 13px;
-      letter-spacing: 2px;
-      color: rgba(79, 79, 79, 0.8);
-      text-transform: uppercase;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      transition: color 0.25s ease;
-    }
-
-    .vr-navbar__mobile-menu a:hover {
-      color: #000000;
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      .vr-navbar {
-        padding: 18px 6vw;
-      }
-      
-      .vr-navbar__links {
-        display: none;
-      }
-
-      .vr-navbar__hamburger {
-        display: flex;
-      }
-
-      .vr-navbar__logo {
-        flex: 0 0 auto;
-      }
-
-      .vr-navbar__logo img {
-        width: 110px;
-      }
-
-      .vr-navbar__cta {
-        padding: 8px 18px;
-        font-size: 12px;
-        margin-left: auto;
-        margin-right: 12px;
-      }
-    }
-    /* ===== FUTURISTIC NAVBAR ===== */
-
-
-
-
-
-
-
-
-/* ===== CONTACT SECTION ===== */
-.contact-section {
-  min-height: 100vh;
-  display: flex;
-  align-items:center;
-  justify-content: center;
-  padding: 120px 8vw 80px;
-}
-
-.contact-container {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 100px;
-  max-width: 1000px;
-  width: 100%;
-}
-
-.contact-left {
-  flex: 1;
-  max-width: 600px;
-}
-
-.contact-left h1 {
-  font-size: 50px;
-  font-weight: 400;
-  line-height: 1.1;
-  margin-bottom: 32px;
-  color: #000;
-}
-
-.contact-left p {
-  font-size: 18px;
-  line-height: 1.6;
-  color: #333;
-  font-weight: 300;
-}
-
-.contact-right {
-  background: #fff;
-  padding: 48px;
-  border-radius: 16px;
-  box-shadow: 0 2px 20px rgba(0,0,0,0.06);
-  min-width: 400px;
-}
-
-.contact-item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-bottom: 24px;
-  color: #333;
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-
-.contact-item:last-child {
-  margin-bottom: 0;
-}
-
-.contact-item:hover {
-  color: #000;
-}
-
-.contact-item i {
-  font-size: 20px;
-  width: 24px;
-  color: #666;
-}
-
-.contact-item span {
-  font-size: 16px;
-  font-weight: 400;
-}
-
-/* ===== FOOTER ===== */
-.vr-footer {
-  background: #ffffffff;
-  color: #000000ff;
-  border-top: 1px solid rgba(0,0,0,0.1);
-  padding: 60px 8vw;
-  font-size: 0.85rem;
-}
-
-.vr-footer-split {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 24px;
-}
-
-.vr-footer-right img {
-  height: 22px;
-  width: auto;
-  opacity: 0.9;
-}
-
-/* ===== MOBILE RESPONSIVE ===== */
-@media (max-width: 1024px) {
-  .contact-container {
-    gap: 60px;
+    .nav-center.active { display: flex; }
+    .nav-toggle { display: flex; }
   }
-  
-  .contact-left h1 {
-    font-size: 56px;
-  }
-}
 
-@media (max-width: 768px) {
-  .vr-navbar {
-    padding: 18px 6vw;
+  /* ===== HERO / PAGE HEADER ===== */
+  .page-header {
+    padding-top: 52px;
+    position: relative;
+    overflow: hidden;
+    min-height: 48vh;
+    display: flex;
+    align-items: flex-end;
   }
-  
-  .vr-navbar__links {
-    display: none;
+
+  .page-header-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 60% 0%, rgba(30,69,75,0.35) 0%, transparent 70%);
+    z-index: 0;
   }
-  
-  .vr-navbar__logo img {
-    width: 90px;
-  }
-  
-  .vr-navbar__cta {
-    padding: 8px 18px;
-    font-size: 12px;
-  }
-  
-  .contact-section {
-    padding: 100px 6vw 60px;
-  }
-  
-  .contact-container {
-    flex-direction: column;
-    gap: 48px;
-  }
-  
-  .contact-left h1 {
-    font-size: 48px;
-  }
-  
-  .contact-left p {
-    font-size: 16px;
-  }
-  
-  .contact-right {
-    min-width: auto;
+
+  .page-header-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
     width: 100%;
-    padding: 36px;
+    margin: 0 auto;
+    padding: 64px 24px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
   }
-  
-  .vr-footer-split {
-    flex-direction: column;
-    gap: 12px;
+
+  .page-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-bottom: 16px;
   }
-  
-  .vr-footer {
-    text-align: center;
+
+  .page-title {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 10vw, 130px);
+    font-weight: 600;
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--white);
   }
-  
-  .vr-footer-right img {
-    height: 20px;
+
+  .page-header-right {
+    flex-shrink: 0;
+    padding-bottom: 8px;
+    max-width: 340px;
   }
-}
+
+  .page-header-desc {
+    font-family: var(--font-body);
+    font-size: clamp(13px, 1.1vw, 15px);
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.9;
+  }
+
+  @media (max-width: 900px) {
+    .page-header-inner {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 28px;
+      padding: 48px 24px 48px;
+    }
+    .page-header-right {
+      max-width: 100%;
+    }
+  }
+
+  /* ===== DIVIDER LINE ===== */
+  .section-divider {
+    height: 1px;
+    background: var(--border);
+  }
+
+  /* ===== CONTACT GRID ===== */
+  .contact-body {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    align-items: start;
+  }
+
+  /* ===== CHANNELS COLUMN ===== */
+  .channels-col {
+    padding: 64px 48px 64px 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .col-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.55;
+    margin-bottom: 36px;
+  }
+
+  /* Channel row */
+  .channel-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    text-decoration: none;
+    color: var(--white);
+    transition: border-color 0.25s ease;
+    gap: 20px;
+  }
+
+  .channel-row:first-of-type { border-top: 1px solid var(--border); }
+
+  .channel-row:hover { border-bottom-color: rgba(255,255,255,0.2); }
+
+  .channel-row:hover .channel-arrow { opacity: 1; transform: translate(3px, -3px); }
+
+  .channel-type {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+  }
+
+  .channel-value {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.8vw, 26px);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    line-height: 1;
+    color: var(--white);
+  }
+
+  .channel-arrow {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.4;
+    flex-shrink: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .channel-arrow svg {
+    width: 14px; height: 14px;
+  }
+
+  /* ===== INTENT COLUMN ===== */
+  .intent-col {
+    padding: 64px 0 64px 48px;
+  }
+
+  /* Intent card */
+  .intent-card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    background: var(--dark);
+    margin-bottom: 2px;
+    text-decoration: none;
+    color: var(--white);
+    display: block;
+    transition: border-color 0.3s ease;
+  }
+
+  .intent-card:last-child { margin-bottom: 0; }
+
+  .intent-card:hover { border-color: rgba(255,255,255,0.18); }
+
+  .intent-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.03);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .intent-card:hover::before { opacity: 1; }
+
+  .intent-card-inner {
+    padding: 32px 36px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .intent-card-left {}
+
+  .intent-card-tag {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.6;
+    margin-bottom: 10px;
+  }
+
+  .intent-card-title {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2.4vw, 32px);
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 1;
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .intent-card-desc {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--text-muted);
+    line-height: 1.7;
+    max-width: 280px;
+  }
+
+  .intent-card-arrow {
+    width: 32px; height: 32px;
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.35;
+    flex-shrink: 0;
+    margin-top: 4px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+
+  .intent-card:hover .intent-card-arrow {
+    opacity: 0.8;
+    transform: translate(3px, -3px);
+  }
+
+  .intent-card-arrow svg { width: 13px; height: 13px; }
+
+  /* Accent (teal) card */
+  .intent-card-accent {
+    background: #1e454b;
+    border-color: transparent;
+  }
+
+  .intent-card-accent:hover { border-color: rgba(255,255,255,0.12); }
+
+  /* ===== LOCATION STRIP ===== */
+  .location-strip {
+    border-top: 1px solid var(--border);
+    background: var(--dark);
+  }
+
+  .location-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .location-item {
+    padding: 36px 0;
+    border-right: 1px solid var(--border);
+  }
+
+  .location-item:last-child { border-right: none; padding-left: 40px; }
+  .location-item:nth-child(2) { padding-left: 40px; }
+
+  .location-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+  }
+
+  .location-value {
+    font-family: var(--font-display);
+    font-size: clamp(16px, 1.5vw, 22px);
+    font-weight: 500;
+    text-transform: uppercase;
+    color: var(--white);
+    line-height: 1.1;
+  }
+
+  /* ===== FOOTER ===== */
+  .footer-minimal {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 22px clamp(24px, 4vw, 56px);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    background: #000;
+  }
+
+  .footer-copy {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: rgba(240,237,232,0.22);
+  }
+
+  .footer-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 28px;
+  }
+
+  .footer-center a {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.3);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer-center a:hover { color: var(--white); }
+
+  .footer-flag {
+    width: 24px;
+    height: auto;
+    opacity: 0.55;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .contact-body {
+      grid-template-columns: 1fr;
+      padding: 0 24px 60px;
+    }
+
+    .channels-col {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding: 48px 0 48px;
+    }
+
+    .intent-col {
+      padding: 48px 0 48px;
+    }
+
+    .location-inner {
+      grid-template-columns: 1fr;
+    }
+
+    .location-item {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding: 28px 0;
+    }
+
+    .location-item:last-child { border-bottom: none; padding-left: 0; }
+    .location-item:nth-child(2) { padding-left: 0; }
+
+    .footer-center {
+      position: static;
+      transform: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .footer-minimal {
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+    }
+  }
 </style>
 </head>
 <body>
 
-<!-- Navbar -->
-    <nav class="vr-navbar">
-      <div class="vr-navbar__logo">
-        <a href="index.html"><img src="images/Renders/WebP/BlackLogo1.webp" alt="Vanar Robots"></a>
-      </div>
-
-      <div class="vr-navbar__links">
-        <a href="Gen1.html">Generation 1</a>
-        <a href="indistinguishability.html">Vision</a>
-        <a href="contact.html">Contact</a>
-      </div>
-
-      <a href="interest.html" class="vr-navbar__cta">Join Beta</a>
-      
-      <button class="vr-navbar__hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </nav>
-
-    <!-- Mobile Dropdown Menu -->
-    <div class="vr-navbar__mobile-menu">
-      <a href="Gen1.html">Generation 1</a>
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html">
+      <img src="images/Renders/WebP/WhiteLogo1.webp" width="95" alt="Vanar Robots">
+    </a>
+    <div class="nav-center" id="navLinks">
+      <a href="Gen1.html">Generation‑1</a>
       <a href="indistinguishability.html">Vision</a>
       <a href="contact.html">Contact</a>
     </div>
-
-    <script>
-      const hamburger = document.querySelector('.vr-navbar__hamburger');
-      const mobileMenu = document.querySelector('.vr-navbar__mobile-menu');
-      const navbar = document.querySelector('.vr-navbar');
-      
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        
-        // Add scrolled class to navbar when menu opens
-        if (mobileMenu.classList.contains('active')) {
-          navbar.classList.add('scrolled');
-        } else {
-          // Only remove if user hasn't scrolled
-          if (window.scrollY === 0) {
-            navbar.classList.remove('scrolled');
-          }
-        }
-      });
-      
-      // Close menu when clicking on a link
-      document.querySelectorAll('.vr-navbar__mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('active');
-          mobileMenu.classList.remove('active');
-          
-          // Remove scrolled class if at top of page
-          if (window.scrollY === 0) {
-            navbar.classList.remove('scrolled');
-          }
-        });
-      });
-      
-      // Close menu when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('.vr-navbar')) {
-          hamburger.classList.remove('active');
-          mobileMenu.classList.remove('active');
-          
-          // Remove scrolled class if at top of page
-          if (window.scrollY === 0) {
-            navbar.classList.remove('scrolled');
-          }
-        }
-      });
-      
-      // Handle scroll events
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add('scrolled');
-        } else {
-          // Only remove if menu is not active
-          if (!mobileMenu.classList.contains('active')) {
-            navbar.classList.remove('scrolled');
-          }
-        }
-      });
-    </script>
-    <!-- Navbar -->
-
-
-
-    
-
-<!-- Contact Section -->
-<section class="contact-section">
-  <div class="contact-container">
-    <div class="contact-left">
-      <h1>Let's talk.</h1>
-      <p>Vanar Robots is built by people who care deeply about how technology fits into the real world. If you're curious,
-        thoughtful, or building something meaningful, reach out directly.</p>
-    </div>
-    
-    <div class="contact-right">
-      <a href="mailto:hello@vanarrobots.com" class="contact-item">
-        <i class="far fa-envelope"></i>
-        <span>hello@vanarrobots.com</span>
-      </a>
-      
-      <a href="https://x.com/vanar_robots" target="_blank" class="contact-item">
-        <i class="fab fa-x-twitter"></i>
-        <span>@vanar_robots</span>
-      </a>
-      
-      <a href="https://linkedin.com/company/vanar-robots" target="_blank" class="contact-item">
-        <i class="fab fa-linkedin"></i>
-        <span>Vanar Robots</span>
-      </a>
-      
-      <a href="https://youtube.com/@vanarrobots" target="_blank" class="contact-item">
-        <i class="fab fa-youtube"></i>
-        <span>Vanar Robots</span>
-      </a>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="interest.html" class="nav-pill">Request Access</a>
+      <div class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('active')">
+        <div class="nav-dot"></div>
+        <div class="nav-dot"></div>
+      </div>
     </div>
   </div>
-</section>
+</nav>
 
-<!-- Footer -->
-<footer class="vr-footer vr-footer-split">
-  <div class="vr-footer-left">
-    2026 © Vanar Robots Private Limited
+<!-- PAGE HEADER -->
+<header class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-grid"></div>
+  <div class="page-header-inner">
+    <div class="page-header-left">
+      <p class="page-eyebrow">// Contact</p>
+      <h1 class="page-title">Let's<br>Talk.</h1>
+    </div>
+    <div class="page-header-right">
+      <p class="page-header-desc">Vanar Robots is built by people who care deeply about advancing human civilization through technology.
+      If you are curious, building something meaningful, or looking to integrate a Vanar into your environment, reach out directly.</p>
+    </div>
   </div>
-  <div class="vr-footer-right">
-    <img src="images/Renders/WebP/India.webp" alt="Made in India">
+</header>
+
+<div class="section-divider"></div>
+
+<!-- CONTACT BODY -->
+<div class="contact-body">
+
+  <!-- LEFT: Direct channels -->
+  <div class="channels-col">
+    <div class="col-label">// Direct channels</div>
+
+    <a href="mailto:hello@vanarrobots.com" class="channel-row">
+      <div class="channel-meta">
+        <div class="channel-type">Email</div>
+        <div class="channel-value">hello@vanarrobots.com</div>
+      </div>
+      <div class="channel-arrow">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="https://x.com/vanar_robots" target="_blank" rel="noopener" class="channel-row">
+      <div class="channel-meta">
+        <div class="channel-type">X (Twitter)</div>
+        <div class="channel-value">@vanar_robots</div>
+      </div>
+      <div class="channel-arrow">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="https://linkedin.com/company/vanar-robots" target="_blank" rel="noopener" class="channel-row">
+      <div class="channel-meta">
+        <div class="channel-type">LinkedIn</div>
+        <div class="channel-value">Vanar Robots</div>
+      </div>
+      <div class="channel-arrow">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="https://youtube.com/@vanarrobots" target="_blank" rel="noopener" class="channel-row">
+      <div class="channel-meta">
+        <div class="channel-type">YouTube</div>
+        <div class="channel-value">Vanar Robots</div>
+      </div>
+      <div class="channel-arrow">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
+    <a href="https://www.instagram.com/vanar_robots/" target="_blank" rel="noopener" class="channel-row">
+      <div class="channel-meta">
+        <div class="channel-type">Instagram</div>
+        <div class="channel-value">@vanar_robots</div>
+      </div>
+      <div class="channel-arrow">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+    </a>
+
   </div>
+
+  <!-- RIGHT: Intent cards -->
+  <div class="intent-col">
+    <div class="col-label">// What brings you here</div>
+
+    <a href="mailto:hello@vanarrobots.com?subject=Partnership Inquiry" class="intent-card">
+      <div class="intent-card-inner">
+        <div class="intent-card-left">
+          <div class="intent-card-tag">Partnerships &amp; Research</div>
+          <div class="intent-card-title">Join us</div>
+          <div class="intent-card-desc">Academic institutions, research labs, and industry partners building the future alongside us.</div>
+        </div>
+        <div class="intent-card-arrow">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <a href="mailto:hello@vanarrobots.com?subject=Media Inquiry" class="intent-card">
+      <div class="intent-card-inner">
+        <div class="intent-card-left">
+          <div class="intent-card-tag">Press &amp; Media</div>
+          <div class="intent-card-title">Cover Us</div>
+          <div class="intent-card-desc">Journalists and creators covering India's robotics story — we're happy to talk.</div>
+        </div>
+        <div class="intent-card-arrow">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+    <a href="interest.html" class="intent-card intent-card-accent">
+      <div class="intent-card-inner">
+        <div class="intent-card-left">
+          <div class="intent-card-tag">Limited Beta</div>
+          <div class="intent-card-title">Request a Unit</div>
+          <div class="intent-card-desc">Industrial partners ready to deploy and shape how Vanars integrate into real environments.</div>
+        </div>
+        <div class="intent-card-arrow">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer-minimal">
+  <span class="footer-copy">© 2026 Vanar Robots Private Limited</span>
+  <div class="footer-center">
+    <a href="https://x.com/vanar_robots" target="_blank">X</a>
+    <a href="https://www.youtube.com/@VanarRobots" target="_blank">YouTube</a>
+    <a href="https://www.linkedin.com/company/vanar-robots/" target="_blank">LinkedIn</a>
+    <a href="https://www.instagram.com/vanar_robots/" target="_blank">Instagram</a>
+  </div>
+  <img src="images/Renders/WebP/India.webp" alt="India" class="footer-flag">
 </footer>
 
+<script>
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.style.background = window.scrollY > 60
+      ? 'rgba(10,10,10,0.97)'
+      : 'rgba(0,0,0,0.35)';
+  });
+</script>
 </body>
 </html>
