@@ -18,40 +18,41 @@
 
   </head>
   <body>
-    <!-- Navbar -->
-      <!-- Navbar -->
-        <!-- Navbar -->
-            <!-- Navbar -->
-        <div class="navbar">
-        <div class="nav-inner">
-            <div class="nav-logo">
-            <img src="images/Renders/WebP/WhiteLogo1.webp" width="90px">
-            </div>
+    <!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img src="images/Renders/WebP/WhiteLogo1.webp" width="95" alt="Vanar Robots">
+    </a>
+    <div class="nav-center" id="navLinks">
+      <a href="Gen1.html">Generation‑1</a>
+      <a href="vision.html">Vision</a>
+      <a href="indistinguishability.html">Indistinguishability</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="interest.html" class="nav-pill">Request Access</a>
+      <div class="nav-toggle" onclick="toggleNav()">
+        <div class="nav-dot"></div>
+        <div class="nav-dot"></div>
+      </div>
+    </div>
+  </div>
+</nav>
 
-            <div class="nav-links" id="navLinks">
-            <a href="Gen1.html">Generation 1</a>
-            <a href="vision.html">Vision</a>
-            <a href="indistinguishability.html">Indistinguishability</a>
-            <a href="contact.html">Contact</a>
-            <a href="interest.html" class="nav-cta">Join Beta</a>
-            </div>
+<script>
+  /* ---- Nav ---- */
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
 
-            <div class="nav-toggle" onclick="toggleNav()">
-            <div class="nav-dot"></div>
-            <div class="nav-dot"></div>
-            <div class="nav-dot"></div>
-            </div>
-        </div>
-        </div>
-        <script>
-        function toggleNav() {
-        document.getElementById("navLinks").classList.toggle("active");
-        }
-        </script>
-        <!-- Navbar -->
-    <!-- Navbar -->
-      <!-- Navbar -->
-        <!-- Navbar -->
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.style.background = window.scrollY > 60
+      ? 'rgba(10,10,10,0.97)'
+      : 'rgba(0,0,0,0.35)';
+  });
+  </script>
 
     <center>
 
