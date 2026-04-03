@@ -141,6 +141,57 @@
    NAVBAR
    ===================================================== */
 
+
+
+
+
+.hero-minimal {
+  margin-top: 20px;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+}
+
+.hero-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.45);
+}
+
+.hero-meta {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(0,0,0,0.35);
+}
+
+.hero-title {
+  font-size: clamp(42px, 6vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  font-weight: 600;
+  margin: 0;
+}
+
+.hero-sub {
+  margin-top: 18px;
+  font-size: 16px;
+  color: rgba(0,0,0,0.6);
+  max-width: 520px;
+  line-height: 1.6;
+}
+
+
+
+
+
+
+
   /* Layout */
   main{
     max-width:var(--max);
@@ -606,22 +657,24 @@
 
 <main>
 
-  <div class="kicker">Labor · Intelligence · Civilization</div>
-  <h1>The True Purpose</h1>
+<div class="hero-minimal">
 
-  <div class="meta">
-    <span>Vanar Robots</span>
-    <span>•</span>
-    <span>Reading time ~7 min</span>
-    <span>•</span>
-    <span>Mumbai, India</span>
+  <div class="hero-top">
+    <div class="hero-eyebrow">Research</div>
+    <div class="hero-meta">Mumbai · 7 min read</div>
   </div>
 
-  <div class="divider"></div>
+  <h1 class="hero-title">
+    Speeding Up<br>Humanity’s Progress
+  </h1>
 
-  <p class="lead">
-    Humanity’s progress is no longer limited by ideas, but by execution. This document explores the long arc of civilization and the constraint that defines it.
+  <p class="hero-sub">
+    Expanding our ability to execute expands what humanity can become.
   </p>
+
+</div>
+
+<div class="divider"></div>
 
   <h2>Origin</h2>
   <img class="img" src="images/Renders/WebP/asteroids.webp" alt="Cosmic universe" />
