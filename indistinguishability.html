@@ -33,192 +33,138 @@
 
 
 
-    /* ===== FUTURISTIC NAVBAR ===== */
-    .vr-navbar {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      padding: 24px 8vw;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
+      /* ===== ADVANCED NAVBAR ===== */
+      /* ===== ADVANCED NAVBAR ===== */
+      /* ===== ADVANCED NAVBAR ===== */
+      /* ===== FUTURISTIC NAVBAR ===== */
+        .navbar {
+        font-family: Helvetica, Arial, sans-serif;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 52px;
 
-      /* Glass effect */
-      background: rgba(255, 255, 255, 0);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      transition: background 0.4s ease, backdrop-filter 0.4s ease;
-    }
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(14px);
+        -webkit-backdrop-filter: blur(14px);
 
-    .vr-navbar.scrolled {
-      background: rgba(255, 255, 255, 0.332);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-    }
+        border-bottom: 1px solid rgba(0,0,0,0.08);
+        z-index: 1000;
+        }
 
-    .vr-navbar__logo {
-      display: flex;
-      align-items: center;
-    }
+        .nav-inner {
+        max-width: 1100px;
+        height: 100%;
+        margin: 0 auto;
+        padding: 0 24px;
 
-    .vr-navbar__logo img {
-      width: 110px;
-      display: block;
-      filter: none;
-    }
-
-    .vr-navbar__links {
-      display: flex;
-      gap: 40px;
-    }
-
-    .vr-navbar__links a {
-      text-decoration: none;
-      font-size: 13px;
-      letter-spacing: 2px;
-      color: rgba(79, 79, 79, 0.6);
-      text-transform: uppercase;
-      position: relative;
-      transition: opacity 0.25s ease;
-    }
-
-    .vr-navbar__links a:hover {
-      opacity: 1;
-      color: #000000;
-      transition: 1s;
-    }
-
-    .vr-navbar__cta {
-      padding: 10px 26px;
-      border-radius: 30px;
-      border: 1px solid #000000;
-      color: #000000;
-      font-size: 13px;
-      letter-spacing: 1px;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
-
-    .vr-navbar__cta:hover {
-      background: #000000;
-      color: #ffffff;
-    }
-
-    /* Hamburger Menu */
-    .vr-navbar__hamburger {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 10px;
-      z-index: 1001;
-      position: relative;
-      width: 40px;
-      height: 40px;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .vr-navbar__hamburger span {
-      width: 22px;
-      height: 2px;
-      background: rgba(0, 0, 0, 0.8);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      border-radius: 2px;
-      display: block;
-    }
-
-    .vr-navbar__hamburger:hover span {
-      background: rgba(0, 0, 0, 1);
-    }
-
-    .vr-navbar__hamburger.active span:nth-child(1) {
-      transform: rotate(45deg) translate(6px, 6px);
-    }
-
-    .vr-navbar__hamburger.active span:nth-child(2) {
-      opacity: 0;
-      transform: translateX(10px);
-    }
-
-    .vr-navbar__hamburger.active span:nth-child(3) {
-      transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    /* Mobile Dropdown */
-    .vr-navbar__mobile-menu {
-      display: none;
-      position: fixed;
-      top: 70px;
-      left: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.332);
-      backdrop-filter: blur(22px);
-      -webkit-backdrop-filter: blur(22px);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-      padding: 20px 6vw;
-      flex-direction: column;
-      gap: 20px;
-      z-index: 999;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .vr-navbar__mobile-menu.active {
-      display: flex;
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .vr-navbar__mobile-menu a {
-      text-decoration: none;
-      font-size: 13px;
-      letter-spacing: 2px;
-      color: rgba(79, 79, 79, 0.8);
-      text-transform: uppercase;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-      transition: color 0.25s ease;
-    }
-
-    .vr-navbar__mobile-menu a:hover {
-      color: #000000;
-    }
-
-    /* Mobile */
-    @media (max-width: 768px) {
-      .vr-navbar {
-        padding: 18px 6vw;
-      }
-      
-      .vr-navbar__links {
-        display: none;
-      }
-
-      .vr-navbar__hamburger {
         display: flex;
-      }
+        align-items: center;
+        justify-content: space-between;
+        }
 
-      .vr-navbar__logo {
-        flex: 0 0 auto;
-      }
+        .nav-logo {
+          display: flex;
+          align-items: center;
+          height: 100%;
+        }
 
-      .vr-navbar__logo img {
-        width: 110px;
-      }
+        .nav-logo img {
+          display: block;
+        }
 
-      .vr-navbar__cta {
-        padding: 8px 18px;
+        /* Links */
+        .nav-links {
+        display: flex;
+        gap: 36px;
+        align-items: center;
+        }
+
+        .nav-links a {
+        text-decoration: none;
+        color: rgba(0,0,0,0.6);
         font-size: 12px;
-        margin-left: auto;
-        margin-right: 12px;
-      }
-    }
-    /* ===== FUTURISTIC NAVBAR ===== */
+        letter-spacing: 0.7px;
+        text-transform: uppercase;
+        transition: all 0.25s ease;
+        }
+
+        .nav-links a:hover {
+        color: #000;
+        }
+
+        /* CTA */
+        .nav-cta {
+        padding: 6px 14px;
+        border-radius: 20px;
+        border: 1px solid rgba(0,0,0,0.25);
+        color: #000000;
+        transition: all 0.25s ease;
+        }
+
+        .nav-cta:hover {
+        background: #000000;
+        color: #ffffff !important;
+        border-color: #000000;
+        }
+
+        /* Toggle (mobile) */
+        .nav-toggle {
+        display: none;
+        width: 28px;
+        height: 28px;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        }
+
+        .nav-dot {
+        width: 4px;
+        height: 4px;
+        background: #000;
+        border-radius: 50%;
+        margin: 2px auto;
+        }
+
+        /* ===== Mobile ===== */
+        @media (max-width: 767px) {
+
+        .nav-toggle {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .nav-links {
+            position: absolute;
+            top: 52px;
+            left: 0;
+            width: 100%;
+
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+
+            flex-direction: column;
+            gap: 26px;
+            padding: 32px 0;
+
+            transform: translateY(-20px);
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.35s ease;
+        }
+
+        .nav-links.active {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        }
+      /* ===== ADVANCED NAVBAR ===== */
+      /* ===== ADVANCED NAVBAR ===== */
+      /* ===== ADVANCED NAVBAR ===== */
+
 
 
       
@@ -658,92 +604,38 @@
   <body>
 
     <!-- Navbar -->
-    <nav class="vr-navbar">
-      <div class="vr-navbar__logo">
-        <a href="index.html"><img src="images/Renders/WebP/BlackLogo1.webp" alt="Vanar Robots"></a>
-      </div>
+      <!-- Navbar -->
+        <!-- Navbar -->
+            <!-- Navbar -->
+        <div class="navbar">
+        <div class="nav-inner">
+            <div class="nav-logo">
+            <img src="images/BlackLogo1.png" width="90px">
+            </div>
 
-      <div class="vr-navbar__links">
-        <a href="Gen1.html">Generation 1</a>
-        <a href="indistinguishability.html">Vision</a>
-        <a href="contact.html">Contact</a>
-      </div>
+            <div class="nav-links" id="navLinks">
+            <a href="Gen1.html">Generation 1</a>
+            <a href="indistinguishability.html">Vision</a>
+            <a href="contact.html">Contact</a>
+            <a href="interest.html" class="nav-cta">Join Beta</a>
+            </div>
 
-      <a href="interest.html" class="vr-navbar__cta">Join Beta</a>
-      
-      <button class="vr-navbar__hamburger" aria-label="Toggle menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-    </nav>
-
-    <!-- Mobile Dropdown Menu -->
-    <div class="vr-navbar__mobile-menu">
-      <a href="Gen1.html">Generation 1</a>
-      <a href="indistinguishability.html">Vision</a>
-      <a href="contact.html">Contact</a>
-    </div>
-
-    <script>
-      const hamburger = document.querySelector('.vr-navbar__hamburger');
-      const mobileMenu = document.querySelector('.vr-navbar__mobile-menu');
-      const navbar = document.querySelector('.vr-navbar');
-      
-      hamburger.addEventListener('click', () => {
-        hamburger.classList.toggle('active');
-        mobileMenu.classList.toggle('active');
-        
-        // Add scrolled class to navbar when menu opens
-        if (mobileMenu.classList.contains('active')) {
-          navbar.classList.add('scrolled');
-        } else {
-          // Only remove if user hasn't scrolled
-          if (window.scrollY === 0) {
-            navbar.classList.remove('scrolled');
-          }
+            <div class="nav-toggle" onclick="toggleNav()">
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            <div class="nav-dot"></div>
+            </div>
+        </div>
+        </div>
+        <script>
+        function toggleNav() {
+        document.getElementById("navLinks").classList.toggle("active");
         }
-      });
-      
-      // Close menu when clicking on a link
-      document.querySelectorAll('.vr-navbar__mobile-menu a').forEach(link => {
-        link.addEventListener('click', () => {
-          hamburger.classList.remove('active');
-          mobileMenu.classList.remove('active');
-          
-          // Remove scrolled class if at top of page
-          if (window.scrollY === 0) {
-            navbar.classList.remove('scrolled');
-          }
-        });
-      });
-      
-      // Close menu when clicking outside
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('.vr-navbar')) {
-          hamburger.classList.remove('active');
-          mobileMenu.classList.remove('active');
-          
-          // Remove scrolled class if at top of page
-          if (window.scrollY === 0) {
-            navbar.classList.remove('scrolled');
-          }
-        }
-      });
-      
-      // Handle scroll events
-      window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-          navbar.classList.add('scrolled');
-        } else {
-          // Only remove if menu is not active
-          if (!mobileMenu.classList.contains('active')) {
-            navbar.classList.remove('scrolled');
-          }
-        }
-      });
-    </script>
+        </script>
+        <!-- Navbar -->
     <!-- Navbar -->
+      <!-- Navbar -->
+        <!-- Navbar -->
 
 
 
