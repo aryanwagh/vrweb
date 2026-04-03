@@ -34,7 +34,12 @@
     min-height: 100vh;
   }
 
-  /* ===== NAVBAR ===== */
+
+  
+
+ /* =====================================================
+   NAVBAR
+   ===================================================== */
   .navbar {
     position: fixed;
     top: 0; left: 0;
@@ -43,13 +48,13 @@
     background: rgba(0,0,0,0.35);
     backdrop-filter: blur(14px);
     -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 1px solid rgba(255,255,255,0.12);
     z-index: 1000;
     transition: background 0.3s ease;
   }
 
   .nav-inner {
-    max-width: 1200px;
+    max-width: 1100px;
     height: 100%;
     margin: 0 auto;
     padding: 0 24px;
@@ -70,11 +75,17 @@
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.55);
-    transition: color .25s ease;
+    transition: all .25s ease;
     font-family: var(--font-mono);
   }
 
   .nav-center a:hover { color: white; }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
 
   .nav-pill {
     border: 1px solid rgba(255,255,255,.25);
@@ -93,12 +104,12 @@
 
   .nav-toggle {
     display: none;
+    width: 28px; height: 28px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     gap: 4px;
-    width: 28px; height: 28px;
   }
 
   .nav-dot { width: 4px; height: 4px; background: #fff; border-radius: 50%; }
@@ -112,11 +123,13 @@
       gap: 20px;
       padding: 30px 0;
       display: none;
-      border-bottom: 1px solid var(--border);
     }
     .nav-center.active { display: flex; }
     .nav-toggle { display: flex; }
   }
+
+
+
 
   /* ===== HERO / PAGE HEADER ===== */
   .page-header {
@@ -517,7 +530,7 @@
 <!-- NAVBAR -->
 <nav class="navbar" id="navbar">
   <div class="nav-inner">
-    <a href="index.html">
+    <a class="nav-brand" href="index.html">
       <img src="images/Renders/WebP/WhiteLogo1.webp" width="95" alt="Vanar Robots">
     </a>
     <div class="nav-center" id="navLinks">
@@ -526,9 +539,9 @@
       <a href="indistinguishability.html">Indistinguishability</a>
       <a href="contact.html">Contact</a>
     </div>
-    <div style="display:flex;align-items:center;gap:16px;">
+    <div class="nav-actions">
       <a href="interest.html" class="nav-pill">Request Access</a>
-      <div class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('active')">
+      <div class="nav-toggle" onclick="toggleNav()">
         <div class="nav-dot"></div>
         <div class="nav-dot"></div>
       </div>
