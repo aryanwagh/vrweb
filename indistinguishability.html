@@ -33,137 +33,106 @@
 
 
 
-      /* ===== ADVANCED NAVBAR ===== */
-      /* ===== ADVANCED NAVBAR ===== */
-      /* ===== ADVANCED NAVBAR ===== */
-      /* ===== FUTURISTIC NAVBAR ===== */
-        .navbar {
-        font-family: Helvetica, Arial, sans-serif;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 52px;
 
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(14px);
-        -webkit-backdrop-filter: blur(14px);
+  /* =====================================================
+   NAVBAR
+   ===================================================== */
+  .navbar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 64px;
+    background: rgba(255,255,255,0.65);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    z-index: 1000;
+    transition: background 0.3s ease;
+  }
 
-        border-bottom: 1px solid rgba(0,0,0,0.08);
-        z-index: 1000;
-        }
+  .nav-inner {
+    max-width: 1100px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 
-        .nav-inner {
-        max-width: 1100px;
-        height: 100%;
-        margin: 0 auto;
-        padding: 0 24px;
+  .nav-brand img {
+    display: block;
+    height: 20px;
+    width: auto;
+  }
 
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        }
+  .nav-center {
+    display: flex;
+    gap: 34px;
+    align-items: center;
+  }
 
-        .nav-logo {
-          display: flex;
-          align-items: center;
-          height: 100%;
-        }
+  .nav-center a {
+    text-decoration: none;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.6);
+    transition: all .25s ease;
+    font-family: var(--font-mono);
+  }
 
-        .nav-logo img {
-          display: block;
-        }
+  .nav-center a:hover { color: black; }
 
-        /* Links */
-        .nav-links {
-        display: flex;
-        gap: 36px;
-        align-items: center;
-        }
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
 
-        .nav-links a {
-        text-decoration: none;
-        color: rgba(0,0,0,0.6);
-        font-size: 12px;
-        letter-spacing: 0.7px;
-        text-transform: uppercase;
-        transition: all 0.25s ease;
-        }
+  .nav-pill {
+    border: 1px solid rgba(0,0,0,0.15);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 10px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: black;
+    font-family: var(--font-mono);
+    transition: all .25s ease;
+  }
 
-        .nav-links a:hover {
-        color: #000;
-        }
+  .nav-pill:hover { background: black; color: white; }
 
-        /* CTA */
-        .nav-cta {
-        padding: 6px 14px;
-        border-radius: 20px;
-        border: 1px solid rgba(0,0,0,0.25);
-        color: #000000;
-        transition: all 0.25s ease;
-        }
+  .nav-toggle {
+    display: none;
+    width: 28px; height: 28px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 4px;
+  }
 
-        .nav-cta:hover {
-        background: #000000;
-        color: #ffffff !important;
-        border-color: #000000;
-        }
+  .nav-dot { width: 4px; height: 4px; background: #000; border-radius: 50%; }
 
-        /* Toggle (mobile) */
-        .nav-toggle {
-        display: none;
-        width: 28px;
-        height: 28px;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        }
-
-        .nav-dot {
-        width: 4px;
-        height: 4px;
-        background: #000;
-        border-radius: 50%;
-        margin: 2px auto;
-        }
-
-        /* ===== Mobile ===== */
-        @media (max-width: 767px) {
-
-        .nav-toggle {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .nav-links {
-            position: absolute;
-            top: 52px;
-            left: 0;
-            width: 100%;
-
-            background: rgba(255,255,255,0.95);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-
-            flex-direction: column;
-            gap: 26px;
-            padding: 32px 0;
-
-            transform: translateY(-20px);
-            opacity: 0;
-            pointer-events: none;
-            transition: all 0.35s ease;
-        }
-
-        .nav-links.active {
-            transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
-        }
-        }
-      /* ===== ADVANCED NAVBAR ===== */
-      /* ===== ADVANCED NAVBAR ===== */
-      /* ===== ADVANCED NAVBAR ===== */
+  @media (max-width: 900px) {
+    .nav-center {
+      position: absolute;
+      top: 52px; left: 0; right: 0;
+      background: rgba(255,255,255,0.95);
+      flex-direction: column;
+      gap: 20px;
+      padding: 30px 0;
+      display: none;
+    }
+    .nav-center.active { display: flex; }
+    .nav-toggle { display: flex; }
+  }
+  /* =====================================================
+   NAVBAR
+   ===================================================== */
 
 
 
@@ -603,40 +572,46 @@
 
   <body>
 
-    <!-- Navbar -->
-      <!-- Navbar -->
-        <!-- Navbar -->
-            <!-- Navbar -->
-        <div class="navbar">
-        <div class="nav-inner">
-            <div class="nav-logo">
-            <img src="images/Renders/WebP/BlackLogo1.webp" width="90px">
-            </div>
+<!-- ===================== NAVBAR ===================== -->
+ <!-- ===================== NAVBAR ===================== -->
+  <!-- ===================== NAVBAR ===================== -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <img src="images/Renders/WebP/BlackLogo1.webp" alt="Vanar Robots">
+    </a>
+    <div class="nav-center" id="navLinks">
+      <a href="Gen1.html">Generation‑1</a>
+      <a href="vision.html">Vision</a>
+      <a href="indistinguishability.html">Indistinguishability</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <a href="interest.html" class="nav-pill">Request Access</a>
+      <div class="nav-toggle" onclick="toggleNav()">
+        <div class="nav-dot"></div>
+        <div class="nav-dot"></div>
+      </div>
+    </div>
+  </div>
+</nav>
 
-            <div class="nav-links" id="navLinks">
-            <a href="Gen1.html">Generation 1</a>
-            <a href="vision.html">Vision</a>
-            <a href="indistinguishability.html">Indistinguishability</a>
-            <a href="contact.html">Contact</a>
-            <a href="interest.html" class="nav-cta">Join Beta</a>
-            </div>
+<script>
+  /* ---- Nav ---- */
+  function toggleNav() {
+    document.getElementById('navLinks').classList.toggle('active');
+  }
 
-            <div class="nav-toggle" onclick="toggleNav()">
-            <div class="nav-dot"></div>
-            <div class="nav-dot"></div>
-            <div class="nav-dot"></div>
-            </div>
-        </div>
-        </div>
-        <script>
-        function toggleNav() {
-        document.getElementById("navLinks").classList.toggle("active");
-        }
-        </script>
-        <!-- Navbar -->
-    <!-- Navbar -->
-      <!-- Navbar -->
-        <!-- Navbar -->
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.style.background = window.scrollY > 60
+      ? 'white'
+      : 'white';
+  });
+  </script>
+<!-- ===================== NAVBAR ===================== -->
+ <!-- ===================== NAVBAR ===================== -->
+  <!-- ===================== NAVBAR ===================== -->
 
 
 
