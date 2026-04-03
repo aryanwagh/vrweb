@@ -339,161 +339,143 @@
 
 
 
-  /* =====================================================
-     VISION / INDISTINGUISHABILITY
-     ===================================================== */
-     .pillar-labor {
-      /* Desktop */
-      --img-x-desktop: 50%;
-      --img-y-desktop: 25%;
-      --img-scale-desktop: 1.5;
-
-      /* Tablet */
-      --img-x-tablet: 40%;
-      --img-y-tablet: 30%;
-      --img-scale-tablet: 1.5;
-
-      /* Mobile */
-      --img-x-mobile: 50%;
-      --img-y-mobile: 35%;
-      --img-scale-mobile: 1.4;
-    }
-
-  .pillar-wrapper {
-    width: 100%;
-    margin: 0;
-  }
  
-  .pillar-labor {
-    position: relative;
-    min-height: 100svh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    margin-top: 0;
-    border-radius: 0;
-    overflow: hidden;
-  }
- 
-  .pillar-labor-bg {
-    position: relative;
-    overflow: hidden;
-  }
- 
-  .pillar-labor-bg img {
+ /* =====================================================
+   VISION & INDISTINGUISHABILITY — COMBINED
+   ===================================================== */
+.ep-combined {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  background: #000;
+}
+
+.ep-col {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+
+.ep-bg {
   position: absolute;
-  top: var(--img-y-desktop);
-  left: var(--img-x-desktop);
+  inset: 0;
+  z-index: 0;
+}
 
+.ep-col--vision {
+  --img-x: 50%;
+  --img-y: 30%;
+  --img-scale: 1;
+}
+
+.ep-col--indist {
+  --img-x: 50%;
+  --img-y: 100%;
+  --img-scale: 1.4;
+}
+
+.ep-bg img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-
-  transform: translate(-50%, -50%) scale(var(--img-scale-desktop));
-}
- 
-  .pillar-labor-content {
-    background: #0a0a0a;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: clamp(60px, 8vw, 120px) clamp(48px, 7vw, 96px);
-    position: relative;
-    z-index: 2;
-  }
- 
-  .pillar-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.22em;
-    color: var(--accent);
-    text-transform: uppercase;
-    opacity: 0.6;
-    margin-bottom: 24px;
-  }
- 
-  .pillar-title {
-    font-family: var(--font-display);
-    font-size: clamp(48px, 6.5vw, 88px);
-    font-weight: 600;
-    text-transform: uppercase;
-    line-height: 0.9;
-    color: var(--white);
-    margin-bottom: 32px;
-    letter-spacing: -0.01em;
-  }
- 
-  .pillar-body {
-    font-family: var(--font-body);
-    font-size: clamp(13px, 1.15vw, 16px);
-    font-weight: 300;
-    color: rgba(240,237,232,0.5);
-    line-height: 1.9;
-    max-width: 440px;
-    margin-bottom: 48px;
-  }
- 
-  .pillar-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 12px;
-    padding: 13px 26px;
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 999px;
-    background: transparent;
-    color: var(--white);
-    text-decoration: none;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    transition: background 0.25s ease, border-color 0.25s ease;
-    width: fit-content;
-  }
- 
-  .pillar-cta:hover {
-    background: rgba(255,255,255,0.08);
-    border-color: rgba(255,255,255,0.35);
-  }
-
-  /* ===============================
-   TABLET
-   =============================== */
-@media (max-width: 1024px) {
-
-  .pillar-labor-bg img {
-    top: var(--img-y-tablet);
-    left: var(--img-x-tablet);
-
-    transform: translate(-50%, -50%) scale(var(--img-scale-tablet));
-  }
+  object-position: var(--img-x) var(--img-y);
+  display: block;
+  transform: scale(var(--img-scale));
+  transform-origin: var(--img-x) var(--img-y);
+  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-/* ===============================
-   MOBILE
-   =============================== */
-@media (max-width: 767px) {
+.ep-bg-fade {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(10,10,10,0.95) 0%,
+    rgba(10, 10, 10, 0.27) 40%,
+    rgba(10,10,10,0) 70%
+  );
+}
 
-  .pillar-labor-bg img {
-    top: var(--img-y-mobile);
-    left: var(--img-x-mobile);
+.ep-col-inner {
+  position: relative;
+  z-index: 2;
+  padding: clamp(32px, 4vw, 56px);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
 
-    transform: translate(-50%, -50%) scale(var(--img-scale-mobile));
+.ep-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  text-transform: uppercase;
+  opacity: 0.65;
+}
+
+.ep-title {
+  font-family: var(--font-display);
+  font-size: clamp(48px, 6vw, 88px);
+  font-weight: 600;
+  text-transform: uppercase;
+  line-height: 0.9;
+  color: var(--white);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+.ep-body {
+  font-family: var(--font-body);
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 300;
+  color: rgb(240, 237, 232);
+  line-height: 1.9;
+  max-width: 380px;
+}
+
+.ep-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  padding-bottom: 6px;
+  width: fit-content;
+  transition: color 0.25s ease, gap 0.25s ease, border-color 0.25s ease;
+  margin-top: 8px;
+}
+
+.ep-link:hover {
+  color: var(--white);
+  gap: 16px;
+  border-bottom-color: rgba(255,255,255,0.35);
+}
+
+@media (max-width: 768px) {
+  .ep-combined {
+    grid-template-columns: 1fr;
+  }
+  .ep-col {
+    min-height: 90svh;
+  }
+  .ep-body {
+    max-width: 100%;
   }
 }
- 
-  @media (max-width: 900px) {
-    .pillar-labor {
-      grid-template-columns: 1fr;
-      min-height: auto;
-    }
-    .pillar-labor-bg {
-      aspect-ratio: 4/3;
-    }
-    .pillar-labor-content {
-      padding: 48px 28px 56px;
-    }
-    .pillar-body { max-width: 100%; }
-  }
+  
+
+
+
+
  
  
 /* =====================================================
@@ -1148,29 +1130,49 @@
 
 
 
-<!-- ===================== VISION ===================== -->
-<div class="pillar-wrapper">
-  <section class="pillar-labor reveal">
- 
-    <div class="pillar-labor-bg">
-      <img src="images/Renders/WebP/File146Large.webp" alt="Vanar humanoid form" loading="lazy">
+
+<!-- ===================== VISION & INDISTINGUISHABILITY ===================== -->
+<section class="ep-combined">
+  <div class="ep-col ep-col--vision">
+    <div class="ep-bg">
+      <img src="images/Renders/WebP/File87.webp" alt="Vanar future vision" loading="lazy">
+      <div class="ep-bg-fade"></div>
     </div>
- 
-    <div class="pillar-labor-content">
-      <h2 class="pillar-title">Indistin&shy;guish&shy;ability</h2>
-      <p class="pillar-body">
-        For Vanars to truly be a part of human environments, they need to be indistinguishable from humans in their form, capabilities and interactions — not just mimicking human actions, but understanding and adapting to the human environments, tasks, and social dynamics.
+    <div class="ep-col-inner">
+      <h2 class="ep-title">Vision</h2>
+      <p class="ep-body">
+        To ensure the long-term survival and expansion of life, humanity must move beyond its current constraints.
+        Vanar Robots is building systems designed to accelerate humanity's progress.
       </p>
-      <a href="indistinguishability.html" class="pillar-cta">
-        <span>Read More</span>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+      <a href="vision.html" class="ep-link">
+        Explore Vision
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
           <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
       </a>
     </div>
- 
-  </section>
-</div>
+  </div>
+
+  <div class="ep-col ep-col--indist">
+    <div class="ep-bg">
+      <img src="images/Renders/WebP/File146Large.webp" alt="Vanar humanoid form" loading="lazy">
+      <div class="ep-bg-fade"></div>
+    </div>
+    <div class="ep-col-inner">
+      <h2 class="ep-title">Indistin&shy;guish&shy;ability</h2>
+      <p class="ep-body">
+        For Vanars to truly be a part of human environments, they need to be indistinguishable from humans in their form, capabilities and interactions,
+        not just mimicking human actions, but understanding and adapting to the human environments, tasks, and social dynamics.
+      </p>
+      <a href="indistinguishability.html" class="ep-link">
+        Read More
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+          <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
  
  
 <!-- ===================== PRESS ===================== -->
