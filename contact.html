@@ -436,6 +436,9 @@
   }
 
   /* ===== FOOTER ===== */
+    /* =====================================================
+     FOOTER
+     ===================================================== */
   .footer-minimal {
     position: relative;
     display: flex;
@@ -445,14 +448,20 @@
     border-top: 1px solid rgba(255,255,255,0.05);
     background: #000;
   }
-
+ 
+  .footer-left {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+ 
   .footer-copy {
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 0.1em;
-    color: rgba(240,237,232,0.22);
+    color: rgb(240, 237, 232);
   }
-
+ 
   .footer-center {
     position: absolute;
     left: 50%;
@@ -460,24 +469,45 @@
     display: flex;
     gap: 28px;
   }
-
+ 
   .footer-center a {
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(240,237,232,0.3);
+    color: rgb(240, 237, 232);
     text-decoration: none;
     transition: color 0.2s ease;
   }
-
-  .footer-center a:hover { color: var(--white); }
-
+ 
+  .footer-center a:hover { font-weight: 900; transition: 0.5s ease; }
+ 
+  .footer-right {
+    display: flex;
+    align-items: center;
+  }
+ 
   .footer-flag {
     width: 24px;
     height: auto;
-    opacity: 0.55;
+    opacity: 0.85;
   }
+ 
+  @media (max-width: 768px) {
+    .footer-minimal {
+      flex-direction: column;
+      gap: 20px;
+      text-align: center;
+    }
+    .footer-center {
+      position: static;
+      transform: none;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+    }
+  }
+
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 900px) {
@@ -508,20 +538,6 @@
 
     .location-item:last-child { border-bottom: none; padding-left: 0; }
     .location-item:nth-child(2) { padding-left: 0; }
-
-    .footer-center {
-      position: static;
-      transform: none;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    .footer-minimal {
-      flex-direction: column;
-      gap: 20px;
-      text-align: center;
-    }
   }
 </style>
 </head>
