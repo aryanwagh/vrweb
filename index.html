@@ -917,6 +917,10 @@
   }
  
  
+
+
+
+  
   /* =====================================================
      FOOTER
      ===================================================== */
@@ -940,7 +944,7 @@
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 0.1em;
-    color: rgba(240,237,232,0.22);
+    color: rgb(240, 237, 232);
   }
  
   .footer-center {
@@ -956,12 +960,12 @@
     font-size: 9px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(240,237,232,0.3);
+    color: rgb(240, 237, 232);
     text-decoration: none;
     transition: color 0.2s ease;
   }
  
-  .footer-center a:hover { color: var(--white); }
+  .footer-center a:hover { font-weight: 900; transition: 0.5s ease; }
  
   .footer-right {
     display: flex;
@@ -971,7 +975,7 @@
   .footer-flag {
     width: 24px;
     height: auto;
-    opacity: 0.55;
+    opacity: 0.85;
   }
  
   @media (max-width: 768px) {
