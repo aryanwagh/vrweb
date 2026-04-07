@@ -3,58 +3,77 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Vanar Robots Research Article</title>
+<title>Vision — Vanar Robots</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
-  :root{
-    --bg:#f5f5f7;
-    --card:#ffffff;
-    --text:#1d1d1f;
-    --muted:#6e6e73;
-    --line:rgba(0,0,0,0.08);
-    --accent:#000000;
-    --max:820px;
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f0ede8;
+    --cream: #e8e4de;
+    --paper: #f5f2ed;
+    --paper-mid: #ece9e3;
+    --ink: #0f0f0f;
+    --ink-mid: #2a2825;
+    --ink-muted: rgba(15,15,15,0.42);
+    --ink-faint: rgba(15,15,15,0.1);
+    --accent: #1e454b;
+    --accent-light: #e4fffa;
+    --border: rgba(15,15,15,0.09);
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body: 'Barlow', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    --max: 740px;
   }
 
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{
-    font-family: -apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Arial,sans-serif;
-    background:var(--bg);
-    color:var(--text);
-    line-height:1.7;
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-weight: 300;
+    overflow-x: hidden;
   }
 
-  a{color:var(--accent);text-decoration:none}
-  a:hover{text-decoration:none}
+  a { color: inherit; text-decoration: none; }
 
-  /* Top progress */
-  .progress{
-    position:fixed;top:0;left:0;height:2px;width:100%;
-    background:transparent;z-index:1000;
+  /* =====================================================
+     PROGRESS BAR
+     ===================================================== */
+  .progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 1px;
+    width: 100%;
+    background: transparent;
+    z-index: 2000;
   }
-  .bar{
-    height:100%;width:0%;
-    background:var(--accent);
-    transition:width .1s linear;
+  .progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--black);
+    transition: width .08s linear;
   }
 
   /* =====================================================
-   NAVBAR
-   ===================================================== */
+     NAVBAR
+     ===================================================== */
   .navbar {
     position: fixed;
     top: 0; left: 0;
     width: 100%;
-    height: 64px;
-    background: rgba(255,255,255,0.65);
-    backdrop-filter: saturate(180%) blur(20px);
-    -webkit-backdrop-filter: saturate(180%) blur(20px);
-    border-bottom: 1px solid rgba(0,0,0,0.08);
+    height: 52px;
+    background: rgba(245,242,237,0.82);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
     z-index: 1000;
-    transition: background 0.3s ease;
   }
 
   .nav-inner {
@@ -67,12 +86,6 @@
     justify-content: space-between;
   }
 
-  .nav-brand img {
-    display: block;
-    height: 20px;
-    width: auto;
-  }
-
   .nav-center {
     display: flex;
     gap: 34px;
@@ -80,37 +93,29 @@
   }
 
   .nav-center a {
-    text-decoration: none;
-    font-size: 11px;
+    font-family: var(--font-mono);
+    font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: rgba(0,0,0,0.6);
-    transition: all .25s ease;
-    font-family: var(--font-mono);
+    color: var(--ink-muted);
+    transition: color .2s ease;
   }
+  .nav-center a:hover { color: var(--ink); }
 
-  .nav-center a:hover { color: black; }
-
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
+  .nav-actions { display: flex; align-items: center; gap: 16px; }
 
   .nav-pill {
-    border: 1px solid rgba(0,0,0,0.15);
+    border: 1px solid rgba(15,15,15,0.2);
     padding: 6px 14px;
     border-radius: 20px;
+    font-family: var(--font-mono);
     font-size: 10px;
     letter-spacing: .15em;
     text-transform: uppercase;
-    text-decoration: none;
-    color: black;
-    font-family: var(--font-mono);
+    color: var(--ink);
     transition: all .25s ease;
   }
-
-  .nav-pill:hover { background: black; color: white; }
+  .nav-pill:hover { background: var(--black); color: var(--white); border-color: var(--black); }
 
   .nav-toggle {
     display: none;
@@ -121,420 +126,530 @@
     cursor: pointer;
     gap: 4px;
   }
-
-  .nav-dot { width: 4px; height: 4px; background: #000; border-radius: 50%; }
+  .nav-dot { width: 4px; height: 4px; background: var(--ink); border-radius: 50%; }
 
   @media (max-width: 900px) {
     .nav-center {
       position: absolute;
       top: 52px; left: 0; right: 0;
-      background: rgba(255,255,255,0.95);
+      background: var(--paper);
       flex-direction: column;
       gap: 20px;
       padding: 30px 0;
       display: none;
+      border-bottom: 1px solid var(--border);
     }
     .nav-center.active { display: flex; }
     .nav-toggle { display: flex; }
   }
+
   /* =====================================================
-   NAVBAR
-   ===================================================== */
-
-
-
-
-
-.hero-minimal {
-  margin-top: 20px;
-}
-
-.hero-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 18px;
-}
-
-.hero-eyebrow {
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.45);
-}
-
-.hero-meta {
-  font-size: 10px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(0,0,0,0.35);
-}
-
-.hero-title {
-  font-size: clamp(42px, 6vw, 64px);
-  line-height: 1.05;
-  letter-spacing: -0.035em;
-  font-weight: 600;
-  margin: 0;
-}
-
-.hero-sub {
-  margin-top: 18px;
-  font-size: 16px;
-  color: rgba(0,0,0,0.6);
-  max-width: 520px;
-  line-height: 1.6;
-}
-
-
-
-
-
-
-
-  /* Layout */
-  main{
-    max-width:var(--max);
-    margin:0 auto;
-    padding:120px 20px 60px;
+     HERO — ARTICLE MASTHEAD
+     ===================================================== */
+  .hero {
+    padding-top: 52px;
+    border-bottom: 1px solid var(--border);
+    background: var(--paper);
   }
 
-  /* Hero */
-  .kicker{
-    font-size:12px;
-    color:var(--muted);
-    text-transform:uppercase;
-    letter-spacing:.12em;
-  }
-  h1{
-    font-size:42px;
-    line-height:1.1;
-    margin-top:12px;
-    letter-spacing:-0.02em;
-  }
-  .meta{
-    margin-top:18px;
-    font-size:13px;
-    color:var(--muted);
-    display:flex;
-    gap:12px;
-    flex-wrap:wrap;
+  .hero-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: clamp(48px, 6vw, 88px) 24px clamp(40px, 5vw, 64px);
+    display: grid;
+    grid-template-columns: 1fr 380px;
+    gap: 0;
+    align-items: end;
   }
 
-  .divider{
-    height:1px;
-    background:var(--line);
-    margin:40px 0;
+  .hero-left {}
+
+  .hero-kicker {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
   }
 
-  /* Typography */
-  h2{
-    font-size:20px;
-    margin-top:48px;
-    margin-bottom:12px;
-    letter-spacing:-0.01em;
+  .hero-kicker-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.8;
   }
 
-  p{
-    margin:14px 0;
-    color:var(--text);
-    font-size:16px;
+  .hero-kicker-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+    max-width: 60px;
   }
 
-  .lead{
-    font-size:18px;
-    color:#2c2c2e;
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 10vw, 128px);
+    font-weight: 600;
+    line-height: 0.88;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--ink);
   }
 
-  .muted{
-    color:var(--muted);
+  .hero-right {
+    padding-bottom: 6px;
+    padding-left: 40px;
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
   }
 
-  /* Quote */
-  blockquote{
-    margin:40px 0;
-    padding-left:16px;
-    border-left:3px solid var(--accent);
-    font-size:20px;
-    line-height:1.4;
-    color:#2c2c2e;
+  .hero-meta-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
   }
 
-  /* Grid */
-  .grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:16px;
-    margin:24px 0;
+  .hero-meta-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
   }
 
-  .card{
-    background:var(--card);
-    border:1px solid var(--line);
-    border-radius:14px;
-    padding:18px;
+  .hero-meta-value {
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--ink-mid);
+    line-height: 1.5;
   }
 
-  .label{
-    font-size:11px;
-    letter-spacing:.12em;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-bottom:8px;
+  .hero-sub {
+    margin-top: 8px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    color: var(--ink-muted);
+    line-height: 1.75;
   }
 
-  /* Image */
-  .img{
-    width:100%;
-    margin:28px 0;
-    border:1px solid var(--line);
-  }
-
-  @media(max-width:720px){
-    /* Image */
-    .img{
-      width:100%;
+  @media (max-width: 768px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .hero-right {
+      padding-left: 0;
+      border-left: none;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .hero-sub {
+      width: 100%;
     }
   }
 
-  /* Table */
-  .table{
-    border:1px solid var(--line);
-    border-radius:14px;
-    overflow:hidden;
-    margin:24px 0;
-    background:var(--card);
-  }
-  .row{
-    display:grid;
-    grid-template-columns:200px 1fr;
-    gap:12px;
-    padding:14px 16px;
-    border-bottom:1px solid var(--line);
-  }
-  .row:last-child{border-bottom:none}
-  .key{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em}
-  .val{font-size:14px}
-
-
-
-  @media(max-width:720px){
-    h1{font-size:34px}
-    .grid{grid-template-columns:1fr}
-    .row{grid-template-columns:1fr}
+  /* =====================================================
+     ARTICLE BODY
+     ===================================================== */
+  .article-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 0;
+    align-items: start;
   }
 
+  /* Sticky index sidebar */
+  .article-index {
+    position: sticky;
+    top: 72px;
+    padding: clamp(40px, 5vw, 64px) 0;
+    padding-right: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
 
+  .index-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 12px;
+  }
 
+  .index-item {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: var(--ink-muted);
+    padding: 5px 0;
+    border-left: 1px solid var(--border);
+    padding-left: 12px;
+    transition: color 0.2s ease, border-color 0.2s ease;
+    text-transform: uppercase;
+  }
+
+  .index-item:hover,
+  .index-item.active {
+    color: var(--ink);
+    border-left-color: var(--ink);
+  }
+
+  .article-body {
+    border-left: 1px solid var(--border);
+    padding: clamp(40px, 5vw, 64px) 0 clamp(40px, 5vw, 64px) clamp(32px, 4vw, 56px);
+  }
+
+  @media (max-width: 860px) {
+    .article-wrap {
+      grid-template-columns: 1fr;
+    }
+    .article-index { display: none; }
+    .article-body {
+      border-left: none;
+      padding-left: 0;
+    }
+  }
 
   /* =====================================================
-     DEPLOY — WHITE EDITORIAL (ADAPTED)
+     ARTICLE TYPOGRAPHY
      ===================================================== */
-.deploy-section {
-  position: relative;
-  background: #f0ede8;
-  overflow: hidden;
-  isolation: isolate;
-  margin-top: 40px;
-  border-top: 1px solid var(--line);
-}
+  .section {
+    margin-bottom: clamp(48px, 6vw, 72px);
+    scroll-margin-top: 80px;
+  }
 
-/* kill noise */
-.deploy-section::before,
-.deploy-section::after { display:none !important; }
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
 
-/* layout */
-.deploy-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  max-width: 100%;
-  margin: 0;
-  align-items: stretch;
-  min-height: 70svh;
-}
+  .section-number {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+    flex-shrink: 0;
+  }
 
-/* left */
-.deploy-left {
-  padding: clamp(48px, 6vw, 96px) clamp(32px, 5vw, 80px);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-right: 1px solid rgba(0,0,0,0.1);
-}
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 0.92;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
 
-.deploy-title {
-  font-size: clamp(56px, 8vw, 110px);
-  line-height: 0.9;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
+  .article-body p {
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: var(--ink-mid);
+    margin-bottom: 18px;
+    max-width: 640px;
+  }
 
-.deploy-desc {
-  font-size: clamp(13px, 1.1vw, 15px);
-  color: var(--muted);
-  line-height: 1.8;
-  max-width: 380px;
-  margin-top: auto;
-  padding-top: 48px;
-}
+  .article-body p strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
 
-/* right */
-.deploy-right {
-  display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
-}
+  .article-body blockquote {
+    margin: 36px 0;
+    padding: 24px 28px;
+    border-left: 3px solid var(--ink);
+    background: var(--paper-mid);
+  }
 
-/* cards */
-.deploy-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: clamp(32px, 4vw, 56px) clamp(32px, 4vw, 60px);
-  text-decoration: none;
-  border: none;
-  background: transparent;
-  position: relative;
-  overflow: hidden;
-}
+  .article-body blockquote p {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 3vw, 30px);
+    font-weight: 500;
+    line-height: 1.1;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    margin: 0;
+  }
 
-/* first card */
-.deploy-card:first-child {
-  background: #e8e4de;
-  border-bottom: 1px solid rgba(0,0,0,0.1);
-  color: #0a0a0a;
-}
+  /* =====================================================
+     IMAGES
+     ===================================================== */
+  .article-img-wrap {
+    margin: 32px 0 36px;
+  }
 
-.deploy-card:first-child::before {
-  content:'';
-  position:absolute;
-  inset:0;
-  background:#0a0a0a;
-  transform:translateY(101%);
-  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
-  z-index:0;
-}
+  .article-img-wrap img {
+    width: 100%;
+    display: block;
+    filter: sepia(8%) contrast(1.02);
+  }
 
-.deploy-card:first-child:hover::before {
-  transform:translateY(0);
-}
+  .article-img-caption {
+    margin-top: 10px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
 
-.deploy-card:first-child:hover {
-  color:#f0ede8;
-}
+  /* =====================================================
+     DATA CARDS / GRID
+     ===================================================== */
+  .data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    margin: 28px 0 32px;
+    border: 1px solid var(--border);
+  }
 
-/* middle card */
-.deploy-card:nth-child(2) {
-  background:#f5f5f7;
-  border-bottom:1px solid rgba(0,0,0,0.1);
-}
+  .data-card {
+    background: var(--paper);
+    padding: 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
 
-.deploy-card:nth-child(2)::before {
-  content:'';
-  position:absolute;
-  inset:0;
-  background:#0a0a0a;
-  transform:translateY(101%);
-  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
-  z-index:0;
-}
+  .data-card-label {
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    opacity: 0.7;
+  }
 
-.deploy-card:nth-child(2):hover::before {
-  transform:translateY(0);
-}
+  .data-card-body {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--ink-muted);
+  }
 
-.deploy-card:nth-child(2):hover {
-  color:#ffffff;
-}
+  @media (max-width: 540px) {
+    .data-grid { grid-template-columns: 1fr; }
+  }
 
-/* highlight card */
-.deploy-card-highlight {
-  background:#1e454b !important;
-  color:#f0ede8;
-}
+  /* =====================================================
+     SPEC TABLE
+     ===================================================== */
+  .spec-table {
+    border: 1px solid var(--border);
+    margin: 28px 0 32px;
+    background: var(--paper);
+  }
 
-.deploy-card-highlight::before {
-  content:'';
-  position:absolute;
-  inset:0;
-  background:#7da5ab;
-  transform:translateY(101%);
-  transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
-  z-index:0;
-}
+  .spec-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .spec-row:last-child { border-bottom: none; }
 
-.deploy-card-highlight:hover::before {
-  transform:translateY(0);
-}
+  .spec-key {
+    padding: 13px 16px;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    border-right: 1px solid var(--border);
+    background: var(--paper-mid);
+  }
 
-/* content above wipe */
-.deploy-card-label,
-.deploy-card-title,
-.deploy-card-arrow {
-  position: relative;
-  z-index: 1;
-}
+  .spec-val {
+    padding: 13px 18px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 300;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
 
-.deploy-card-label {
-  font-size: 10px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  opacity: 0.5;
-  margin-bottom: 12px;
-}
+  @media (max-width: 540px) {
+    .spec-row { grid-template-columns: 1fr; }
+    .spec-key { border-right: none; border-bottom: 1px solid var(--border); }
+  }
 
-.deploy-card-title {
-  font-size: clamp(28px, 3vw, 42px);
-  font-weight: 600;
-  line-height: 1;
-}
+  /* =====================================================
+     DIVIDER
+     ===================================================== */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 0 0 clamp(40px, 5vw, 56px);
+  }
 
-/* arrow */
-.deploy-card-arrow {
-  position: absolute;
-  top: clamp(20px, 3vw, 32px);
-  right: clamp(20px, 3vw, 32px);
-  width: 24px;
-  height: 24px;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  opacity: 0.3;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
+  /* =====================================================
+     DEPLOY SECTION
+     ===================================================== */
+  .deploy-section {
+    background: var(--cream);
+    border-top: 1px solid var(--border);
+    overflow: hidden;
+  }
 
-.deploy-card:hover .deploy-card-arrow {
-  opacity: 0.7;
-  transform: translate(3px, -3px);
-}
-
-.deploy-card-arrow svg {
-  width: 10px;
-}
-
-/* mobile */
-@media (max-width: 900px) {
   .deploy-inner {
-    grid-template-columns: 1fr;
-    min-height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 60svh;
+    align-items: stretch;
   }
+
   .deploy-left {
-    border-right: none;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    gap: 40px;
+    padding: clamp(48px, 6vw, 88px) clamp(32px, 5vw, 80px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-right: 1px solid var(--border);
   }
-  .deploy-right {
-    grid-template-rows: auto auto auto;
+
+  .deploy-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    margin-bottom: 20px;
   }
-  .deploy-card {
-    min-height: 220px;
+
+  .deploy-title {
+    font-family: var(--font-display);
+    font-size: clamp(56px, 8vw, 110px);
+    font-weight: 600;
+    line-height: 0.88;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    color: var(--ink);
   }
+
   .deploy-desc {
-    padding-top: 32px;
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink-muted);
+    line-height: 1.85;
+    max-width: 360px;
+    padding-top: 40px;
+    margin-top: auto;
   }
-}
+
+  .deploy-right {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+  }
+
+  .deploy-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: clamp(28px, 3.5vw, 48px) clamp(28px, 3.5vw, 52px);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink);
+    transition: color 0.3s ease;
+  }
+  .deploy-card:last-child { border-bottom: none; }
+
+  .deploy-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--black);
+    transform: translateY(101%);
+    transition: transform 0.48s cubic-bezier(0.16,1,0.3,1);
+    z-index: 0;
+  }
+  .deploy-card:hover::before { transform: translateY(0); }
+  .deploy-card:hover { color: var(--white); }
+
+  .deploy-card-highlight {
+    background: var(--accent) !important;
+    color: var(--white);
+  }
+  .deploy-card-highlight::before {
+    background: #7da5ab;
+  }
+
+  .deploy-card-label,
+  .deploy-card-title,
+  .deploy-card-arrow {
+    position: relative;
+    z-index: 1;
+  }
+
+  .deploy-card-label {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    opacity: 0.45;
+    margin-bottom: 10px;
+  }
+
+  .deploy-card-title {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 600;
+    text-transform: uppercase;
+    line-height: 0.93;
+    letter-spacing: -0.01em;
+  }
+
+  .deploy-card-arrow {
+    position: absolute;
+    top: clamp(20px, 2.5vw, 32px);
+    right: clamp(20px, 2.5vw, 32px);
+    width: 28px; height: 28px;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.25;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  .deploy-card:hover .deploy-card-arrow {
+    opacity: 0.6;
+    transform: translate(3px,-3px);
+  }
+  .deploy-card-arrow svg { width: 11px; }
+
+  @media (max-width: 860px) {
+    .deploy-inner { grid-template-columns: 1fr; min-height: auto; }
+    .deploy-left { border-right: none; border-bottom: 1px solid var(--border); }
+    .deploy-right { grid-template-rows: repeat(3, auto); }
+    .deploy-card { min-height: 180px; }
+  }
 
   /* =====================================================
      FOOTER
@@ -545,23 +660,17 @@
     align-items: center;
     justify-content: space-between;
     padding: 22px clamp(24px, 4vw, 56px);
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background: #ffffff;
+    border-top: 1px solid var(--border);
+    background: var(--paper);
   }
- 
-  .footer-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
- 
+
   .footer-copy {
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 0.1em;
-    color: rgba(0, 0, 0, 0.534);
+    color: var(--ink-muted);
   }
- 
+
   .footer-center {
     position: absolute;
     left: 50%;
@@ -569,57 +678,51 @@
     display: flex;
     gap: 28px;
   }
- 
+
   .footer-center a {
     font-family: var(--font-mono);
     font-size: 9px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: rgba(0, 0, 0, 0.534);
-    text-decoration: none;
+    color: var(--ink-muted);
     transition: color 0.2s ease;
   }
- 
-  .footer-center a:hover { color: var(--white); }
- 
-  .footer-right {
-    display: flex;
-    align-items: center;
-  }
- 
-  .footer-flag {
-    width: 24px;
-    height: auto;
-    opacity: 0.7;
-  }
- 
+  .footer-center a:hover { color: var(--ink); font-weight: 700; }
+
+  .footer-flag { width: 24px; height: auto; opacity: 0.7; }
+
   @media (max-width: 768px) {
-    .footer-minimal {
-      flex-direction: column;
-      gap: 20px;
-      text-align: center;
-    }
-    .footer-center {
-      position: static;
-      transform: none;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }}
+    .footer-minimal { flex-direction: column; gap: 20px; text-align: center; }
+    .footer-center { position: static; transform: none; flex-wrap: wrap; justify-content: center; gap: 20px; }
+  }
+
+  /* =====================================================
+     REVEAL ANIMATIONS
+     ===================================================== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
 </style>
 </head>
 
 <body>
 
-<div class="progress"><div class="bar" id="bar"></div></div>
+<div class="progress"><div class="progress-bar" id="progressBar"></div></div>
 
 <!-- ===================== NAVBAR ===================== -->
- <!-- ===================== NAVBAR ===================== -->
-  <!-- ===================== NAVBAR ===================== -->
 <nav class="navbar" id="navbar">
   <div class="nav-inner">
     <a class="nav-brand" href="index.html">
-      <img src="images/Renders/WebP/BlackLogo1.webp" alt="Vanar Robots">
+      <img src="images/Renders/WebP/BlackLogo1.webp" height="22" alt="Vanar Robots">
     </a>
     <div class="nav-center" id="navLinks">
       <a href="Gen1.html">Generation‑1</a>
@@ -629,7 +732,7 @@
     </div>
     <div class="nav-actions">
       <a href="interest.html" class="nav-pill">Request Access</a>
-      <div class="nav-toggle" onclick="toggleNav()">
+      <div class="nav-toggle" onclick="document.getElementById('navLinks').classList.toggle('active')">
         <div class="nav-dot"></div>
         <div class="nav-dot"></div>
       </div>
@@ -637,193 +740,235 @@
   </div>
 </nav>
 
-<script>
-  /* ---- Nav ---- */
-  function toggleNav() {
-    document.getElementById('navLinks').classList.toggle('active');
-  }
-
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.style.background = window.scrollY > 60
-      ? 'white'
-      : 'white';
-  });
-  </script>
-<!-- ===================== NAVBAR ===================== -->
- <!-- ===================== NAVBAR ===================== -->
-  <!-- ===================== NAVBAR ===================== -->
-
-
-<main>
-
-<div class="hero-minimal">
-
-  <div class="hero-top">
-    <div class="hero-eyebrow">Research</div>
-    <div class="hero-meta">Mumbai · 7 min read</div>
+<!-- ===================== HERO MASTHEAD ===================== -->
+<header class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-kicker">
+        <span class="hero-kicker-label">// Research</span>
+        <div class="hero-kicker-line"></div>
+      </div>
+      <h1 class="hero-title">Speeding<br>Up<br>Humanity's<br>Progress</h1>
+    </div>
+    <div class="hero-right">
+      <div class="hero-meta-row">
+        <span class="hero-meta-label">Location</span>
+        <span class="hero-meta-value">Mumbai, India</span>
+      </div>
+      <div class="hero-meta-row">
+        <span class="hero-meta-label">Read time</span>
+        <span class="hero-meta-value">7 minutes</span>
+      </div>
+      <div class="hero-meta-row">
+        <span class="hero-meta-label">Filed under</span>
+        <span class="hero-meta-value">Vision · Philosophy</span>
+      </div>
+      <p class="hero-sub">
+        Expanding our ability to execute expands what humanity can become.
+      </p>
+    </div>
   </div>
+</header>
 
-  <h1 class="hero-title">
-    Speeding Up<br>Humanity’s Progress
-  </h1>
+<!-- ===================== ARTICLE ===================== -->
+<div class="article-wrap">
 
-  <p class="hero-sub">
-    Expanding our ability to execute expands what humanity can become.
-  </p>
+  <!-- Sidebar index -->
+  <nav class="article-index">
+    <div class="index-label">Contents</div>
+    <a href="#origin" class="index-item" data-section="origin">01 Origin</a>
+    <a href="#selection" class="index-item" data-section="selection">02 Selection</a>
+    <a href="#intelligence" class="index-item" data-section="intelligence">03 Intelligence</a>
+    <a href="#constraint" class="index-item" data-section="constraint">04 Constraint</a>
+    <a href="#response" class="index-item" data-section="response">05 Response</a>
+    <a href="#outcome" class="index-item" data-section="outcome">06 Outcome</a>
+  </nav>
 
+  <!-- Body -->
+  <article class="article-body">
+
+    <!-- 01 ORIGIN -->
+    <section class="section reveal" id="origin">
+      <div class="section-head">
+        <span class="section-number">01</span>
+        <h2 class="section-title">Origin</h2>
+      </div>
+
+      <div class="article-img-wrap reveal reveal-delay-1">
+        <img src="images/Renders/WebP/asteroids.webp" alt="Cosmic universe" />
+        <div class="article-img-caption">The observable universe — 13.8 billion years of matter becoming</div>
+      </div>
+
+      <p>The universe began approximately 13.8 gigayears ago with the Big Bang — not an explosion in space, but an expansion of space itself. From an extremely hot, dense state, the universe evolved through well-understood physical laws. Within minutes, the first nuclei formed. Over millions of years, matter cooled enough to allow atoms to form, followed by the gravitational collapse of gas into the first stars and galaxies.</p>
+
+      <p>Inside these stars, nuclear fusion produced heavier elements — carbon, oxygen, iron — the essential building blocks of planets and life. When massive stars ended their lives in supernova explosions, they scattered these elements across space, enriching future generations of stars and planetary systems. Our solar system, formed around 4.5 Gyr ago, is a direct consequence of this cosmic recycling process.</p>
+
+      <p>Early Earth was chemically active and volatile. Through processes studied under abiogenesis, simple organic molecules began forming increasingly complex structures. While the exact pathway from chemistry to biology remains an open question, experiments and evidence suggest that energy sources such as ultraviolet radiation, geothermal activity, and lightning may have driven the synthesis of self-organizing molecular systems.</p>
+
+      <p>This transition represents one of the most significant thresholds in the history of the universe: matter becoming capable of storing information, adapting, and evolving. From that point onward, evolution through natural selection began shaping increasingly complex organisms — a process that would unfold over billions of years.</p>
+
+      <blockquote><p>Matter became capable of learning.</p></blockquote>
+    </section>
+
+    <!-- 02 SELECTION -->
+    <section class="section reveal" id="selection">
+      <div class="section-head">
+        <span class="section-number">02</span>
+        <h2 class="section-title">Selection</h2>
+      </div>
+
+      <p>Once life emerged, it diversified through evolution by natural selection — a process in which heritable traits that improve survival and reproduction become more common over generations. Over billions of years, life evolved from single-celled organisms into complex multicellular systems, forming ecosystems of immense diversity.</p>
+
+      <p>However, evolution is not a linear progression. It is repeatedly interrupted by catastrophic events. The Cretaceous-Paleogene extinction event, caused by a large asteroid impact approximately 66 million years ago, eliminated nearly 75% of all species on Earth, including the dinosaurs. Yet life persisted, adapted, and continued evolving.</p>
+
+      <p>From this long trajectory emerged Homo sapiens — a species defined not by physical dominance, but by cognitive capability. Humans possess the ability to model reality, accumulate knowledge across generations, and extend perception far beyond immediate experience. Through disciplines such as quantum physics, cosmology, and biology, humanity has constructed an understanding of the universe that spans from subatomic particles to cosmic-scale structures.</p>
+
+      <blockquote><p>Unlike previous species, humanity is aware of existential risk. More importantly, we possess the ability to act on that awareness.</p></blockquote>
+    </section>
+
+    <!-- 03 TWO FORMS OF INTELLIGENCE -->
+    <section class="section reveal" id="intelligence">
+      <div class="section-head">
+        <span class="section-number">03</span>
+        <h2 class="section-title">Two Forms of Intelligence</h2>
+      </div>
+
+      <p>This introduces a meaningful distinction in forms of intelligence. The first is survival-driven, found across the animal kingdom, focused on immediate needs such as food, reproduction, and safety. The second is exploratory — the capacity to question, model, and understand the nature of reality, as well as to anticipate future risks and possibilities. Humans uniquely operate at both levels.</p>
+
+      <div class="data-grid reveal reveal-delay-1">
+        <div class="data-card">
+          <div class="data-card-label">Survival-driven</div>
+          <div class="data-card-body">Found across the animal kingdom. Focused on immediate needs — food, reproduction, safety. Reactive. Cannot model unknown futures.</div>
+        </div>
+        <div class="data-card">
+          <div class="data-card-label">Exploratory</div>
+          <div class="data-card-body">The capacity to question, model, and understand reality. Enables science, prediction, and civilization-scale thinking.</div>
+        </div>
+      </div>
+
+      <p>This dual capability allows us not only to survive, but to recognize that life itself is fragile. Earth has experienced multiple extinction events, and future risks — ranging from asteroid impacts to climate instability, geological activity, and even self-inflicted threats — remain real. Unlike previous species, we can see these risks coming. And we can choose to act.</p>
+    </section>
+
+    <!-- 04 THE CONSTRAINT -->
+    <section class="section reveal" id="constraint">
+      <div class="section-head">
+        <span class="section-number">04</span>
+        <h2 class="section-title">The Constraint</h2>
+      </div>
+
+      <p>To ensure the long-term survival and expansion of life, humanity must operate beyond its current constraints. This includes stabilizing and improving conditions on Earth while developing the capability to sustain life beyond a single planet.</p>
+
+      <p><strong>The limiting factor is not just knowledge. It is execution.</strong></p>
+
+      <p>Human biological systems impose strict constraints on physical output. The body requires rest, is susceptible to fatigue and injury, and cannot sustain continuous peak performance.</p>
+
+      <p>Even with existing automation, a significant portion of global infrastructure still depends on biological labor and rigid industrial systems. Traditional automation can be slow to deploy, expensive to reconfigure, and limited to narrow use-cases. Scaling these systems efficiently across dynamic environments remains a challenge.</p>
+
+      <div class="spec-table reveal reveal-delay-1">
+        <div class="spec-row">
+          <div class="spec-key">Biological Constraint</div>
+          <div class="spec-val">Human bodies require rest. Cannot operate continuously at peak efficiency.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-key">Scale Problem</div>
+          <div class="spec-val">Scaling physical productivity using biological labor and traditional automation is slow, expensive, and difficult to adapt.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-key">Dependency</div>
+          <div class="spec-val">Global systems rely on biological labor and fixed automation that lack flexibility.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-key">Consequence</div>
+          <div class="spec-val">Progress is bounded by execution capacity, not ideas.</div>
+        </div>
+      </div>
+
+      <blockquote><p>Progress is bounded not by ideas, but by the rate of physical execution.</p></blockquote>
+    </section>
+
+    <!-- 05 THE RESPONSE -->
+    <section class="section reveal" id="response">
+      <div class="section-head">
+        <span class="section-number">05</span>
+        <h2 class="section-title">The Response</h2>
+      </div>
+
+      <div class="article-img-wrap reveal reveal-delay-1">
+        <img src="images/Renders/WebP/File155.webp" alt="Vanar Generation 1 humanoid robot" />
+        <div class="article-img-caption">Vanar Generation 1 — designed for sustained, high-precision industrial work</div>
+      </div>
+
+      <p>Vanar Robots is building a new class of systems designed to address these constraints — general-purpose humanoid robots capable of sustained, high-speed, high-precision work across dynamic environments.</p>
+
+      <p>Beginning with Generation 1, we aim for near-continuous operation (~24/7) with consistency and adaptability comparable to human labor.</p>
+
+      <p>Each system improves over time through accumulated experience, refining execution, reducing errors, and optimizing performance.</p>
+
+      <p>Long-term, multiple systems coordinate autonomously, interpreting goals, decomposing tasks, and executing collaboratively. Given high-level objectives like "build a spacecraft," such systems determine the required steps and processes independently.</p>
+
+      <p>The human role shifts from execution to intent definition.</p>
+    </section>
+
+    <!-- 06 THE OUTCOME -->
+    <section class="section reveal" id="outcome">
+      <div class="section-head">
+        <span class="section-number">06</span>
+        <h2 class="section-title">The Outcome</h2>
+      </div>
+
+      <div class="article-img-wrap reveal reveal-delay-1">
+        <img src="images/Renders/WebP/spaceship.webp" alt="Future civilization and space expansion" />
+        <div class="article-img-caption">The long game — humanity expanding beyond a single planet</div>
+      </div>
+
+      <p>The result is a step-change in execution speed. Tasks that once took years become significantly faster. Infrastructure scales rapidly. Complex projects become feasible.</p>
+
+      <p>This is not incremental efficiency. It is a change in slope.</p>
+
+      <p>By increasing execution capacity, humanity unlocks the ability to build more, faster, and expand beyond Earth.</p>
+
+      <div class="spec-table reveal reveal-delay-1">
+        <div class="spec-row">
+          <div class="spec-key">Acceleration</div>
+          <div class="spec-val">Years of work reduced dramatically.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-key">Infrastructure</div>
+          <div class="spec-val">Faster construction and deployment at scale.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-key">Possibility</div>
+          <div class="spec-val">Previously impractical outcomes become achievable.</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-key">The Long Game</div>
+          <div class="spec-val">Humanity expands beyond current boundaries.</div>
+        </div>
+      </div>
+
+      <blockquote><p>Speeding up humanity's progress.</p></blockquote>
+    </section>
+
+  </article>
 </div>
 
-<div class="divider"></div>
-
-  <h2>Origin</h2>
-  <img class="img" src="images/Renders/WebP/asteroids.webp" alt="Cosmic universe" />
-
-  <p>The universe began approximately 13.8 gigayear ago with the Big Bang, not an explosion in space, but an expansion of space itself. From an extremely hot, dense state, the universe evolved through well-understood physical laws. Within minutes, the first nuclei formed. Over millions of years, matter cooled enough to allow atoms to form, followed by the gravitational collapse of gas into the first stars and galaxies.</p>
-
-  <p>Inside these stars, nuclear fusion produced heavier elements, carbon, oxygen, iron, the essential building blocks of planets and life. When massive stars ended their lives in supernova explosions, they scattered these elements across space, enriching future generations of stars and planetary systems. Our solar system, formed around 4.5 Gyr ago, is a direct consequence of this cosmic recycling process.</p>
-
-  <p>Early Earth was chemically active and volatile. Through processes studied under abiogenesis, simple organic molecules began forming increasingly complex structures. While the exact pathway from chemistry to biology remains an open question, experiments and evidence suggest that energy sources such as ultraviolet radiation, geothermal activity, and lightning may have driven the synthesis of self-organizing molecular systems. Over time, these systems developed the ability to replicate and evolve, marking the transition from non-living chemistry to life.</p>
-
-  <p>This transition represents one of the most significant thresholds in the history of the universe: matter becoming capable of storing information, adapting, and evolving. From that point onward, evolution through natural selection began shaping increasingly complex organisms, a process that would unfold over billions of years.</p>
-
-  <blockquote>
-    Matter became capable of learning.
-  </blockquote>
-
-  <h2>Selection</h2>
-
-  <p>Once life emerged, it diversified through evolution by natural selection, a process in which heritable traits that improve survival and reproduction become more common over generations. Over billions of years, life evolved from single-celled organisms into complex multicellular systems, forming ecosystems of immense diversity.</p>
-
-  <p>However, evolution is not a linear progression. It is repeatedly interrupted by catastrophic events. The Cretaceous-Paleogene extinction event, caused by a large asteroid impact approximately 66 million years ago, eliminated nearly 75% of all species on Earth, including the dinosaurs. Yet life persisted, adapted, and continued evolving.</p>
-
-  <p>From this long trajectory emerged Homo sapiens, a species defined not by physical dominance, but by cognitive capability. Humans possess the ability to model reality, accumulate knowledge across generations, and extend perception far beyond immediate experience. Through disciplines such as quantum physics, cosmology, and biology, humanity has constructed an understanding of the universe that spans from subatomic particles to cosmic-scale structures.</p>
-
-  <blockquote>
-    Unlike previous species, humanity is aware of existential risk. More importantly, we possess the ability to act on that awareness.
-  </blockquote>
-
-  <h2>Two Forms of Intelligence</h2>
-
-  <p>This introduces a meaningful distinction in forms of intelligence. The first is survival-driven, found across the animal kingdom, focused on immediate needs such as food, reproduction, and safety. The second is exploratory, the capacity to question, model, and understand the nature of reality, as well as to anticipate future risks and possibilities. Humans uniquely operate at both levels.</p>
-
-  <div class="grid">
-    <div class="card">
-      <div class="label">Survival-driven</div>
-      <p class="muted">Found across the animal kingdom. Focused on immediate needs, food, reproduction, safety. Reactive. Cannot model unknown futures.</p>
-    </div>
-    <div class="card">
-      <div class="label">Exploratory</div>
-      <p class="muted">The capacity to question, model, and understand reality. Enables science, prediction, and civilization-scale thinking.</p>
-    </div>
-  </div>
-
-  <p>This dual capability allows us not only to survive, but to recognize that life itself is fragile. Earth has experienced multiple extinction events, and future risks, ranging from asteroid impacts to climate instability, geological activity, and even self-inflicted threats, remain real. Unlike previous species, we can see these risks coming. And we can choose to act.</p>
-
-  <h2>The Constraint</h2>
-
-  <p>To ensure the long-term survival and expansion of life, humanity must operate beyond its current constraints. This includes stabilizing and improving conditions on Earth while developing the capability to sustain life beyond a single planet.</p>
-
-  <p><strong>The limiting factor is not just knowledge. It is execution.</strong></p>
-
-  <p>Human biological systems impose strict constraints on physical output. The body requires rest, is susceptible to fatigue and injury, and cannot sustain continuous peak performance.</p>
-
-  <p>Even with existing automation, a significant portion of global infrastructure still depends on biological labor and rigid industrial systems. Traditional automation can be slow to deploy, expensive to reconfigure, and limited to narrow use-cases. Scaling these systems efficiently across dynamic environments remains a challenge.</p>
-
-  <div class="table">
-    <div class="row">
-      <div class="key">Biological Constraint</div>
-      <div class="val">Human bodies require rest. Cannot operate continuously at peak efficiency.</div>
-    </div>
-    <div class="row">
-      <div class="key">Scale Problem</div>
-      <div class="val">Scaling physical productivity using biological labor and traditional automation is slow, expensive, and difficult to adapt.</div>
-    </div>
-    <div class="row">
-      <div class="key">Dependency</div>
-      <div class="val">Global systems rely on biological labor and fixed automation that lack flexibility.</div>
-    </div>
-    <div class="row">
-      <div class="key">Consequence</div>
-      <div class="val">Progress is bounded by execution capacity, not ideas.</div>
-    </div>
-  </div>
-
-  <blockquote>
-    Progress is bounded not by ideas, but by the rate of physical execution.
-  </blockquote>
-
-  <h2>The Response</h2>
-  <img class="img" src="images/Renders/WebP/File155.webp" alt="Humanoid robot" />
-
-  <p>Vanar Robots is building a new class of systems designed to address these constraints, general-purpose humanoid robots capable of sustained, high-speed, high-precision work across dynamic environments.</p>
-
-  <p>Beginning with Generation 1, we aim for near-continuous operation (~24/7) with consistency and adaptability comparable to human labor.</p>
-
-  <p>Each system improves over time through accumulated experience, refining execution, reducing errors, and optimizing performance.</p>
-
-  <p>Long-term, multiple systems coordinate autonomously, interpreting goals, decomposing tasks, and executing collaboratively.</p>
-
-  <p>Given high-level objectives like “build a spacecraft,” such systems determine the required steps and processes independently.</p>
-
-  <p>The human role shifts from execution to intent definition.</p>
-
-  <h2>The Outcome</h2>
-  <img class="img" src="images/Renders/WebP/spaceship.webp" alt="Future civilization and space" />
-
-  <p>The result is a step-change in execution speed. Tasks that once took years become significantly faster. Infrastructure scales rapidly. Complex projects become feasible.</p>
-
-  <p>This is not incremental efficiency. It is a change in slope.</p>
-
-  <p>By increasing execution capacity, humanity unlocks the ability to build more, faster, and expand beyond Earth.</p>
-
-  <div class="table">
-    <div class="row">
-      <div class="key">Acceleration</div>
-      <div class="val">Years of work reduced dramatically.</div>
-    </div>
-    <div class="row">
-      <div class="key">Infrastructure</div>
-      <div class="val">Faster construction and deployment at scale.</div>
-    </div>
-    <div class="row">
-      <div class="key">Possibility</div>
-      <div class="val">Previously impractical outcomes become achievable.</div>
-    </div>
-    <div class="row">
-      <div class="key">The Long Game</div>
-      <div class="val">Humanity expands beyond current boundaries.</div>
-    </div>
-  </div>
-
-  <blockquote>
-    Speeding up the humanity's progress.
-  </blockquote>
-
-</main>
-
-
-<!-- ===================== Deploy ===================== -->
+<!-- ===================== DEPLOY ===================== -->
 <section class="deploy-section">
-
   <div class="deploy-inner">
-
     <div class="deploy-left">
-      <h2 class="deploy-title">
-        Bring A<br>Vanar<br>Into Your<br>Environment
-      </h2>
+      <div>
+        <div class="deploy-eyebrow">// Deploy</div>
+        <h2 class="deploy-title">Bring A<br>Vanar<br>Into Your<br>Environment</h2>
+      </div>
       <p class="deploy-desc">
         Limited beta units will be placed with select industrial partners. We will work directly with teams ready to shape how robots integrate into real-world environments.
       </p>
     </div>
 
     <div class="deploy-right">
-
       <a href="Gen1.html" class="deploy-card">
         <div class="deploy-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="deploy-card-label">Product Overview</div>
         <div class="deploy-card-title">Explore<br>Generation 1</div>
@@ -831,9 +976,7 @@
 
       <a href="contact.html" class="deploy-card">
         <div class="deploy-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
         <div class="deploy-card-label">Partnerships / Research / Media</div>
         <div class="deploy-card-title">Speak<br>With Us</div>
@@ -841,20 +984,14 @@
 
       <a href="interest.html" class="deploy-card deploy-card-highlight">
         <div class="deploy-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none">
-            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
-        <div class="deploy-card-label">Limited Beta</div>
+        <div class="deploy-card-label">Limited Beta Deployment</div>
         <div class="deploy-card-title">Request<br>Early Access</div>
       </a>
-
     </div>
-
   </div>
-
 </section>
-<!-- ===================== Deploy ===================== -->
 
 <!-- ===================== FOOTER ===================== -->
 <footer class="footer-minimal">
@@ -873,13 +1010,39 @@
 </footer>
 
 <script>
-  const bar = document.getElementById('bar');
+  /* Progress bar */
+  const bar = document.getElementById('progressBar');
   window.addEventListener('scroll', () => {
     const h = document.documentElement;
-    const max = h.scrollHeight - h.clientHeight;
-    const pct = (h.scrollTop / max) * 100;
-    bar.style.width = pct + '%';
+    bar.style.width = ((h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100) + '%';
   });
+
+  /* Reveal on scroll */
+  const revealEls = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        revealObs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.07, rootMargin: '0px 0px -32px 0px' });
+  revealEls.forEach(el => revealObs.observe(el));
+
+  /* Active index highlight */
+  const sections = document.querySelectorAll('.section');
+  const indexLinks = document.querySelectorAll('.index-item');
+  const indexObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const id = e.target.id;
+        indexLinks.forEach(a => {
+          a.classList.toggle('active', a.dataset.section === id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sections.forEach(s => indexObs.observe(s));
 </script>
 
 </body>
