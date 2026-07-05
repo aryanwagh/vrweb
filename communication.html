@@ -3,708 +3,508 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contact — Vanar Robots</title>
+<title>Vanar Robots — Get in Touch</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
   :root {
-    --black: #0a0a0a;
-    --dark: #111111;
-    --mid: #1a1a1a;
-    --border: rgba(255,255,255,0.08);
-    --white: #f0ede8;
-    --cream: #e8e4de;
-    --accent: #e4fffa;
-    --text-muted: rgba(240,237,232,0.45);
-    --font-display: 'Barlow Condensed', sans-serif;
-    --font-body: 'Barlow', sans-serif;
-    --font-mono: 'Helvetica', monospace;
+    --black:#070707; --white:#f6f6f6;
+    --dim:rgba(246,246,246,0.55); --faint:rgba(246,246,246,0.30); --line:rgba(246,246,246,0.17);
+    --font-display:'Switzer','Bricolage Grotesque','Inter',system-ui,sans-serif;
+    --font-desc:'Switzer','Inter',system-ui,-apple-system,sans-serif;
+    --font-body:'Inter',system-ui,-apple-system,sans-serif;
+    --edge: clamp(20px, 5.2vw, 88px);
+    --edge-sm: clamp(16px, 4vw, 56px);
+  }
+  html { overflow-x:hidden; overflow-x:clip; }
+  body { background:var(--black); color:var(--white); font-family:var(--font-body); font-weight:300; font-optical-sizing:auto; overflow-x:hidden; overflow-x:clip; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; min-height:100svh; display:flex; flex-direction:column; }
+  ::selection { background:var(--white); color:var(--black); }
+  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline:1px solid var(--white); outline-offset:3px; }
+  .flow-input:focus-visible, .flow-textarea:focus-visible { outline:none; }
+  button { font:inherit; }
+
+  /* ===== NAVBAR (matches main site) ===== */
+  .navbar { position:fixed; top:0; left:0; width:100%; height:clamp(52px,7vw,64px); background:rgba(7,7,7,0.55); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid var(--line); z-index:1000; }
+  .nav-inner { max-width:1440px; height:100%; margin:0 auto; padding:0 var(--edge-sm); display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .nav-brand { display:flex; align-items:center; flex-shrink:0; }
+  .nav-brand img { display:block; width:clamp(78px,9vw,100px); height:auto; }
+  .nav-links { display:flex; gap:clamp(18px,3vw,32px); align-items:center; }
+  .nav-links a { text-decoration:none; font-family:var(--font-body); font-size:clamp(13px,1.4vw,15px); font-weight:400; letter-spacing:0; color:var(--dim); transition:color .3s ease; white-space:nowrap; }
+  .nav-links a:hover, .nav-links a.current { color:var(--white); }
+  @media (max-width:400px){ .nav-links{ gap:14px;} .nav-links a{ font-size:12.5px;} }
+
+  /* ===== PROGRESS ===== */
+  .flow-progress { position:fixed; top:0; left:0; width:100%; height:2px; background:var(--line); z-index:1002; }
+  .flow-progress i { display:block; height:100%; width:0%; background:var(--white); transition:width .5s cubic-bezier(.19,.75,.24,1); }
+
+  /* ===== SHELL ===== */
+  .flow { flex:1; display:flex; flex-direction:column; padding-top:clamp(52px,7vw,64px); }
+  .flow-shell { flex:1; display:flex; flex-direction:column; max-width:760px; width:100%; margin:0 auto; padding:0 var(--edge); }
+  .flow-bar { display:flex; align-items:center; justify-content:space-between; padding:clamp(20px,3.5vw,32px) 0; gap:16px; }
+  .flow-direct-link { font-family:var(--font-body); font-size:13px; color:var(--faint); text-decoration:none; transition:color .25s ease; }
+  .flow-direct-link:hover { color:var(--white); }
+  .flow-count { font-family:var(--font-body); font-size:12px; letter-spacing:.02em; color:var(--faint); }
+  .flow-count[hidden] { visibility:hidden; }
+  .flow-back { background:none; border:none; padding:0; color:var(--dim); font-family:var(--font-body); font-size:14px; cursor:pointer; transition:color .25s ease; }
+  .flow-back:hover { color:var(--white); }
+
+  .flow-stage { flex:1; display:flex; min-height:clamp(420px,54vh,560px); }
+  .step { display:none; width:100%; flex-direction:column; justify-content:center; gap:0; opacity:0; filter:blur(10px); transform:translateY(16px); transition:opacity .55s cubic-bezier(.19,.75,.24,1), filter .55s cubic-bezier(.19,.75,.24,1), transform .55s cubic-bezier(.19,.75,.24,1); }
+  .step.active { display:flex; }
+  .step.active.in { opacity:1; filter:blur(0px); transform:none; }
+
+  .step-kicker { font-family:var(--font-body); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--faint); margin-bottom:clamp(14px,2vw,20px); }
+  .step-q { font-family:var(--font-display); font-weight:500; font-size:clamp(24px,3.6vw,40px); line-height:1.22; letter-spacing:-.015em; color:var(--white); max-width:22ch; }
+  .step-help { font-family:var(--font-desc); font-size:clamp(13.5px,1.3vw,15px); color:var(--dim); line-height:1.5; max-width:52ch; margin-top:12px; }
+
+  .flow-fields { display:flex; flex-direction:column; gap:clamp(20px,3vw,28px); margin-top:clamp(28px,4vw,40px); }
+  .flow-field-label { display:block; font-family:var(--font-body); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); margin-bottom:10px; }
+  .flow-input, .flow-textarea { width:100%; background:transparent; border:none; border-bottom:1px solid var(--line); color:var(--white); font-family:var(--font-display); font-weight:500; font-size:clamp(19px,2.6vw,28px); letter-spacing:-.01em; padding:10px 2px 14px; outline:none; transition:border-color .3s ease; }
+  .flow-input:focus, .flow-textarea:focus { border-color:var(--white); }
+  .flow-input::-webkit-contacts-auto-fill-button, .flow-input::-webkit-credentials-auto-fill-button,
+  .flow-input::-webkit-caps-lock-indicator { visibility:hidden; display:none !important; pointer-events:none; position:absolute; right:0; }
+  .flow-input::placeholder, .flow-textarea::placeholder { color:var(--faint); }
+  .flow-textarea { resize:none; height:120px; line-height:1.4; font-size:clamp(17px,2vw,22px); }
+
+  /* Conversational row list — deliberately different from the Deploy page's
+     hairline-grid tiles, since this page is about people reaching out, not
+     spec'ing an industrial deployment. */
+  .flow-choices { display:flex; flex-direction:column; margin-top:clamp(28px,4vw,40px); border-top:1px solid var(--line); }
+  .flow-choice { display:flex; align-items:center; gap:18px; padding:clamp(18px,2.6vw,22px) 2px; border:none; border-bottom:1px solid var(--line); background:transparent; text-align:left; color:var(--dim); font-family:var(--font-desc); font-size:clamp(15px,1.7vw,18px); cursor:pointer; transition:color .25s ease, padding-left .25s ease; }
+  .flow-choice::before { content:''; flex-shrink:0; width:9px; height:9px; border-radius:50%; border:1px solid var(--line); transition:background-color .25s ease, border-color .25s ease; }
+  .flow-choice::after { content:'→'; margin-left:auto; flex-shrink:0; color:var(--faint); opacity:0; transform:translateX(-6px); transition:opacity .25s ease, transform .25s ease; }
+  .flow-choice:hover { color:var(--white); padding-left:8px; }
+  .flow-choice:hover::before { border-color:var(--white); }
+  .flow-choice:hover::after, .flow-choice.selected::after { opacity:1; transform:none; }
+  .flow-choice.selected { color:var(--white); padding-left:8px; }
+  .flow-choice.selected::before { background:var(--white); border-color:var(--white); }
+
+  .flow-actions { display:flex; align-items:center; gap:20px; margin-top:clamp(32px,5vw,48px); flex-wrap:wrap; }
+  .flow-next { position:relative; display:inline-flex; align-items:center; justify-content:center; padding:15px 32px; border:1px solid rgba(246,246,246,0.35); background:transparent; color:var(--white); font-family:var(--font-body); font-size:15px; font-weight:400; cursor:pointer; white-space:nowrap; transition:background-color .5s cubic-bezier(.4,0,.2,1), color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1), opacity .3s ease; }
+  .flow-next:hover:not(:disabled) { background-color:var(--white); color:var(--black); border-color:var(--white); }
+  .flow-next:disabled { opacity:.3; cursor:not-allowed; }
+  .flow-hint { font-family:var(--font-body); font-size:12px; color:var(--faint); }
+  .flow-hint kbd { font-family:var(--font-body); border:1px solid var(--line); border-radius:3px; padding:1px 6px; color:var(--dim); }
+
+  /* ===== COVER STEP ===== */
+  .cover-eyebrow { font-family:var(--font-body); font-size:13px; letter-spacing:0; color:var(--dim); margin-bottom:clamp(18px,3vw,26px); }
+  .cover-title { font-family:var(--font-display); font-weight:500; font-size:clamp(34px,6vw,56px); line-height:1.1; letter-spacing:-.02em; color:var(--white); max-width:14ch; }
+  .cover-sub { font-family:var(--font-desc); font-size:clamp(14.5px,1.6vw,17px); color:var(--dim); line-height:1.55; max-width:48ch; margin-top:clamp(18px,2.5vw,24px); }
+  .cover-direct { margin-top:clamp(40px,6vw,56px); padding-top:clamp(24px,3.5vw,32px); border-top:1px solid var(--line); display:flex; flex-wrap:wrap; align-items:baseline; gap:clamp(10px,2vw,20px); }
+  .cover-direct-label { font-family:var(--font-body); font-size:13px; color:var(--faint); }
+  .cover-direct-links { display:flex; flex-wrap:wrap; gap:clamp(16px,2.5vw,24px); }
+  .cover-direct-links a { font-family:var(--font-body); font-size:14px; color:var(--dim); text-decoration:none; transition:color .25s ease; }
+  .cover-direct-links a:hover { color:var(--white); }
+
+  /* ===== CONFIRMATION OVERLAY ===== */
+  .flow-overlay { position:fixed; inset:0; background:var(--black); display:flex; align-items:center; justify-content:center; z-index:2000; opacity:0; pointer-events:none; transition:opacity .5s ease; padding:24px; }
+  .flow-overlay.active { opacity:1; pointer-events:auto; }
+  .confirm-box { max-width:520px; width:100%; text-align:center; }
+  .confirm-tag { font-family:var(--font-body); font-size:13px; color:var(--dim); margin-bottom:22px; }
+  .confirm-box h2 { font-family:var(--font-display); font-weight:500; font-size:clamp(30px,5vw,46px); line-height:1.1; letter-spacing:-.02em; color:var(--white); margin-bottom:20px; }
+  .confirm-box p { font-family:var(--font-desc); font-size:14.5px; color:var(--dim); line-height:1.6; margin-bottom:36px; }
+  .confirm-btn { display:inline-flex; align-items:center; justify-content:center; padding:14px 30px; border:1px solid rgba(246,246,246,0.35); color:var(--white); font-family:var(--font-body); font-size:14px; text-decoration:none; transition:background-color .5s cubic-bezier(.4,0,.2,1), color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1); }
+  .confirm-btn:hover { background-color:var(--white); color:var(--black); border-color:var(--white); }
+
+  /* ===== FOOTER (matches main site) ===== */
+  .site-footer { position:relative; background:var(--black); border-top:1px solid var(--line); z-index:1; overflow:hidden; }
+  .footer-top { display:flex; justify-content:space-between; gap:clamp(40px,6vw,80px); padding:clamp(48px,7vw,88px) var(--edge) clamp(32px,5vw,48px); flex-wrap:wrap; }
+  .footer-brand { flex:1 1 260px; max-width:380px; }
+  .footer-logo { display:block; width:clamp(88px,9vw,104px); height:auto; margin-bottom:clamp(16px,2.4vw,22px); }
+  .footer-tagline { font-family:var(--font-desc); font-size:clamp(13.5px,1.3vw,15px); color:var(--dim); line-height:1.55; max-width:34ch; }
+  .footer-cols { display:flex; gap:clamp(40px,6vw,88px); flex-shrink:0; }
+  .footer-col { display:flex; flex-direction:column; gap:clamp(10px,1.6vw,14px); min-width:110px; }
+  .footer-col-title { font-family:var(--font-body); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin-bottom:clamp(4px,1vw,8px); }
+  .footer-col a { font-family:var(--font-body); font-size:13.5px; color:var(--dim); text-decoration:none; transition:color .25s ease; width:fit-content; }
+  .footer-col a:hover { color:var(--white); }
+
+  .footer-bottom { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:clamp(18px,2.6vw,22px) var(--edge); border-top:1px solid var(--line); flex-wrap:wrap; }
+  .footer-copy { font-family:var(--font-body); font-size:12px; letter-spacing:0; color:var(--faint); }
+  .footer-made { display:flex; align-items:center; gap:8px; font-family:var(--font-body); font-size:12px; color:var(--faint); }
+  .footer-flag { width:18px; height:auto; opacity:.85; }
+
+  .footer-wordmark { font-family:var(--font-display); font-weight:600; letter-spacing:-.02em; line-height:.78; text-align:center; color:var(--white); opacity:.05; font-size:clamp(72px,17vw,220px); padding:0 var(--edge) clamp(8px,2vw,20px); user-select:none; pointer-events:none; white-space:nowrap; }
+
+  @media (max-width:768px){
+    .footer-top { flex-direction:column; gap:clamp(28px,6vw,36px); padding-bottom:clamp(28px,5vw,36px); }
+    .footer-cols { gap:clamp(32px,10vw,56px); }
+    .footer-bottom { flex-direction:column; text-align:center; padding-top:20px; padding-bottom:20px; }
   }
 
-  html { scroll-behavior: smooth; overflow-x: hidden; }
-
-  body {
-    background: var(--black);
-    color: var(--white);
-    font-family: var(--font-body);
-    font-weight: 300;
-    overflow-x: hidden;
-    min-height: 100vh;
+  @media (max-width:600px){
+    .flow-stage{ min-height:clamp(460px,62vh,620px); }
+    .flow-choices{ grid-template-columns:1fr; }
+    .cover-direct{ flex-direction:column; align-items:flex-start; gap:14px; }
   }
 
-
-  
-
- /* =====================================================
-   NAVBAR
-   ===================================================== */
-  .navbar {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 52px;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255,255,255,0.12);
-    z-index: 1000;
-    transition: background 0.3s ease;
-  }
-
-  .nav-inner {
-    max-width: 1100px;
-    height: 100%;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav-center {
-    display: flex;
-    gap: 34px;
-    align-items: center;
-  }
-
-  .nav-center a {
-    text-decoration: none;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
-    transition: all .25s ease;
-    font-family: var(--font-mono);
-  }
-
-  .nav-center a:hover { color: white; }
-
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .nav-pill {
-    border: 1px solid rgba(255,255,255,.25);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 10px;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: white;
-    font-family: var(--font-mono);
-    transition: all .25s ease;
-  }
-
-  .nav-pill:hover { background: white; color: black; }
-
-  .nav-toggle {
-    display: none;
-    width: 28px; height: 28px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    gap: 4px;
-  }
-
-  .nav-dot { width: 4px; height: 4px; background: #fff; border-radius: 50%; }
-
-  @media (max-width: 900px) {
-    .nav-center {
-      position: absolute;
-      top: 52px; left: 0; right: 0;
-      background: #0a0a0a;
-      flex-direction: column;
-      gap: 20px;
-      padding: 30px 0;
-      display: none;
-    }
-    .nav-center.active { display: flex; }
-    .nav-toggle { display: flex; }
-  }
-
-
-
-
-  /* ===== HERO / PAGE HEADER ===== */
-  .page-header {
-    padding-top: 52px;
-    position: relative;
-    overflow: hidden;
-    min-height: 48vh;
-    display: flex;
-    align-items: flex-end;
-  }
-
-  .page-header-bg {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 60% 0%, rgba(30,69,75,0.35) 0%, transparent 70%);
-    z-index: 0;
-  }
-
-  .page-header-inner {
-    position: relative;
-    z-index: 2;
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 64px 24px 56px;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    gap: 32px;
-  }
-
-  .page-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    color: var(--accent);
-    text-transform: uppercase;
-    opacity: 0.7;
-    margin-bottom: 16px;
-  }
-
-  .page-title {
-    font-family: var(--font-display);
-    font-size: clamp(72px, 10vw, 130px);
-    font-weight: 600;
-    line-height: 0.88;
-    letter-spacing: -0.01em;
-    text-transform: uppercase;
-    color: var(--white);
-  }
-
-  .page-header-right {
-    flex-shrink: 0;
-    padding-bottom: 8px;
-    max-width: 340px;
-  }
-
-  .page-header-desc {
-    font-family: var(--font-body);
-    font-size: clamp(13px, 1.1vw, 15px);
-    font-weight: 300;
-    color: var(--text-muted);
-    line-height: 1.9;
-  }
-
-  @media (max-width: 900px) {
-    .page-header-inner {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 28px;
-      padding: 48px 24px 48px;
-    }
-    .page-header-right {
-      max-width: 100%;
-    }
-  }
-
-  /* ===== DIVIDER LINE ===== */
-  .section-divider {
-    height: 1px;
-    background: var(--border);
-  }
-
-  /* ===== CONTACT GRID ===== */
-  .contact-body {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px 80px;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    align-items: start;
-  }
-
-  /* ===== CHANNELS COLUMN ===== */
-  .channels-col {
-    padding: 64px 48px 64px 0;
-    border-right: 1px solid var(--border);
-  }
-
-  .col-label {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--accent);
-    opacity: 0.55;
-    margin-bottom: 36px;
-  }
-
-  /* Channel row */
-  .channel-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 24px 0;
-    border-bottom: 1px solid var(--border);
-    text-decoration: none;
-    color: var(--white);
-    transition: border-color 0.25s ease;
-    gap: 20px;
-  }
-
-  .channel-row:first-of-type { border-top: 1px solid var(--border); }
-
-  .channel-row:hover { border-bottom-color: rgba(255,255,255,0.2); }
-
-  .channel-row:hover .channel-arrow { opacity: 1; transform: translate(3px, -3px); }
-
-  .channel-type {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 6px;
-  }
-
-  .channel-value {
-    font-family: var(--font-display);
-    font-size: clamp(18px, 1.8vw, 26px);
-    font-weight: 500;
-    letter-spacing: 0.02em;
-    text-transform: uppercase;
-    line-height: 1;
-    color: var(--white);
-  }
-
-  .channel-arrow {
-    width: 36px; height: 36px;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.4;
-    flex-shrink: 0;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-  }
-
-  .channel-arrow svg {
-    width: 14px; height: 14px;
-  }
-
-  /* ===== INTENT COLUMN ===== */
-  .intent-col {
-    padding: 64px 0 64px 48px;
-  }
-
-  /* Intent card */
-  .intent-card {
-    position: relative;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    background: var(--dark);
-    margin-bottom: 2px;
-    text-decoration: none;
-    color: var(--white);
-    display: block;
-    transition: border-color 0.3s ease;
-  }
-
-  .intent-card:last-child { margin-bottom: 0; }
-
-  .intent-card:hover { border-color: rgba(255,255,255,0.18); }
-
-  .intent-card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(255,255,255,0.03);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  .intent-card:hover::before { opacity: 1; }
-
-  .intent-card-inner {
-    padding: 32px 36px;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 20px;
-  }
-
-  .intent-card-left {}
-
-  .intent-card-tag {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    opacity: 0.6;
-    margin-bottom: 10px;
-  }
-
-  .intent-card-title {
-    font-family: var(--font-display);
-    font-size: clamp(22px, 2.4vw, 32px);
-    font-weight: 600;
-    text-transform: uppercase;
-    line-height: 1;
-    margin-bottom: 10px;
-    letter-spacing: -0.01em;
-  }
-
-  .intent-card-desc {
-    font-family: var(--font-body);
-    font-size: 13px;
-    font-weight: 300;
-    color: var(--text-muted);
-    line-height: 1.7;
-    max-width: 280px;
-  }
-
-  .intent-card-arrow {
-    width: 32px; height: 32px;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.35;
-    flex-shrink: 0;
-    margin-top: 4px;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-
-  .intent-card:hover .intent-card-arrow {
-    opacity: 0.8;
-    transform: translate(3px, -3px);
-  }
-
-  .intent-card-arrow svg { width: 13px; height: 13px; }
-
-  /* Accent (teal) card */
-  .intent-card-accent {
-    background: #1e454b;
-    border-color: transparent;
-  }
-
-  .intent-card-accent:hover { border-color: rgba(255,255,255,0.12); }
-
-  /* ===== LOCATION STRIP ===== */
-  .location-strip {
-    border-top: 1px solid var(--border);
-    background: var(--dark);
-  }
-
-  .location-inner {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0;
-  }
-
-  .location-item {
-    padding: 36px 0;
-    border-right: 1px solid var(--border);
-  }
-
-  .location-item:last-child { border-right: none; padding-left: 40px; }
-  .location-item:nth-child(2) { padding-left: 40px; }
-
-  .location-label {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    margin-bottom: 8px;
-  }
-
-  .location-value {
-    font-family: var(--font-display);
-    font-size: clamp(16px, 1.5vw, 22px);
-    font-weight: 500;
-    text-transform: uppercase;
-    color: var(--white);
-    line-height: 1.1;
-  }
-
-  /* ===== FOOTER ===== */
-    /* =====================================================
-     FOOTER
-     ===================================================== */
-  .footer-minimal {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 22px clamp(24px, 4vw, 56px);
-    border-top: 1px solid rgba(255,255,255,0.05);
-    background: #000;
-  }
- 
-  .footer-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
- 
-  .footer-copy {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: rgb(240, 237, 232);
-  }
- 
-  .footer-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 28px;
-  }
- 
-  .footer-center a {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgb(240, 237, 232);
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
- 
-  .footer-center a:hover { font-weight: 900; transition: 0.5s ease; }
- 
-  .footer-right {
-    display: flex;
-    align-items: center;
-  }
- 
-  .footer-flag {
-    width: 24px;
-    height: auto;
-    opacity: 0.85;
-  }
- 
-  @media (max-width: 768px) {
-    .footer-minimal {
-      flex-direction: column;
-      gap: 20px;
-      text-align: center;
-    }
-    .footer-center {
-      position: static;
-      transform: none;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-  }
-
-
-  /* ===== RESPONSIVE ===== */
-  @media (max-width: 900px) {
-    .contact-body {
-      grid-template-columns: 1fr;
-      padding: 0 24px 60px;
-    }
-
-    .channels-col {
-      border-right: none;
-      border-bottom: 1px solid var(--border);
-      padding: 48px 0 48px;
-    }
-
-    .intent-col {
-      padding: 48px 0 48px;
-    }
-
-    .location-inner {
-      grid-template-columns: 1fr;
-    }
-
-    .location-item {
-      border-right: none;
-      border-bottom: 1px solid var(--border);
-      padding: 28px 0;
-    }
-
-    .location-item:last-child { border-bottom: none; padding-left: 0; }
-    .location-item:nth-child(2) { padding-left: 0; }
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after { transition-duration:.001ms !important; }
+    .step{ transform:none !important; filter:none !important; }
   }
 </style>
 </head>
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar" id="navbar">
+<nav class="navbar">
   <div class="nav-inner">
-    <a class="nav-brand" href="index.html">
-      <img src="images/Renders/WebP/WhiteLogo1.webp" width="95" alt="Vanar Robots">
-    </a>
-    <div class="nav-center" id="navLinks">
-      <a href="Gen1.html">Generation‑1</a>
-      <a href="vision.html">Vision</a>
-      <a href="indistinguishability.html">Indistinguishability</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="nav-actions">
-      <a href="interest.html" class="nav-pill">Request Access</a>
-      <div class="nav-toggle" onclick="toggleNav()">
-        <div class="nav-dot"></div>
-        <div class="nav-dot"></div>
-      </div>
+    <a class="nav-brand" href="index.html"><img src="images/Renders/WebP/WhiteLogo1.webp" alt="Vanar Robots"></a>
+    <div class="nav-links">
+      <a href="contact.html" class="current">Communications</a>
+      <a href="interest.html">Deploy</a>
     </div>
   </div>
 </nav>
 
-<!-- PAGE HEADER -->
-<header class="page-header">
-  <div class="page-header-bg"></div>
-  <div class="page-header-grid"></div>
-  <div class="page-header-inner">
-    <div class="page-header-left">
-      <p class="page-eyebrow">// Contact</p>
-      <h1 class="page-title">Let's<br>Talk.</h1>
+<div class="flow-progress"><i id="flowFill"></i></div>
+
+<main class="flow">
+  <div class="flow-shell">
+    <div class="flow-bar">
+      <span class="flow-count" id="flowCount" hidden></span>
     </div>
-    <div class="page-header-right">
-      <p class="page-header-desc">Vanar Robots is built by people who care deeply about advancing human civilization through technology.
-      If you are curious, building something meaningful, or looking to integrate a Vanar into your environment, reach out directly.</p>
+    <div class="flow-stage" id="flowStage">
+
+      <!-- COVER -->
+      <section class="step" data-role="cover">
+        <div class="cover-eyebrow">Get in Touch · Vanar Robots</div>
+        <h1 class="cover-title">Let's talk.</h1>
+        <p class="cover-sub">A few quick questions, tailored to what you are reaching out about. Press, investment, partnerships, or joining the team.</p>
+        <div class="flow-actions">
+          <button class="flow-next" id="coverStart" type="button">Begin →</button>
+        </div>
+        <div class="cover-direct">
+          <span class="cover-direct-label">Prefer to reach us directly?</span>
+          <div class="cover-direct-links">
+            <a href="mailto:hello@vanarrobots.com">hello@vanarrobots.com</a>
+            <a href="https://x.com/vanar_robots" target="_blank" rel="noopener">X</a>
+            <a href="https://www.linkedin.com/company/vanar-robots/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://www.instagram.com/vanar_robots/" target="_blank" rel="noopener">Instagram</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- question steps are rendered here by JS: base steps first, then a branch chosen after "What brings you here?" -->
     </div>
   </div>
-</header>
+</main>
 
-<div class="section-divider"></div>
-
-<!-- CONTACT BODY -->
-<div class="contact-body">
-
-  <!-- LEFT: Direct channels -->
-  <div class="channels-col">
-    <div class="col-label">// Direct channels</div>
-
-    <a href="mailto:hello@vanarrobots.com" class="channel-row">
-      <div class="channel-meta">
-        <div class="channel-type">Email</div>
-        <div class="channel-value">hello@vanarrobots.com</div>
-      </div>
-      <div class="channel-arrow">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </a>
-
-    <a href="https://x.com/vanar_robots" target="_blank" rel="noopener" class="channel-row">
-      <div class="channel-meta">
-        <div class="channel-type">X (Twitter)</div>
-        <div class="channel-value">@vanar_robots</div>
-      </div>
-      <div class="channel-arrow">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </a>
-
-    <a href="https://linkedin.com/company/vanar-robots" target="_blank" rel="noopener" class="channel-row">
-      <div class="channel-meta">
-        <div class="channel-type">LinkedIn</div>
-        <div class="channel-value">Vanar Robots</div>
-      </div>
-      <div class="channel-arrow">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </a>
-
-    <a href="https://youtube.com/@vanarrobots" target="_blank" rel="noopener" class="channel-row">
-      <div class="channel-meta">
-        <div class="channel-type">YouTube</div>
-        <div class="channel-value">Vanar Robots</div>
-      </div>
-      <div class="channel-arrow">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </a>
-
-    <a href="https://www.instagram.com/vanar_robots/" target="_blank" rel="noopener" class="channel-row">
-      <div class="channel-meta">
-        <div class="channel-type">Instagram</div>
-        <div class="channel-value">@vanar_robots</div>
-      </div>
-      <div class="channel-arrow">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-    </a>
-
+<!-- CONFIRMATION -->
+<div class="flow-overlay" id="flowOverlay">
+  <div class="confirm-box">
+    <div class="confirm-tag">Message received</div>
+    <h2>Thanks for<br>reaching out.</h2>
+    <p>Your message has been recorded and routed to the right person on our end. We read everything personally — expect to hear back within a few days. You can also always reach us directly at <a href="mailto:hello@vanarrobots.com" style="color:var(--white);">hello@vanarrobots.com</a>.</p>
+    <a href="index.html" class="confirm-btn">← Return home</a>
   </div>
-
-  <!-- RIGHT: Intent cards -->
-  <div class="intent-col">
-    <div class="col-label">// What brings you here</div>
-
-    <a href="mailto:hello@vanarrobots.com?subject=Partnership Inquiry" class="intent-card">
-      <div class="intent-card-inner">
-        <div class="intent-card-left">
-          <div class="intent-card-title">Join us</div>
-          <div class="intent-card-desc">Engineers, scientists, and builders driven to create something meaningful, to shape the next era of intelligent machines and help build a revolution.</div>
-        </div>
-        <div class="intent-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-      </div>
-    </a>
-
-    <a href="mailto:hello@vanarrobots.com?subject=Media Inquiry" class="intent-card">
-      <div class="intent-card-inner">
-        <div class="intent-card-left">
-          <div class="intent-card-title">Cover Us</div>
-          <div class="intent-card-desc">Journalists and creators covering technology stories, we are happy to talk.</div>
-        </div>
-        <div class="intent-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-      </div>
-    </a>
-
-    <a href="interest.html" class="intent-card intent-card-accent">
-      <div class="intent-card-inner">
-        <div class="intent-card-left">
-          <div class="intent-card-title">Request a Unit</div>
-          <div class="intent-card-desc">Industrial partners ready to deploy and shape how Vanars integrate into real environments.</div>
-        </div>
-        <div class="intent-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </div>
-      </div>
-    </a>
-
-  </div>
-
 </div>
 
 <!-- FOOTER -->
-<footer class="footer-minimal">
-  <span class="footer-copy">© 2026 Vanar Robots Private Limited</span>
-  <div class="footer-center">
-    <a href="https://x.com/vanar_robots" target="_blank">X</a>
-    <a href="https://www.youtube.com/@VanarRobots" target="_blank">YouTube</a>
-    <a href="https://www.linkedin.com/company/vanar-robots/" target="_blank">LinkedIn</a>
-    <a href="https://www.instagram.com/vanar_robots/" target="_blank">Instagram</a>
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img class="footer-logo" src="images/Renders/WebP/WhiteLogo1.webp" alt="Vanar Robots">
+      <p class="footer-tagline">A new species, designed and built to speed up humanity's progress.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">Site</div>
+        <a href="index.html">Home</a>
+        <a href="contact.html">Communications</a>
+        <a href="interest.html">Deploy</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Follow</div>
+        <a href="https://x.com/vanar_robots" target="_blank" rel="noopener">X</a>
+        <a href="https://www.youtube.com/@VanarRobots" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.linkedin.com/company/vanar-robots/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.instagram.com/vanar_robots/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
   </div>
-  <img src="images/Renders/WebP/India.webp" alt="India" class="footer-flag">
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Vanar Robots Private Limited</span>
+    <span class="footer-made"><img src="images/Renders/WebP/India.webp" alt="" class="footer-flag">Made in India</span>
+  </div>
+  <div class="footer-wordmark" aria-hidden="true">VANAR</div>
 </footer>
 
 <script>
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.style.background = window.scrollY > 60
-      ? 'rgba(10,10,10,0.97)'
-      : 'rgba(0,0,0,0.35)';
-  });
+/* ==========================================================================
+   BASE_STEPS — everyone answers these, in order: contact info, then "what
+   brings you here". The `branchKey:true` flag on the reason step tells the
+   engine to mount a different set of follow-up questions (from BRANCHES)
+   depending on which option gets picked.
+
+   BRANCHES — one question array per reason. Edit these to add/remove
+   questions for a given path; the last item in each array becomes the
+   "Submit" step for that path.
+
+   Step shape is the same either way:
+     { id, kicker, q, help, fields:[{name,label,type,placeholder,required,validate}] }
+   or:
+     { id, kicker, q, choices:[ 'Option A', 'Option B', ... ] }  (single-select)
+   ========================================================================== */
+const BASE_STEPS = [
+  { id:'contact', kicker:'You', q:"Let's start with you.",
+    fields:[
+      { name:'name',  label:'Full name', type:'text',  placeholder:'Your full name', required:true },
+      { name:'email', label:'Email',     type:'email', placeholder:'you@company.com', required:true,
+        validate:v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) }
+    ]
+  },
+  { id:'reason', kicker:'Purpose', q:'What brings you here?', branchKey:true,
+    choices:['Press & media', 'Investment', 'Partnership', 'Joining the team', 'General / other']
+  }
+];
+
+const BRANCHES = {
+  'Press & media': [
+    { id:'outlet', kicker:'Press', q:'Which outlet or publication are you with?',
+      fields:[{ name:'outlet', label:'Outlet / publication', type:'text', placeholder:'e.g. Economic Times', required:true }]
+    },
+    { id:'story', kicker:'Press', q:"What's the story about?",
+      fields:[{ name:'story', label:'Story details', type:'textarea', placeholder:'What angle are you working on, and what do you need from us?', required:true }]
+    }
+  ],
+  'Investment': [
+    { id:'fund', kicker:'Investment', q:'What fund or firm are you with?',
+      fields:[{ name:'fund', label:'Fund / firm', type:'text', placeholder:'e.g. Independent angel, or fund name', required:true }]
+    },
+    { id:'stage', kicker:'Investment', q:'What stage do you typically invest at?',
+      choices:['Angel / individual', 'Pre-seed', 'Seed', 'Series A', 'Growth stage']
+    },
+    { id:'invnotes', kicker:'Investment', q:"Anything specific you'd like to know?",
+      fields:[{ name:'invnotes', label:'Notes (optional)', type:'textarea', placeholder:'Context, thesis fit, questions…', required:false }]
+    }
+  ],
+  'Partnership': [
+    { id:'orgName', kicker:'Partnership', q:'What company or organisation are you with?',
+      fields:[{ name:'orgName', label:'Company / organisation', type:'text', placeholder:'Legal entity name', required:true }]
+    },
+    { id:'partnerType', kicker:'Partnership', q:'What kind of partnership did you have in mind?',
+      choices:['Industrial deployment & piloting', 'Technology / R&D collaboration', 'Manufacturing or supply chain', 'Distribution', 'Other']
+    },
+    { id:'partnerDetails', kicker:'Partnership', q:'Tell us more about what you have in mind.',
+      fields:[{ name:'partnerDetails', label:'Details', type:'textarea', placeholder:'What would this partnership involve?', required:true }]
+    }
+  ],
+  'Joining the team': [
+    { id:'roleInterest', kicker:'Team', q:'What role or way of contributing interests you?',
+      fields:[{ name:'roleInterest', label:'Area of interest', type:'text', placeholder:'e.g. Mechanical design, firmware, co-founder…', required:true }]
+    },
+    { id:'about', kicker:'Team', q:'Tell us about yourself.',
+      fields:[{ name:'about', label:'Background', type:'textarea', placeholder:'Background, portfolio, LinkedIn or GitHub links are welcome', required:true }]
+    }
+  ],
+  'General / other': [
+    { id:'message', kicker:'Message', q:'What would you like to tell us?',
+      fields:[{ name:'message', label:'Message', type:'textarea', placeholder:'Type your message', required:true }]
+    }
+  ]
+};
+
+// TODO: point this at your own Apps Script Web App URL once it's deployed
+// (a new sheet tab for Communications inquiries — see setup notes).
+const SCRIPT_URL = "PASTE_YOUR_COMMUNICATIONS_SCRIPT_URL_HERE";
+
+(function(){
+  const stage   = document.getElementById('flowStage');
+  const fill    = document.getElementById('flowFill');
+  const countEl = document.getElementById('flowCount');
+  const overlay = document.getElementById('flowOverlay');
+  const coverStart = document.getElementById('coverStart');
+
+  const answers = {};      // accumulated across every step — sent as one payload at the end
+  let stepEls = [];        // DOM nodes: [0]=cover, [1]=contact, [2]=reason, [3..]=the chosen branch
+  let current = 0;
+  const BASE_COUNT = BASE_STEPS.length; // 2 — everything past this index is branch-dependent
+
+  function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
+
+  function buildStep(cfg, isLast){
+    const el = document.createElement('section');
+    el.className = 'step';
+
+    const kicker = document.createElement('div');
+    kicker.className = 'step-kicker'; kicker.textContent = cfg.kicker || '';
+    el.appendChild(kicker);
+    el._kickerEl = kicker;
+    el._kickerLabel = cfg.kicker || '';
+
+    const q = document.createElement('h2');
+    q.className = 'step-q'; q.textContent = cfg.q;
+    el.appendChild(q);
+
+    if (cfg.help){
+      const help = document.createElement('p');
+      help.className = 'step-help'; help.textContent = cfg.help;
+      el.appendChild(help);
+    }
+
+    if (cfg.fields){
+      const wrap = document.createElement('div');
+      wrap.className = 'flow-fields';
+      cfg.fields.forEach((f, fi) => {
+        const field = document.createElement('div');
+        const label = document.createElement('label');
+        label.className = 'flow-field-label'; label.textContent = f.label; label.htmlFor = cfg.id+'-'+f.name;
+        field.appendChild(label);
+        const input = document.createElement(f.type === 'textarea' ? 'textarea' : 'input');
+        input.id = cfg.id+'-'+f.name;
+        input.className = f.type === 'textarea' ? 'flow-textarea' : 'flow-input';
+        if (f.type !== 'textarea') input.type = f.type;
+        input.placeholder = f.placeholder || '';
+        input.dataset.name = f.name;
+        input.setAttribute('autocomplete', 'off');
+        input.addEventListener('input', () => { answers[f.name] = input.value; refreshNextState(); });
+        input.addEventListener('keydown', (e) => {
+          if (e.key !== 'Enter') return;
+          if (f.type === 'textarea' && !(e.metaKey || e.ctrlKey)) return; // allow newlines in textarea
+          e.preventDefault();
+          const isLastField = fi === cfg.fields.length - 1;
+          if (isLastField) { if (isStepValid(cfg)) goNext(); }
+          else { const inputs = wrap.querySelectorAll('input,textarea'); inputs[fi+1] && inputs[fi+1].focus(); }
+        });
+        field.appendChild(input);
+        wrap.appendChild(field);
+      });
+      el.appendChild(wrap);
+    }
+
+    if (cfg.choices){
+      const grid = document.createElement('div');
+      grid.className = 'flow-choices';
+      const key = cfg.id;
+      cfg.choices.forEach(choice => {
+        const btn = document.createElement('button');
+        btn.type = 'button'; btn.className = 'flow-choice'; btn.textContent = choice;
+        btn.addEventListener('click', () => {
+          grid.querySelectorAll('.flow-choice').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          answers[key] = choice;
+          if (cfg.branchKey) mountBranch(choice);
+          refreshNextState();
+          setTimeout(() => { if (isStepValid(cfg)) goNext(); }, 320);
+        });
+        grid.appendChild(btn);
+      });
+      el.appendChild(grid);
+    }
+
+    const actions = document.createElement('div');
+    actions.className = 'flow-actions';
+    const nextBtn = document.createElement('button');
+    nextBtn.type = 'button'; nextBtn.className = 'flow-next';
+    nextBtn.textContent = isLast ? 'Submit →' : 'Next →';
+    nextBtn.disabled = true;
+    nextBtn.addEventListener('click', () => { if (isLast) submitAll(); else goNext(); });
+    const backBtn = document.createElement('button');
+    backBtn.type = 'button'; backBtn.className = 'flow-back'; backBtn.textContent = '← Back';
+    backBtn.addEventListener('click', goPrev);
+    actions.appendChild(backBtn);
+    actions.appendChild(nextBtn);
+    if (!cfg.choices){
+      const hint = document.createElement('span');
+      hint.className = 'flow-hint';
+      hint.innerHTML = cfg.fields && cfg.fields.some(f=>f.type==='textarea') ? '<kbd>⌘/Ctrl</kbd> + <kbd>Enter</kbd> to continue' : 'Press <kbd>Enter ↵</kbd>';
+      actions.appendChild(hint);
+    }
+    el.appendChild(actions);
+    el._nextBtn = nextBtn;
+    el._cfg = cfg;
+    return el;
+  }
+
+  // Swap in the question set for whichever reason the person picked. Always
+  // rebuilt fresh (cheap — a handful of DOM nodes) so changing your mind and
+  // picking a different reason after going back works cleanly.
+  function mountBranch(reason){
+    while (stepEls.length > BASE_COUNT + 1){ const el = stepEls.pop(); el.remove(); }
+    const cfgs = BRANCHES[reason] || [];
+    cfgs.forEach((cfg, i) => {
+      const el = buildStep(cfg, i === cfgs.length - 1);
+      stage.appendChild(el);
+      stepEls.push(el);
+    });
+  }
+
+  function isStepValid(cfg){
+    if (cfg.choices) return !!answers[cfg.id];
+    if (cfg.fields) return cfg.fields.every(f => {
+      const v = (answers[f.name] || '').trim();
+      if (f.required && !v) return false;
+      if (v && f.validate) return f.validate(v);
+      return true;
+    });
+    return true;
+  }
+
+  function refreshNextState(){
+    const el = stepEls[current];
+    if (el && el._nextBtn) el._nextBtn.disabled = !isStepValid(el._cfg);
+  }
+
+  function updateChrome(){
+    const total = stepEls.length - 1; // excludes cover; grows once a branch is mounted
+    const qIndex = current - 1; // -1 while on cover
+    if (current === 0){
+      countEl.hidden = true; fill.style.width = '0%';
+    } else {
+      countEl.hidden = false;
+      countEl.textContent = String(qIndex+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+      fill.style.width = (((qIndex+1)/total) * 100).toFixed(1) + '%';
+    }
+  }
+
+  function focusFirst(el){
+    const f = el.querySelector('input,textarea,button.flow-choice');
+    if (f) setTimeout(() => f.focus(), 60);
+  }
+
+  function showStep(index){
+    const prev = stepEls[current];
+    prev.classList.remove('active','in');
+    current = index;
+    const el = stepEls[current];
+    el.classList.add('active');
+    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('in')));
+    updateChrome();
+    if (current > 0 && el._kickerEl){
+      const qIndex = current - 1;
+      el._kickerEl.textContent = String(qIndex+1).padStart(2,'0') + (el._kickerLabel ? ' · ' + el._kickerLabel : '');
+    }
+    focusFirst(el);
+  }
+
+  function goNext(){ if (current < stepEls.length - 1) showStep(current + 1); }
+  function goPrev(){ if (current > 0) showStep(current - 1); }
+
+  function submitAll(){
+    const btn = stepEls[current]._nextBtn;
+    btn.disabled = true; btn.textContent = 'Sending…';
+    const fd = new FormData();
+    Object.keys(answers).forEach(k => fd.append(k, answers[k]));
+    fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:fd })
+      .then(showConfirmation)
+      .catch(showConfirmation);
+  }
+  function showConfirmation(){ overlay.classList.add('active'); }
+
+  // Build DOM — base steps only; the branch mounts once "reason" is answered.
+  const coverEl = stage.querySelector('[data-role="cover"]');
+  stepEls.push(coverEl);
+  BASE_STEPS.forEach(cfg => { const el = buildStep(cfg, false); stage.appendChild(el); stepEls.push(el); });
+
+  coverEl.classList.add('active','in');
+  coverStart.addEventListener('click', goNext);
+  updateChrome();
+})();
 </script>
+
 </body>
 </html>
