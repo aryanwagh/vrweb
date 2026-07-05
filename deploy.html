@@ -241,14 +241,7 @@
 </footer>
 
 <script>
-/* ==========================================================================
-   FLOW_STEPS — edit this array to add, remove, or reorder questions.
-   Each step is either:
-     { kicker, q, help, fields:[{name,label,type,placeholder,required,validate}] }
-   or:
-     { kicker, q, help, choices:[ 'Option A', 'Option B', ... ] }  (single-select)
-   `name` on choice steps is optional — defaults to a slug of the question.
-   ========================================================================== */
+
 const FLOW_STEPS = [
   { id:'contact', kicker:'Applicant', q:"Let's start with the basics.", help:"So we know who we're talking to.",
     fields:[
@@ -269,11 +262,11 @@ const FLOW_STEPS = [
   { id:'industry', kicker:'Company', q:'Which industry are you in?',
     choices:['Manufacturing', 'Warehousing & Logistics', 'Construction', 'Healthcare Support', 'Hospitality', 'Other']
   },
-  { id:'problem', kicker:'The task', q:"What's the first task you'd hand to a Vanar?",
+  { id:'problem', kicker:'The task', q:"What's the first task you would hand to a Vanar?",
     help:'Describe the physically demanding or repetitive work you want automated first.',
     fields:[
       { name:'problem', label:'Task description', type:'textarea', required:true,
-        placeholder:'e.g. Loading and moving 20kg boxes across our warehouse floor, 10 hours a day…' }
+        placeholder:'e.g. Loading and moving 5kg boxes across our warehouse floor, 10 hours a day…' }
     ]
   },
   { id:'handling', kicker:'The task', q:'How is this task handled today?',
@@ -283,15 +276,15 @@ const FLOW_STEPS = [
     choices:['Under 10 hours/week', '10–40 hours/week', 'Full-time (1 role)', 'Multiple full-time roles']
   },
   { id:'timeline', kicker:'Deployment', q:'When would you want a Vanar unit deployed?',
-    choices:['As soon as possible', 'Q1–Q2 2027', 'Later in 2027', 'Just exploring for now']
+    choices:['As soon as possible', 'Early - Mid 2027', 'Late 2027 - Early 2028', 'Just exploring for now']
   },
   { id:'budget', kicker:'Deployment', q:'What monthly budget are you working with?',
     choices:['Under ₹20,000', '₹20,000 – ₹50,000', '₹50,000 – ₹1,00,000', '₹1,00,000+', 'Need to discuss']
   },
   { id:'location', kicker:'Deployment', q:'Where would this Vanar unit operate?',
     fields:[
-      { name:'city',  label:'City / deployment location', type:'text', placeholder:'e.g. Bhiwandi, Maharashtra', required:true },
-      { name:'phone', label:'Phone number',                type:'tel',  placeholder:'+91 00000 00000', required:true,
+      { name:'city',  label:'City / deployment location', type:'text', placeholder:'e.g. Andheri, Mumbai, Maharashtra', required:true },
+      { name:'phone', label:'Phone number',                type:'tel',  placeholder:'+910000000000', required:true,
         validate:v => v.replace(/\D/g,'').length >= 7 }
     ]
   }
