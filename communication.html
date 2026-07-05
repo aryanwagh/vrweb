@@ -340,7 +340,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
   const overlay = document.getElementById('flowOverlay');
   const coverStart = document.getElementById('coverStart');
 
-  const answers = {};      // accumulated across every step — sent as one payload at the end
+  const answers = { formType: 'communications' };      // accumulated across every step — sent as one payload at the end
   let stepEls = [];        // DOM nodes: [0]=cover, [1]=contact, [2]=reason, [3..]=the chosen branch
   let current = 0;
   const BASE_COUNT = BASE_STEPS.length; // 2 — everything past this index is branch-dependent
