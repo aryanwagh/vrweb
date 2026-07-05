@@ -20,10 +20,9 @@
     })(window, document, "clarity", "script", "xhjgope2e6");
 </script>
  
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deploy Vanar Generation 1</title>
+<title>Vanar Robots — Deploy in Your Environment</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -44,6 +43,7 @@
   body { background:var(--black); color:var(--white); font-family:var(--font-body); font-weight:300; font-optical-sizing:auto; overflow-x:hidden; overflow-x:clip; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; min-height:100svh; display:flex; flex-direction:column; }
   ::selection { background:var(--white); color:var(--black); }
   a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline:1px solid var(--white); outline-offset:3px; }
+  .flow-input:focus-visible, .flow-textarea:focus-visible { outline:none; }
   button { font:inherit; }
 
   /* ===== NAVBAR (matches main site) ===== */
@@ -82,6 +82,8 @@
   .flow-field-label { display:block; font-family:var(--font-body); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); margin-bottom:10px; }
   .flow-input, .flow-textarea { width:100%; background:transparent; border:none; border-bottom:1px solid var(--line); color:var(--white); font-family:var(--font-display); font-weight:500; font-size:clamp(19px,2.6vw,28px); letter-spacing:-.01em; padding:10px 2px 14px; outline:none; transition:border-color .3s ease; }
   .flow-input:focus, .flow-textarea:focus { border-color:var(--white); }
+  .flow-input::-webkit-contacts-auto-fill-button, .flow-input::-webkit-credentials-auto-fill-button,
+  .flow-input::-webkit-caps-lock-indicator { visibility:hidden; display:none !important; pointer-events:none; position:absolute; right:0; }
   .flow-input::placeholder, .flow-textarea::placeholder { color:var(--faint); }
   .flow-textarea { resize:none; height:120px; line-height:1.4; font-size:clamp(17px,2vw,22px); }
 
@@ -115,8 +117,7 @@
   .confirm-btn { display:inline-flex; align-items:center; justify-content:center; padding:14px 30px; border:1px solid rgba(246,246,246,0.35); color:var(--white); font-family:var(--font-body); font-size:14px; text-decoration:none; transition:background-color .5s cubic-bezier(.4,0,.2,1), color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1); }
   .confirm-btn:hover { background-color:var(--white); color:var(--black); border-color:var(--white); }
 
-  
-    /* ===== FOOTER (matches main site) ===== */
+  /* ===== FOOTER (matches main site) ===== */
   .site-footer { position:relative; background:var(--black); border-top:1px solid var(--line); z-index:1; overflow:hidden; }
   .footer-top { display:flex; justify-content:space-between; gap:clamp(40px,6vw,80px); padding:clamp(48px,7vw,88px) var(--edge) clamp(32px,5vw,48px); flex-wrap:wrap; }
   .footer-brand { flex:1 1 260px; max-width:380px; }
@@ -127,20 +128,19 @@
   .footer-col-title { font-family:var(--font-body); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin-bottom:clamp(4px,1vw,8px); }
   .footer-col a { font-family:var(--font-body); font-size:13.5px; color:var(--dim); text-decoration:none; transition:color .25s ease; width:fit-content; }
   .footer-col a:hover { color:var(--white); }
- 
+
   .footer-bottom { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:clamp(18px,2.6vw,22px) var(--edge); border-top:1px solid var(--line); flex-wrap:wrap; }
   .footer-copy { font-family:var(--font-body); font-size:12px; letter-spacing:0; color:var(--faint); }
   .footer-made { display:flex; align-items:center; gap:8px; font-family:var(--font-body); font-size:12px; color:var(--faint); }
   .footer-flag { width:18px; height:auto; opacity:.85; }
- 
+
   .footer-wordmark { font-family:var(--font-display); font-weight:600; letter-spacing:-.02em; line-height:.78; text-align:center; color:var(--white); opacity:.05; font-size:clamp(72px,17vw,220px); padding:0 var(--edge) clamp(8px,2vw,20px); user-select:none; pointer-events:none; white-space:nowrap; }
- 
+
   @media (max-width:768px){
     .footer-top { flex-direction:column; gap:clamp(28px,6vw,36px); padding-bottom:clamp(28px,5vw,36px); }
     .footer-cols { gap:clamp(32px,10vw,56px); }
     .footer-bottom { flex-direction:column; text-align:center; padding-top:20px; padding-bottom:20px; }
   }
-  
 
   @media (max-width:600px){
     .flow-stage{ min-height:clamp(460px,62vh,620px); }
@@ -183,7 +183,7 @@
         <p class="cover-sub">Ten quick questions, about two minutes. We personally review every application against Gen 1's first target environments before reaching out.</p>
         <div class="cover-meta">
           <div><strong>2027</strong>Beta deployment</div>
-          <div><strong>Industrial</strong>Target usecase</div>
+          <div><strong>Industry</strong>Target environment</div>
         </div>
         <div class="flow-actions">
           <button class="flow-next" id="coverStart" type="button">Begin →</button>
@@ -200,7 +200,7 @@
   <div class="confirm-box">
     <div class="confirm-tag">Request logged</div>
     <h2>Beta request<br>received.</h2>
-    <p>Your request has been recorded. We review every environment personally against Gen 1's first target applications. If it's a fit, our team will reach out with next steps.</p>
+    <p>Your request has been recorded. We review every environment personally against Gen 1's first target applications — if it's a fit, our team will reach out with next steps.</p>
     <a href="index.html" class="confirm-btn">← Return home</a>
   </div>
 </div>
@@ -232,6 +232,7 @@
     <span class="footer-copy">© 2026 Vanar Robots Private Limited</span>
     <span class="footer-made"><img src="images/Renders/WebP/India.webp" alt="" class="footer-flag">Made in India</span>
   </div>
+  <div class="footer-wordmark" aria-hidden="true">VANAR</div>
 </footer>
 
 <script>
@@ -340,6 +341,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
         if (f.type !== 'textarea') input.type = f.type;
         input.placeholder = f.placeholder || '';
         input.dataset.name = f.name;
+        input.setAttribute('autocomplete', 'off');
         input.addEventListener('input', () => { answers[f.name] = input.value; refreshNextState(); });
         input.addEventListener('keydown', (e) => {
           if (e.key !== 'Enter') return;
