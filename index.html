@@ -23,7 +23,7 @@
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deploy</title>
+<title>Vanar Robots</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -32,90 +32,243 @@
 <style>
   *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
   :root {
+    /* monochrome only — emphasis comes from opacity, never colour or weight */
     --black:#070707; --white:#f6f6f6;
     --dim:rgba(246,246,246,0.55); --faint:rgba(246,246,246,0.30); --line:rgba(246,246,246,0.17);
+    --paper:#f3f3f1; --paper-2:#e9e9e6; --ink:#0a0a0a;
+    /* legacy aliases kept monochrome so nothing stray reintroduces colour */
+    --accent:var(--white); --signal:var(--white); --border:var(--line); --text-muted:var(--dim); --cream:var(--paper-2); --mid:#141414;
+    /* Switzer (Fontshare, free for commercial use) — closest free stand-in for
+       Neue Haas Grotesk Display Pro. Swap back to NHG here if you buy a license later. */
     --font-display:'Switzer','Bricolage Grotesque','Inter',system-ui,sans-serif;
     --font-desc:'Switzer','Inter',system-ui,-apple-system,sans-serif;
     --font-body:'Inter',system-ui,-apple-system,sans-serif;
+    --font-mono:'Inter',system-ui,-apple-system,sans-serif;
+    /* shared responsive rhythm */
     --edge: clamp(20px, 5.2vw, 88px);
     --edge-sm: clamp(16px, 4vw, 56px);
-  }
-  html { overflow-x:hidden; overflow-x:clip; }
-  body { background:var(--black); color:var(--white); font-family:var(--font-body); font-weight:300; font-optical-sizing:auto; overflow-x:hidden; overflow-x:clip; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; min-height:100svh; display:flex; flex-direction:column; }
-  ::selection { background:var(--white); color:var(--black); }
-  a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible { outline:1px solid var(--white); outline-offset:3px; }
-  button { font:inherit; }
 
-  /* ===== NAVBAR (matches main site) ===== */
-  .navbar { position:fixed; top:0; left:0; width:100%; height:clamp(52px,7vw,64px); background:rgba(7,7,7,0.55); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid var(--line); z-index:1000; }
+    /* type scale — three clear tiers so the page has one loud moment,
+       one confident moment, and quiet section labels. Nothing else
+       is allowed to compete with --peak. */
+    --peak:      clamp(52px, 9vw, 104px);   /* the closing line — the single loudest moment on the page */
+    --statement: clamp(28px, 4.4vw, 44px);  /* the hero sentence — long-form, so it reads, not shouts */
+    --section:   clamp(30px, 4.6vw, 46px);  /* section headlines: film beats, spec, grid, press */
+    --card:      clamp(17px, 1.7vw, 21px);  /* card/tile titles */
+
+    /* section tones — near-black but distinct, so boundaries are legible
+       instead of one flat grey scroll */
+    --tone-1:#0a0a0a;  /* hero / nav / footer sit on pure --black instead */
+    --tone-2:#050505;  /* film */
+    --tone-3:#0d0d0d;  /* spec */
+    --tone-4:#020202;  /* closing */
+    --tone-5:#0d0d0d;  /* press */
+  }
+
+  html { scroll-behavior:smooth; overflow-x:hidden; overflow-x:clip; }
+  body { background:var(--black); color:var(--white); font-family:var(--font-body); font-weight:300; font-optical-sizing:auto; overflow-x:hidden; overflow-x:clip; -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  ::selection { background:var(--white); color:var(--black); }
+  a:focus-visible, button:focus-visible { outline:1px solid var(--white); outline-offset:3px; }
+  img { max-width:100%; }
+
+  /* AMBIENT GRAIN + VIGNETTE (neutral, very subtle) */
+  .fx-vignette { position:fixed; inset:0; z-index:900; pointer-events:none; background:radial-gradient(ellipse 130% 95% at 50% 45%, transparent 62%, rgba(0,0,0,0.4) 100%); }
+  .fx-grain { position:fixed; inset:0; z-index:901; pointer-events:none; opacity:.03; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:170px 170px; animation:grain 6s steps(6) infinite; }
+  @keyframes grain { 0%,100%{transform:translate(0,0)} 20%{transform:translate(-4%,2%)} 40%{transform:translate(3%,-3%)} 60%{transform:translate(-2%,4%)} 80%{transform:translate(4%,1%)} }
+
+  /* SCROLL METER (hairline, white) */
+  .scroll-progress { position:fixed; top:0; left:0; height:1px; width:100%; z-index:1001; pointer-events:none; }
+  .scroll-progress i { display:block; height:100%; width:0; background:var(--white); opacity:.7; }
+
+  /* NAVBAR */
+  .navbar { position:fixed; top:0; left:0; width:100%; height:clamp(52px,7vw,64px); background:rgba(7,7,7,0.28); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px); border-bottom:1px solid var(--line); z-index:1000; transition:background .3s ease; }
   .nav-inner { max-width:1440px; height:100%; margin:0 auto; padding:0 var(--edge-sm); display:flex; align-items:center; justify-content:space-between; gap:16px; }
   .nav-brand { display:flex; align-items:center; flex-shrink:0; }
   .nav-brand img { display:block; width:clamp(78px,9vw,100px); height:auto; }
   .nav-links { display:flex; gap:clamp(18px,3vw,32px); align-items:center; }
   .nav-links a { text-decoration:none; font-family:var(--font-body); font-size:clamp(13px,1.4vw,15px); font-weight:400; letter-spacing:0; color:var(--dim); transition:color .3s ease; white-space:nowrap; }
-  .nav-links a:hover, .nav-links a.current { color:var(--white); }
+  .nav-links a:hover { color:var(--white); }
   @media (max-width:400px){ .nav-links{ gap:14px;} .nav-links a{ font-size:12.5px;} }
 
-  /* ===== PROGRESS ===== */
-  .flow-progress { position:fixed; top:0; left:0; width:100%; height:2px; background:var(--line); z-index:1002; }
-  .flow-progress i { display:block; height:100%; width:0%; background:var(--white); transition:width .5s cubic-bezier(.19,.75,.24,1); }
+  /* HERO */
+  .hero { --img-x-desktop:20%; --img-y-desktop:100%; --img-scale-desktop:140%; --img-x-tablet:40%; --img-y-tablet:100%; --img-scale-tablet:230%; --img-x-mobile:50%; --img-y-mobile:100%; --img-scale-mobile:300%; position:relative; height:100svh; min-height:560px; overflow:hidden; }
+  .hero-image { position:absolute; inset:0; z-index:0; background-image:url(""); background-repeat:no-repeat; background-size:var(--img-scale-desktop); background-position:var(--img-x-desktop) var(--img-y-desktop); transform:scale(1.05); animation:heroDrift 20s ease-in-out infinite alternate; }
+  @keyframes heroDrift { to { transform:scale(1.1) translateY(-1.5%); } }
+  .hero-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(to top, rgba(7,7,7,0.72), rgba(7,7,7,0.18) 42%, rgba(7,7,7,0) 70%), linear-gradient(to right, rgba(7,7,7,0.5), transparent 55%); }
+  .hero-content { position:relative; z-index:2; width:100%; height:100%; padding-left:var(--edge); padding-right:var(--edge); padding-bottom:clamp(48px,7vw,96px); display:flex; align-items:flex-end; justify-content:flex-start; }
+  .hero-text { display:flex; flex-direction:column; align-items:flex-start; text-align:left; max-width:820px; width:100%; }
+  /* Hero text/buttons: slow blur-to-sharp fade in, staggered. No motion,
+     no overlay elements — just opacity + blur on the text itself. */
+  .hero-eyebrow { font-family:var(--font-body); font-size:clamp(12px,1.4vw,14px); font-weight:400; letter-spacing:0; color:var(--dim); margin-bottom:clamp(14px,2vw,22px); opacity:0; filter:blur(11px); }
+  body.loaded .hero-eyebrow { opacity:1; filter:blur(0px); transition:opacity 2.2s cubic-bezier(.19,.75,.24,1) .2s, filter 2.2s cubic-bezier(.19,.75,.24,1) .2s; }
+  .hero-title { font-family:var(--font-display); font-size:var(--statement); font-weight:500; line-height:1.28; letter-spacing:-.015em; color:var(--white); margin-bottom:clamp(22px,3vw,32px); max-width:min(700px,90vw); opacity:0; filter:blur(13px); }
+  body.loaded .hero-title { opacity:1; filter:blur(0px); transition:opacity 2.4s cubic-bezier(.19,.75,.24,1) .45s, filter 2.4s cubic-bezier(.19,.75,.24,1) .45s; }
+  .hero-sub { font-family:var(--font-desc); font-weight:400; font-size:clamp(14.5px,1.7vw,18px); color:var(--dim); line-height:1.45; max-width:560px; margin-bottom:clamp(26px,4vw,34px); opacity:0; filter:blur(11px); }
+  body.loaded .hero-sub { opacity:1; filter:blur(0px); transition:opacity 2.2s cubic-bezier(.19,.75,.24,1) 1.05s, filter 2.2s cubic-bezier(.19,.75,.24,1) 1.05s; }
+  .hero-actions { display:flex; align-items:center; gap:clamp(16px,3vw,32px); flex-wrap:wrap; row-gap:16px; }
+  .hero-btn { position:relative; display:inline-flex; align-items:center; justify-content:center; padding:clamp(13px,1.8vw,15px) clamp(22px,3vw,30px); border:1px solid rgba(246,246,246,0.35); background:transparent; color:var(--white); font-family:var(--font-body); font-size:clamp(14px,1.5vw,15px); font-weight:400; letter-spacing:0; text-decoration:none; white-space:nowrap;
+    opacity:0; filter:blur(11px); transition:background-color .6s cubic-bezier(.4,0,.2,1), color .6s cubic-bezier(.4,0,.2,1), border-color .6s cubic-bezier(.4,0,.2,1); }
+  body.loaded .hero-btn { opacity:1; filter:blur(0px); transition:opacity 2.2s cubic-bezier(.19,.75,.24,1) 1.5s, filter 2.2s cubic-bezier(.19,.75,.24,1) 1.5s, background-color .6s cubic-bezier(.4,0,.2,1), color .6s cubic-bezier(.4,0,.2,1), border-color .6s cubic-bezier(.4,0,.2,1); }
+  .hero-btn:hover { background-color:var(--white); color:var(--black); border-color:var(--white); }
+  .hero-link { display:inline-block; font-family:var(--font-body); font-size:clamp(14px,1.5vw,15px); font-weight:400; letter-spacing:0; color:var(--dim); text-decoration:none;
+    opacity:0; filter:blur(11px); transition:color .3s ease; }
+  body.loaded .hero-link { opacity:1; filter:blur(0px); transition:opacity 2.2s cubic-bezier(.19,.75,.24,1) 1.65s, filter 2.2s cubic-bezier(.19,.75,.24,1) 1.65s, color .3s ease; }
+  .hero-link:hover { color:var(--white); }
+  @media (max-width:1024px){ .hero-image{ background-size:var(--img-scale-tablet); background-position:var(--img-x-tablet) var(--img-y-tablet);} }
+  /* Vertical tablet + mobile: text moves to center-bottom */
+  @media (max-width:1024px) and (orientation:portrait){
+    .hero-content{ justify-content:center; align-items:flex-end; text-align:center; }
+    .hero-text{ align-items:center; text-align:center; }
+    .hero-sub{ max-width:520px; }
+  }
+  @media (max-width:768px){
+    .hero-image{ background-size:var(--img-scale-mobile); background-position:var(--img-x-mobile) var(--img-y-mobile);}
+    .hero-content{ padding-left:24px; padding-right:24px; padding-bottom:56px; }
+    .hero-text{ width:100%; }
+    .hero-sub{ width:100%; max-width:420px; }
+  }
+  @media (max-width:400px){ .hero-btn{ width:100%; } .hero-actions{ width:100%; flex-direction:column; align-items:stretch; } .hero-link{ text-align:center; } }
 
-  /* ===== SHELL ===== */
-  .flow { flex:1; display:flex; flex-direction:column; padding-top:clamp(52px,7vw,64px); }
-  .flow-shell { flex:1; display:flex; flex-direction:column; max-width:760px; width:100%; margin:0 auto; padding:0 var(--edge); }
-  .flow-bar { display:flex; align-items:center; justify-content:flex-end; padding:clamp(20px,3.5vw,32px) 0; }
-  .flow-count { font-family:var(--font-body); font-size:12px; letter-spacing:.02em; color:var(--faint); }
-  .flow-count[hidden] { visibility:hidden; }
-  .flow-back { background:none; border:none; padding:0; color:var(--dim); font-family:var(--font-body); font-size:14px; cursor:pointer; transition:color .25s ease; }
-  .flow-back:hover { color:var(--white); }
+  /* PRODUCT GRID */
+  .grid-head { padding:clamp(56px,9vw,120px) var(--edge) clamp(24px,4vw,46px); background:var(--black); position:relative; z-index:1; display:flex; align-items:baseline; gap:clamp(16px,3vw,32px); flex-wrap:wrap; border-top:1px solid var(--line); }
+  .grid-label { font-family:var(--font-body); font-size:13px; font-weight:400; letter-spacing:0; color:var(--faint); margin-bottom:0; white-space:nowrap; }
+  .grid-h2 { font-family:var(--font-display); font-size:var(--section); font-weight:500; line-height:1.1; letter-spacing:-.02em; color:var(--white); }
+  .grid-sub { font-family:var(--font-desc); font-weight:400; font-size:clamp(14px,1.1vw,16px); color:var(--dim); line-height:1.4; max-width:460px; margin-top:18px; }
+  .product-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); }
+  .product-grid > a { display:block; text-decoration:none; color:inherit; position:relative; overflow:hidden; background:var(--black); }
+  .product-card { position:relative; overflow:hidden; width:100%; height:100%; aspect-ratio:1/1; }
+  .product-card img { width:100%; height:100%; object-fit:cover; transition:transform .8s cubic-bezier(.25,.46,.45,.94), filter .6s ease; display:block; filter:grayscale(.25) brightness(.84) contrast(1.03); }
+  .product-grid > a:hover .product-card img { filter:grayscale(0) brightness(1.2) contrast(1); }
+  .product-card-overlay { position:absolute; inset:0; background:linear-gradient(180deg, transparent 40%, rgba(7,7,7,0.9) 100%); display:flex; flex-direction:column; justify-content:flex-end; padding:clamp(14px,2vw,26px); z-index:1; }
+  .product-card-name { font-family:var(--font-display); font-size:var(--card); font-weight:500; letter-spacing:-.01em; color:var(--white); line-height:1.3; }
+  @media (max-width:1024px){ .product-grid{ grid-template-columns:repeat(2,1fr);} }
+  @media (max-width:480px){ .product-grid{ grid-template-columns:1fr;} }
 
-  .flow-stage { flex:1; display:flex; min-height:clamp(420px,54vh,560px); }
-  .step { display:none; width:100%; flex-direction:column; justify-content:center; gap:0; opacity:0; filter:blur(10px); transform:translateY(16px); transition:opacity .55s cubic-bezier(.19,.75,.24,1), filter .55s cubic-bezier(.19,.75,.24,1), transform .55s cubic-bezier(.19,.75,.24,1); }
-  .step.active { display:flex; }
-  .step.active.in { opacity:1; filter:blur(0px); transform:none; }
+  /* =====================================================
+     SCROLL FILM — three clips played as one continuous oner.
+     1 Humanoid → 2 Spaceship → 3 Vanars building
+     ===================================================== */
+  .film { position:relative; height:570vh; background:var(--tone-2); z-index:1; }
+  .film-pin { position:sticky; top:0; height:100svh; overflow:hidden; background:var(--tone-2); }
+  #film-canvas { position:absolute; inset:0; width:100%; height:100%; display:block; }
+  .film-scrim { position:absolute; inset:0; pointer-events:none; z-index:2;
+    background:
+      radial-gradient(ellipse 80% 70% at 50% 42%, transparent 46%, rgba(5,5,5,0.32) 100%),
+      linear-gradient(to bottom, rgba(5,5,5,0.2) 0%, transparent 24%, transparent 54%, rgba(5,5,5,0.74) 100%);
+  }
+  .film-text { position:absolute; z-index:3; left:var(--edge); right:auto; bottom:clamp(9vh,14vh,14vh); text-align:left; margin:0; max-width:min(640px,86vw); opacity:0; pointer-events:none; will-change:opacity,transform,filter; }
+  .film-text::before { content:''; position:absolute; inset:-28px -52px; z-index:-1; filter:blur(12px); }
+  .film-eyebrow { font-family:var(--font-body); font-size:clamp(12px,1.4vw,14px); font-weight:400; letter-spacing:0; color:var(--dim); margin-bottom:clamp(12px,2vw,18px); }
+  .film-title { font-family:var(--font-display); font-weight:500; font-size:var(--section); line-height:1.12; letter-spacing:-.02em; color:var(--white); }
+  .film-title .hl { color:inherit; }
+  .film-sub { margin-top:clamp(14px,2vw,22px); font-family:var(--font-desc); font-weight:400; font-size:clamp(13.5px,1.2vw,18px); color:var(--dim); max-width:50ch; line-height:1.45; }
+  @media (max-width:820px){
+    .film { height:495vh; }
+    .film-text { left:0; right:0; margin:0 auto; width:min(600px,88vw); bottom:11vh; text-align:center; }
+    .film-text .film-sub { margin-left:auto; margin-right:auto; }
+    .film-title { font-size:clamp(26px,8vw,48px); }
+    .film-sub { font-size:14px; line-height:1.45; }
+  }
+  @media (max-width:400px){ .film-text{ bottom:9vh; } .film-title{ font-size:clamp(24px,8vw,36px); } }
 
-  .step-kicker { font-family:var(--font-body); font-size:12px; letter-spacing:.04em; text-transform:uppercase; color:var(--faint); margin-bottom:clamp(14px,2vw,20px); }
-  .step-q { font-family:var(--font-display); font-weight:500; font-size:clamp(24px,3.6vw,40px); line-height:1.22; letter-spacing:-.015em; color:var(--white); max-width:22ch; }
-  .step-help { font-family:var(--font-desc); font-size:clamp(13.5px,1.3vw,15px); color:var(--dim); line-height:1.5; max-width:52ch; margin-top:12px; }
+  /* GENERATION 1 SPEC SECTION — static, not scroll-scrubbed */
+  .spec-section { padding:clamp(64px,10vw,140px) var(--edge); background:var(--tone-3); position:relative; z-index:1; border-top:1px solid var(--line); }
+  .spec-inner { display:flex; gap:clamp(32px,5vw,72px); align-items:stretch; }
+  .spec-content { flex:1 1 50%; display:flex; flex-direction:column; justify-content:center; min-width:0; }
+  .spec-title { font-family:var(--font-display); font-weight:500; font-size:var(--section); line-height:1.1; letter-spacing:-.02em; color:var(--white); margin:clamp(12px,2vw,18px) 0 clamp(24px,4vw,36px); }
+  .spec-title .hl { color:inherit; }
+  .spec-table { width:100%; border-collapse:collapse; }
+  .spec-table tr { border-bottom:1px solid var(--line); }
+  .spec-table tr:last-child { border-bottom:none; }
+  .spec-table th, .spec-table td { text-align:left; padding:clamp(13px,1.8vw,18px) 4px; font-weight:400; vertical-align:top; }
+  .spec-table th { font-family:var(--font-display); color:var(--white); font-weight:600; font-size:clamp(13px,1.1vw,17px); width:42%; }
+  .spec-table td { font-family:var(--font-desc); color:var(--dim); font-size:clamp(13px,1.1vw,17px); }
+  .spec-media { flex:1 1 50%; position:relative; overflow:hidden; aspect-ratio:4/3; background:#111; }
+  .spec-media img { width:100%; height:100%; object-fit:cover; display:block; filter:grayscale(.15) brightness(.92); }
+  @media (max-width:1024px) and (orientation:portrait){
+    .spec-inner { flex-direction:column; }
+    .spec-media { order:-1; aspect-ratio:16/9; }
+  }
+  @media (max-width:600px){
+    .spec-inner{ flex-direction:column; gap:28px; }
+    .spec-media{ order:-1; aspect-ratio:4/3; }
+  }
 
-  .flow-fields { display:flex; flex-direction:column; gap:clamp(20px,3vw,28px); margin-top:clamp(28px,4vw,40px); }
-  .flow-field-label { display:block; font-family:var(--font-body); font-size:11px; letter-spacing:.05em; text-transform:uppercase; color:var(--faint); margin-bottom:10px; }
-  .flow-input, .flow-textarea { width:100%; background:transparent; border:none; border-bottom:1px solid var(--line); color:var(--white); font-family:var(--font-display); font-weight:500; font-size:clamp(19px,2.6vw,28px); letter-spacing:-.01em; padding:10px 2px 14px; outline:none; transition:border-color .3s ease; }
-  .flow-input:focus, .flow-textarea:focus { border-color:var(--white); }
-  .flow-input::placeholder, .flow-textarea::placeholder { color:var(--faint); }
-  .flow-textarea { resize:none; height:120px; line-height:1.4; font-size:clamp(17px,2vw,22px); }
+  /* PRESS — an editorial index, not a card grid. Rows carry the read;
+     hovering a row spotlights it and swaps the image panel beside it. The
+     panel is a CSS Grid row-stretch, not a JS-measured size, so it always
+     spans exactly the heading-to-last-row height with nothing to recompute
+     or jump on scroll/resize. */
+  .press-section { padding:clamp(64px,10vw,130px) 0; background:var(--tone-5); position:relative; z-index:1; border-top:1px solid var(--line); }
+  .press-content { display:grid; grid-template-columns:1fr clamp(340px,36vw,520px); align-items:stretch; gap:clamp(24px,5vw,72px); padding:0 var(--edge); }
+  @media (max-width:859px){ .press-content { grid-template-columns:1fr; } }
+  .press-main { min-width:0; display:flex; flex-direction:column; }
+  .press-head { margin-bottom:clamp(36px,6vw,56px); display:flex; align-items:flex-end; justify-content:space-between; gap:24px; flex-wrap:wrap; }
+  .press-label { font-family:var(--font-body); font-size:13px; font-weight:400; letter-spacing:0; color:var(--dim); margin-bottom:clamp(10px,2vw,16px); }
+  .press-h2 { font-family:var(--font-display); font-size:var(--section); font-weight:500; line-height:1.1; letter-spacing:-.02em; color:var(--white); }
 
-  .flow-choices { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); margin-top:clamp(28px,4vw,40px); }
-  .flow-choice { background:var(--black); padding:clamp(18px,2.4vw,22px) clamp(18px,2.4vw,24px); text-align:left; border:none; color:var(--dim); font-family:var(--font-body); font-size:clamp(14.5px,1.5vw,16px); cursor:pointer; transition:background .25s ease, color .25s ease; }
-  .flow-choice:hover { background:#111; color:var(--white); }
-  .flow-choice.selected { background:var(--white); color:var(--black); }
+  .press-list { display:flex; flex-direction:column; }
+  .press-list:has(.press-row:hover) .press-row:not(:hover) { opacity:.38; }
+  .press-row { position:relative; display:flex; align-items:baseline; gap:clamp(14px,2.6vw,28px); padding:clamp(20px,3vw,30px) 0; text-decoration:none; color:var(--white); border-top:1px solid var(--line); transition:opacity .45s ease; }
+  .press-list .press-row:last-child { border-bottom:1px solid var(--line); }
+  .press-row-index { flex:0 0 auto; font-family:var(--font-body); font-size:13px; color:var(--faint); padding-top:.3em; }
+  .press-row-body { flex:1 1 auto; min-width:0; display:flex; flex-direction:column; gap:clamp(6px,1vw,10px); }
+  .press-row-meta { display:flex; align-items:baseline; gap:10px; flex-wrap:wrap; }
+  .press-row-source { font-family:var(--font-body); font-size:11px; font-weight:400; letter-spacing:.06em; text-transform:uppercase; color:var(--dim); }
+  .press-row-date { font-family:var(--font-body); font-size:12px; color:var(--faint); }
+  .press-row-title { font-family:var(--font-display); font-weight:500; font-size:clamp(19px,2.4vw,29px); line-height:1.28; letter-spacing:-.01em; color:var(--white); max-width:26ch; }
+  .press-row-arrow { flex:0 0 auto; align-self:center; font-family:var(--font-body); font-size:13px; color:var(--faint); opacity:0; transform:translateX(-8px); transition:opacity .3s ease, transform .3s ease; }
+  .press-row:hover .press-row-arrow { opacity:1; transform:none; }
+  .press-row-thumb { display:none; }
 
-  .flow-actions { display:flex; align-items:center; gap:20px; margin-top:clamp(32px,5vw,48px); flex-wrap:wrap; }
-  .flow-next { position:relative; display:inline-flex; align-items:center; justify-content:center; padding:15px 32px; border:1px solid rgba(246,246,246,0.35); background:transparent; color:var(--white); font-family:var(--font-body); font-size:15px; font-weight:400; cursor:pointer; white-space:nowrap; transition:background-color .5s cubic-bezier(.4,0,.2,1), color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1), opacity .3s ease; }
-  .flow-next:hover:not(:disabled) { background-color:var(--white); color:var(--black); border-color:var(--white); }
-  .flow-next:disabled { opacity:.3; cursor:not-allowed; }
-  .flow-hint { font-family:var(--font-body); font-size:12px; color:var(--faint); }
-  .flow-hint kbd { font-family:var(--font-body); border:1px solid var(--line); border-radius:3px; padding:1px 6px; color:var(--dim); }
+  .press-visual { display:none; }
+  @media (min-width:860px){
+    .press-visual { display:flex; flex-direction:column; height:100%; position:relative; overflow:hidden; background:#0c0c0c; box-shadow:inset 0 0 0 1px var(--line); }
+    .press-visual img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; opacity:0; filter:grayscale(.5) brightness(.82) contrast(1.02); transform:scale(1.04); transition:opacity .7s ease; }
+    .press-visual img.active { opacity:1; }
+    .press-visual-scrim { position:absolute; inset:0; background:linear-gradient(180deg, rgba(7,7,7,0) 50%, rgba(7,7,7,.88) 100%); }
+    .press-visual-cap { position:absolute; left:0; right:0; bottom:0; padding:clamp(16px,2vw,24px); display:flex; align-items:baseline; justify-content:space-between; gap:12px; z-index:1; }
+    .press-visual-cap-source { font-family:var(--font-body); font-size:12px; letter-spacing:.04em; text-transform:uppercase; color:var(--dim); }
+    .press-visual-cap-index { font-family:var(--font-body); font-size:12px; color:var(--faint); }
+  }
+  @media (max-width:859px){
+    .press-row-thumb { display:block; flex:0 0 clamp(56px,16vw,84px); align-self:flex-start; aspect-ratio:1/1; overflow:hidden; position:relative; background:#0c0c0c; order:3; }
+    .press-row-thumb img { width:100%; height:100%; object-fit:cover; filter:grayscale(.55) brightness(.82); display:block; }
+    .press-list:has(.press-row:hover) .press-row:not(:hover) { opacity:1; } /* spotlight is a desktop-hover idea only */
+  }
 
-  /* ===== COVER STEP ===== */
-  .cover-eyebrow { font-family:var(--font-body); font-size:13px; letter-spacing:0; color:var(--dim); margin-bottom:clamp(18px,3vw,26px); }
-  .cover-title { font-family:var(--font-display); font-weight:500; font-size:clamp(34px,6vw,56px); line-height:1.1; letter-spacing:-.02em; color:var(--white); max-width:14ch; }
-  .cover-sub { font-family:var(--font-desc); font-size:clamp(14.5px,1.6vw,17px); color:var(--dim); line-height:1.55; max-width:48ch; margin-top:clamp(18px,2.5vw,24px); }
-  .cover-meta { display:flex; gap:clamp(24px,4vw,48px); margin-top:clamp(28px,4vw,36px); flex-wrap:wrap; }
-  .cover-meta div { font-family:var(--font-body); font-size:12px; color:var(--faint); }
-  .cover-meta strong { display:block; font-family:var(--font-display); font-weight:500; font-size:15px; color:var(--white); margin-bottom:4px; }
+  /* CLOSING LINE */
+  .closing-band { background:var(--tone-4); min-height:100svh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:64px 24px; text-align:center; border-top:1px solid var(--line); position:relative; z-index:1; overflow:hidden; }
+  .closing-band::after { content:''; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:min(880px,90%); height:1px; background:linear-gradient(90deg,transparent,rgba(246,246,246,0.22),transparent); }
+  .closing-band .closing-eyebrow { font-family:var(--font-body); font-size:13px; font-weight:400; letter-spacing:0; color:var(--dim); margin-bottom:clamp(22px,4vw,40px); position:relative; }
+  .closing-band p { font-family:var(--font-display); font-weight:500; font-size:var(--peak); line-height:1.05; letter-spacing:-.03em; color:var(--white); position:relative; }
+  .closing-band .hl { color:inherit; }
 
-  /* ===== CONFIRMATION OVERLAY ===== */
-  .flow-overlay { position:fixed; inset:0; background:var(--black); display:flex; align-items:center; justify-content:center; z-index:2000; opacity:0; pointer-events:none; transition:opacity .5s ease; padding:24px; }
-  .flow-overlay.active { opacity:1; pointer-events:auto; }
-  .confirm-box { max-width:520px; width:100%; text-align:center; }
-  .confirm-tag { font-family:var(--font-body); font-size:13px; color:var(--dim); margin-bottom:22px; }
-  .confirm-box h2 { font-family:var(--font-display); font-weight:500; font-size:clamp(30px,5vw,46px); line-height:1.1; letter-spacing:-.02em; color:var(--white); margin-bottom:20px; }
-  .confirm-box p { font-family:var(--font-desc); font-size:14.5px; color:var(--dim); line-height:1.6; margin-bottom:36px; }
-  .confirm-btn { display:inline-flex; align-items:center; justify-content:center; padding:14px 30px; border:1px solid rgba(246,246,246,0.35); color:var(--white); font-family:var(--font-body); font-size:14px; text-decoration:none; transition:background-color .5s cubic-bezier(.4,0,.2,1), color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1); }
-  .confirm-btn:hover { background-color:var(--white); color:var(--black); border-color:var(--white); }
+  /* DEPLOY */
+  .deploy-section { position:relative; background:var(--paper); overflow:hidden; isolation:isolate; z-index:1; }
+  .deploy-inner { display:grid; grid-template-columns:1fr 1fr; gap:0; max-width:100%; margin:0; align-items:stretch; min-height:70svh; }
+  .deploy-left { padding:clamp(40px,6vw,96px) clamp(24px,5vw,60px); display:flex; flex-direction:column; justify-content:space-between; border-right:1px solid rgba(10,10,10,0.1); gap:32px; }
+  .deploy-title { font-family:var(--font-display); font-size:var(--section); line-height:1.1; font-weight:500; letter-spacing:-.02em; color:var(--ink); margin:0; }
+  .deploy-desc { font-family:var(--font-desc); font-size:clamp(14px,1.1vw,16px); font-weight:400; color:rgba(10,10,10,0.55); line-height:1.45; max-width:380px; margin-top:auto; padding-top:0; }
+  .deploy-right { display:grid; grid-template-rows:1fr 1fr; gap:0; }
+  .deploy-card { display:flex; flex-direction:column; justify-content:flex-end; padding:clamp(28px,4vw,56px) clamp(24px,4vw,60px); text-decoration:none; border:none; background:transparent; gap:0; position:relative; overflow:hidden; border-radius:0; min-height:180px; }
+  .deploy-card:first-child { background:var(--paper-2); border-bottom:1px solid rgba(10,10,10,0.1); color:var(--ink); }
+  .deploy-card:first-child::before { content:''; position:absolute; inset:0; background:var(--ink); transform:translateY(101%); transition:transform .5s cubic-bezier(.16,1,.3,1); z-index:0; }
+  .deploy-card:first-child:hover::before { transform:translateY(0); }
+  .deploy-card:first-child:hover { color:var(--paper); }
+  .deploy-card-highlight { background:var(--ink); color:var(--white); }
+  .deploy-card-highlight::before { content:''; position:absolute; inset:0; background:var(--white); transform:translateY(101%); transition:transform .5s cubic-bezier(.16,1,.3,1); z-index:0; }
+  .deploy-card-highlight:hover::before { transform:translateY(0); }
+  .deploy-card-highlight:hover { color:var(--ink); }
+  .deploy-card-label, .deploy-card-title { position:relative; z-index:1; }
+  .deploy-card-label { font-family:var(--font-body); font-size:clamp(11px,1vw,12px); font-weight:400; letter-spacing:0; opacity:.55; margin-bottom:clamp(8px,1.4vw,12px); }
+  .deploy-card-title { font-family:var(--font-display); font-size:clamp(22px,2.6vw,32px); font-weight:500; line-height:1.15; letter-spacing:-.02em; }
+  .deploy-card:hover { transform:none; background:transparent; border-color:transparent; }
+  @media (max-width:900px){ .deploy-inner{ grid-template-columns:1fr; min-height:auto;} .deploy-left{ border-right:none; border-bottom:1px solid rgba(10,10,10,0.1); gap:40px;} .deploy-right{ grid-template-rows:auto auto;} .deploy-card{ min-height:200px;} .deploy-desc{ padding-top:0;} }
 
-  /* ===== FOOTER (matches main site) ===== */
+  /* FOOTER */
   .footer-minimal { position:relative; display:flex; align-items:center; justify-content:space-between; padding:clamp(20px,3vw,24px) var(--edge-sm); border-top:1px solid var(--line); background:var(--black); z-index:1; gap:16px; flex-wrap:wrap; }
   .footer-left { display:flex; align-items:center; gap:14px; }
   .footer-copy { font-family:var(--font-body); font-size:12px; letter-spacing:0; color:var(--dim); }
@@ -126,1831 +279,346 @@
   .footer-flag { width:22px; height:auto; opacity:.85; }
   @media (max-width:768px){ .footer-minimal{ flex-direction:column; gap:18px; text-align:center; padding-top:28px; padding-bottom:28px;} .footer-center{ order:2; } .footer-right{ order:3; } .footer-left{ order:1; } }
 
-  @media (max-width:600px){
-    .flow-stage{ min-height:clamp(460px,62vh,620px); }
-    .flow-choices{ grid-template-columns:1fr; }
-    .cover-meta{ gap:20px; }
-  }
+  /* REVEAL */
+  .reveal { opacity:0; transform:translateY(24px); transition:opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1); }
+  .reveal.visible { opacity:1; transform:none; }
 
+  /* REDUCED MOTION */
   @media (prefers-reduced-motion: reduce){
-    *,*::before,*::after { transition-duration:.001ms !important; }
-    .step{ transform:none !important; filter:none !important; }
+    *,*::before,*::after { animation-duration:.001ms !important; animation-iteration-count:1 !important; transition-duration:.001ms !important; }
+    .hero-image{ animation:none; transform:none; } .fx-grain{ animation:none; }
+    .hero-title,.hero-eyebrow,.hero-sub,.hero-btn,.hero-link,.reveal{ transform:none !important; opacity:1 !important; filter:none !important; }
   }
 </style>
 </head>
 <body>
 
+<!-- AMBIENT FX + SCROLL METER -->
+<div class="fx-vignette"></div>
+<div class="fx-grain"></div>
+<div class="scroll-progress"><i></i></div>
+
 <!-- NAVBAR -->
-<nav class="navbar">
+<nav class="navbar" id="navbar">
   <div class="nav-inner">
-    <a class="nav-brand" href="index.html"><img src="images/Renders/WebP/WhiteLogo1.webp" alt="Vanar Robots"></a>
+    <a class="nav-brand" href="index.html"><img src="https://www.vanarrobots.com/images/Renders/WebP/WhiteLogo1.webp" width="95" alt="Vanar Robots"></a>
     <div class="nav-links">
       <a href="contact.html">Communications</a>
-      <a href="interest.html" class="current">Deploy</a>
+      <a href="interest.html">Deploy</a>
     </div>
   </div>
 </nav>
 
-<div class="flow-progress"><i id="flowFill"></i></div>
-
-<main class="flow">
-  <div class="flow-shell">
-    <div class="flow-bar">
-      <span class="flow-count" id="flowCount" hidden></span>
-    </div>
-    <div class="flow-stage" id="flowStage">
-
-      <!-- COVER -->
-      <section class="step" data-role="cover">
-        <div class="cover-eyebrow">Beta Access · Vanar Generation 1</div>
-        <h1 class="cover-title">Bring a Vanar into your environment.</h1>
-        <p class="cover-sub">Ten quick questions, about two minutes. We personally review every application against Gen 1's first target environments before reaching out.</p>
-        <div class="cover-meta">
-          <div><strong>2027</strong>Beta deployment</div>
-          <div><strong>Industrial</strong>Target usecase</div>
-        </div>
-        <div class="flow-actions">
-          <button class="flow-next" id="coverStart" type="button">Begin →</button>
-        </div>
-      </section>
-
-      <!-- question steps are rendered here by JS from the FLOW_STEPS config -->
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-image"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-text">
+      <h1 class="hero-title">
+        Humanity’s greatest limitation is not intelligence. It is the speed at which intelligence can build.
+      </h1>
+      <p class="hero-sub">Vanar Robots is developing humanoid robots that multiply the world’s capacity to engineer, manufacture, construct, and operate in the environments humans have already built and produce outcomes achieved in a fraction of the time.</p>
+      <div class="hero-actions">
+        <a href="interest.html" class="hero-btn">Deploy in your environment</a>
+        <a href="contact.html" class="hero-link">Talk to us</a>
+      </div>
     </div>
   </div>
-</main>
+</section>
 
-<!-- CONFIRMATION -->
-<div class="flow-overlay" id="flowOverlay">
-  <div class="confirm-box">
-    <div class="confirm-tag">Request logged</div>
-    <h2>Beta request<br>received.</h2>
-    <p>Your request has been recorded. We review every environment personally against Gen 1's first target applications. If it's a fit, our team will reach out with next steps.</p>
-    <a href="index.html" class="confirm-btn">← Return home</a>
+<!-- ============================================================
+     SCROLL FILM — three clips, blurred together at the seams.
+     ============================================================ -->
+<section class="film" id="film">
+  <div class="film-pin">
+    <canvas id="film-canvas"></canvas>
+    <div class="film-scrim"></div>
+
+    <!-- 1 -->
+    <div class="film-text pos-bl" data-beat="1">
+      <div class="film-eyebrow">Purpose</div>
+      <h2 class="film-title">To protect the civilisation.</h2>
+      <p class="film-sub">The future demands machinery, megastructures, spacecraft, and technologies that do not exist yet. The challenge is not imagination.
+        It is the speed of research, iteration, and construction. Vanars are being engineered to operate in existing human environments, work continuously
+        with superhuman capability, and learn from every task they perform.</p>
+    </div>
+
+    <!-- 2 -->
+    <div class="film-text pos-bl" data-beat="0">
+      <div class="film-eyebrow">Adaptability</div>
+      <h2 class="film-title">Human form.<br>Superhuman capability.</h2>
+      <p class="film-sub">Every new kind of automation has required the world to adapt to it. Vanars reverse that. We are building machines with superhuman speed, precision,
+        strength, and continuously improving intelligence that work naturally in the environments humanity has already built. Every task becomes experience.
+        Every deployment makes the system smarter.</p>
+    </div>
+
+    <!-- 3 -->
+    <div class="film-text pos-bl" data-beat="2">
+      <div class="film-eyebrow">The future</div>
+      <h2 class="film-title">&ldquo;Build a<br><span class="hl">spacecraft.</span>&rdquo;</h2>
+      <p class="film-sub">We are advancing toward a future where a team of Vanars can receive a single instruction: “Build a spacecraft”. They determine the resources,
+        plan the work, coordinate among themselves, adapt as they build, and execute continuously with minimal human intervention.
+        That is the next evolution of labor.</p>
+    </div>
   </div>
+</section>
+
+<!-- GENERATION 1 — static spec section (image + table, not scroll-scrubbed) -->
+<section class="spec-section reveal">
+  <div class="spec-inner">
+    <div class="spec-content">
+      <div class="film-eyebrow">Generation 1</div>
+      <h2 class="spec-title">The <span class="hl">beginning.</span></h2>
+      <table class="spec-table">
+        <tr><th>Height</th><td>5'9"</td></tr>
+        <tr><th>Weight</th><td>~60 kg</td></tr>
+        <tr><th>Degrees of Freedom</th><td>38 DoF</td></tr>
+        <tr><th>Actuator</th><td>In-house, full-stack proprietary</td></tr>
+        <tr><th>Manipulators</th><td>Tendon-driven, high payload</td></tr>
+        <tr><th>Target Deployment</th><td>2027 industrial beta deployment</td></tr>
+        <tr><th>Built In-House</th><td>Structure, Actuators, Manipulators, Software</td></tr>
+      </table>
+    </div>
+    <div class="spec-media"><img src="https://www.vanarrobots.com/images/Renders/WebP/File100Full.webp" alt="Vanar Generation 1" loading="lazy"></div>
+  </div>
+</section>
+
+<!-- CLOSING LINE -->
+<section class="closing-band reveal">
+  <div class="closing-eyebrow">The point of all of it</div>
+  <p>Speeding up<br><span class="hl">humanity's</span> progress.</p>
+</section>
+
+<!-- PROOF -->
+<div class="grid-head reveal">
+  <div class="grid-label">Progress</div>
+  <h2 class="grid-h2">Every milestone documented.</h2>
 </div>
+<section class="product-grid reveal">
+  <a href="https://x.com/vanar_robots/status/2066018605444305146?s=20" target="_blank" rel="noopener"><div class="product-card"><img src="https://pbs.twimg.com/media/HIr1Wg_bkAAd6fO?format=jpg&name=medium" alt="Material Handling" loading="lazy"><div class="product-card-overlay"><div class="product-card-name">Material Handling</div></div></div></a>
+  <a href="https://x.com/vanar_robots/status/2035689089962545615?s=20" target="_blank" rel="noopener"><div class="product-card"><img src="https://www.vanarrobots.com/images/Renders/WebP/humanoid.webp" alt="Vanar Generation 1" loading="lazy"><div class="product-card-overlay"><div class="product-card-name">Vanar Generation 1</div></div></div></a>
+  <a href="https://x.com/vanar_robots/status/2025194650030735695?s=20" target="_blank" rel="noopener"><div class="product-card"><img src="https://www.vanarrobots.com/images/Renders/WebP/manipulatorX.webp" alt="Opposition Thumb" loading="lazy"><div class="product-card-overlay"><div class="product-card-name">Opposition Thumb</div></div></div></a>
+  <a href="https://x.com/vanar_robots/status/2026032512448045458?s=20" target="_blank" rel="noopener"><div class="product-card"><img src="https://www.vanarrobots.com/images/Renders/WebP/ManipulatorX1.webp" alt="Manipulators" loading="lazy"><div class="product-card-overlay"><div class="product-card-name">Manipulators</div></div></div></a>
+  <a href="https://x.com/ironwagh/status/1971205893908988319?s=20" target="_blank" rel="noopener"><div class="product-card"><img src="https://www.vanarrobots.com/images/Renders/WebP/WalkX.webp" alt="Initial Locomotion" loading="lazy"><div class="product-card-overlay"><div class="product-card-name">Initial Locomotion</div></div></div></a>
+  <a href="https://x.com/ironwagh/status/1916622689537867814?s=20" target="_blank" rel="noopener"><div class="product-card"><img src="https://www.vanarrobots.com/images/Renders/WebP/ActuatorX.webp" alt="Actuator Strength Test — SUV Pull" loading="lazy"><div class="product-card-overlay"><div class="product-card-name">Actuator Strength Test — SUV Pull</div></div></div></a>
+</section>
+
+<!-- PRESS -->
+<section class="press-section reveal">
+  <div class="press-content">
+    <div class="press-main" id="pressMain">
+      <div class="press-head"><div class="press-head-left"><div class="press-label">Press</div><h2 class="press-h2">In the news</h2></div></div>
+      <div class="press-list" id="pressList">
+        <a href="https://youtu.be/Zd94vE75S_U?si=gxhbcrc2iD3GwMfD" class="press-row" target="_blank" rel="noopener" data-img="0">
+          <span class="press-row-index">01</span>
+          <span class="press-row-body">
+            <span class="press-row-meta"><span class="press-row-source">RuntimeBRT</span><span class="press-row-date">Mar 2026</span></span>
+            <span class="press-row-title">They Built This Robot From Scratch With No Venture Capital</span>
+          </span>
+          <span class="press-row-thumb"><img src="https://i.ytimg.com/vi/Zd94vE75S_U/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLB74-yz3ohGGAkR3mRgf5v2MKh76A" alt="" loading="lazy"></span>
+          <span class="press-row-arrow">Watch →</span>
+        </a>
+        <a href="https://startuppedia.in/trending/meet-indias-59-50-kg-humanoid-designed-by-mumbai-based-startup-for-strenuous-real-world-tasks-10992429" class="press-row" target="_blank" rel="noopener" data-img="1">
+          <span class="press-row-index">02</span>
+          <span class="press-row-body">
+            <span class="press-row-meta"><span class="press-row-source">StartupPedia</span><span class="press-row-date">Jan 2026</span></span>
+            <span class="press-row-title">Meet India's 5'9" Humanoid Designed by a Mumbai-Based Startup</span>
+          </span>
+          <span class="press-row-thumb"><img src="https://img-cdn.publive.online/fit-in/1280x960/filters:format(webp)/startuppedia/media/media_files/2026/01/12/copy-of-website-1110-x-960-px-32-2026-01-12-17-43-50.png" alt="" loading="lazy"></span>
+          <span class="press-row-arrow">Read article →</span>
+        </a>
+        <a href="https://youtube.com/shorts/ReRgv8WzCUk?si=RssCrYcEKFm6HXmm" class="press-row" target="_blank" rel="noopener" data-img="2">
+          <span class="press-row-index">03</span>
+          <span class="press-row-body">
+            <span class="press-row-meta"><span class="press-row-source">Runtime Bharat</span><span class="press-row-date">Feb 2026</span></span>
+            <span class="press-row-title">They Built This in Mumbai</span>
+          </span>
+          <span class="press-row-thumb"><img src="https://media.licdn.com/dms/image/v2/D4D05AQFyO7WEMin26Q/videocover-high/B4DZyNgFX0JYBc-/0/1771900527495?e=2147483647&v=beta&t=7zvFX6YBTOvmsvqC8igGp11MFlz-whkoAGiQWpcDawg" alt="" loading="lazy"></span>
+          <span class="press-row-arrow">Watch →</span>
+        </a>
+        <a href="https://youtube.com/shorts/ReRgv8WzCUk?si=RssCrYcEKFm6HXmm" class="press-row" target="_blank" rel="noopener" data-img="3">
+          <span class="press-row-index">04</span>
+          <span class="press-row-body">
+            <span class="press-row-meta"><span class="press-row-source">Runtime Bharat</span><span class="press-row-date">Jan 2026</span></span>
+            <span class="press-row-title">Is This the Future of Indian Robotics?</span>
+          </span>
+          <span class="press-row-thumb"><img src="https://www.vanarrobots.com/images/Renders/WebP/File178.webp" alt="" loading="lazy"></span>
+          <span class="press-row-arrow">Watch →</span>
+        </a>
+      </div>
+    </div>
+    <div class="press-visual" id="pressVisual">
+      <img class="active" src="https://i.ytimg.com/vi/Zd94vE75S_U/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLB74-yz3ohGGAkR3mRgf5v2MKh76A" alt="">
+      <img src="https://img-cdn.publive.online/fit-in/1280x960/filters:format(webp)/startuppedia/media/media_files/2026/01/12/copy-of-website-1110-x-960-px-32-2026-01-12-17-43-50.png" alt="">
+      <img src="https://media.licdn.com/dms/image/v2/D4D05AQFyO7WEMin26Q/videocover-high/B4DZyNgFX0JYBc-/0/1771900527495?e=2147483647&v=beta&t=7zvFX6YBTOvmsvqC8igGp11MFlz-whkoAGiQWpcDawg" alt="">
+      <img src="https://www.vanarrobots.com/images/Renders/WebP/File178.webp" alt="">
+      <div class="press-visual-scrim"></div>
+      <div class="press-visual-cap">
+        <span class="press-visual-cap-source" id="pressVisualSource">RuntimeBRT</span>
+        <span class="press-visual-cap-index" id="pressVisualIndex">01 / 04</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPLOYMENT · JOIN US -->
+<section class="deploy-section reveal">
+  <div class="deploy-inner">
+    <div class="deploy-left"><h2 class="deploy-title">Bring a Vanar<br>into your environment</h2><p class="deploy-desc">Limited beta units will be placed with select industrial partners. We will work directly with teams ready to shape how robots integrate into real-world environments.</p></div>
+    <div class="deploy-right">
+      <a href="contact.html" class="deploy-card"><div class="deploy-card-label">Partnerships / Research / Media</div><div class="deploy-card-title">Speak<br>with us</div></a>
+      <a href="interest.html" class="deploy-card deploy-card-highlight"><div class="deploy-card-label">Limited Beta Deployment</div><div class="deploy-card-title">Request<br>early unit</div></a>
+    </div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer class="footer-minimal">
   <div class="footer-left"><span class="footer-copy">© 2026 Vanar Robots Private Limited</span></div>
   <div class="footer-center"><a href="https://x.com/vanar_robots" target="_blank">X</a><a href="https://www.youtube.com/@VanarRobots" target="_blank">YouTube</a><a href="https://www.linkedin.com/company/vanar-robots/" target="_blank">LinkedIn</a><a href="https://www.instagram.com/vanar_robots/" target="_blank">Instagram</a></div>
-  <div class="footer-right"><img src="images/Renders/WebP/India.webp" alt="India" class="footer-flag"></div>
+  <div class="footer-right"><img src="https://www.vanarrobots.com/images/Renders/WebP/India.webp" alt="India" class="footer-flag"></div>
 </footer>
 
 <script>
-/* ==========================================================================
-   FLOW_STEPS — edit this array to add, remove, or reorder questions.
-   Each step is either:
-     { kicker, q, help, fields:[{name,label,type,placeholder,required,validate}] }
-   or:
-     { kicker, q, help, choices:[ 'Option A', 'Option B', ... ] }  (single-select)
-   `name` on choice steps is optional — defaults to a slug of the question.
-   ========================================================================== */
-const FLOW_STEPS = [
-  { id:'contact', kicker:'Applicant', q:"Let's start with the basics.", help:"So we know who we're talking to.",
-    fields:[
-      { name:'name',  label:'Full name',  type:'text',  placeholder:'Your full name', required:true },
-      { name:'email', label:'Work email', type:'email', placeholder:'you@company.com', required:true,
-        validate:v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) }
-    ]
-  },
-  { id:'company', kicker:'Company', q:'Who are you building this for?',
-    fields:[
-      { name:'company', label:'Company / organisation', type:'text', placeholder:'Legal entity name', required:true },
-      { name:'role',    label:'Your role',               type:'text', placeholder:'e.g. Operations Head', required:true }
-    ]
-  },
-  { id:'size', kicker:'Company', q:'How many people work there?',
-    choices:['1–10', '11–50', '51–200', '201–1,000', '1,000+']
-  },
-  { id:'industry', kicker:'Company', q:'Which industry are you in?',
-    choices:['Manufacturing', 'Warehousing & Logistics', 'Construction', 'Healthcare Support', 'Hospitality', 'Other']
-  },
-  { id:'problem', kicker:'The task', q:"What's the first task you'd hand to a Vanar?",
-    help:'Describe the physically demanding or repetitive work you want automated first.',
-    fields:[
-      { name:'problem', label:'Task description', type:'textarea', required:true,
-        placeholder:'e.g. Loading and moving 20kg boxes across our warehouse floor, 10 hours a day…' }
-    ]
-  },
-  { id:'handling', kicker:'The task', q:'How is this task handled today?',
-    choices:['Manual labour team', 'Contracted / outsourced labour', 'Existing machinery or automation', 'Not being done adequately', 'Other']
-  },
-  { id:'scale', kicker:'The task', q:'How much of your week does this task take up?',
-    choices:['Under 10 hours/week', '10–40 hours/week', 'Full-time (1 role)', 'Multiple full-time roles']
-  },
-  { id:'timeline', kicker:'Deployment', q:'When would you want a Vanar unit deployed?',
-    choices:['As soon as possible', 'Q1–Q2 2027', 'Later in 2027', 'Just exploring for now']
-  },
-  { id:'budget', kicker:'Deployment', q:'What monthly budget are you working with?',
-    choices:['Under ₹20,000', '₹20,000 – ₹50,000', '₹50,000 – ₹1,00,000', '₹1,00,000+', 'Need to discuss']
-  },
-  { id:'location', kicker:'Deployment', q:'Where would this Vanar unit operate?',
-    fields:[
-      { name:'city',  label:'City / deployment location', type:'text', placeholder:'e.g. Bhiwandi, Maharashtra', required:true },
-      { name:'phone', label:'Phone number',                type:'tel',  placeholder:'+91 00000 00000', required:true,
-        validate:v => v.replace(/\D/g,'').length >= 7 }
-    ]
-  }
-];
+  const navbar = document.getElementById('navbar');
+  const sp = document.querySelector('.scroll-progress i');
+  addEventListener('scroll', () => {
+    navbar.style.background = scrollY > 60 ? 'rgba(7,7,7,0.92)' : 'rgba(7,7,7,0.28)';
+    const d=document.documentElement; const p=d.scrollTop/Math.max(1,(d.scrollHeight-innerHeight));
+    if(sp) sp.style.width=(p*100).toFixed(2)+'%';
+  }, {passive:true});
+  requestAnimationFrame(()=>requestAnimationFrame(()=>document.body.classList.add('loaded')));
+  const ro = new IntersectionObserver((es)=>{ es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); ro.unobserve(e.target);} }); }, { threshold:0.08, rootMargin:'0px 0px -40px 0px' });
+  document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+</script>
 
-// Same Google Apps Script endpoint as the previous form.
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkRqZoU-kc-j1cGCUOxHaB2VH5hL2p61U5M92ktDeNcpaRDP-Zww/exec";
-
+<!-- ===== PRESS INDEX — hover swaps the image panel ===== -->
+<script>
 (function(){
-  const stage   = document.getElementById('flowStage');
-  const fill    = document.getElementById('flowFill');
-  const countEl = document.getElementById('flowCount');
-  const overlay = document.getElementById('flowOverlay');
-  const coverStart = document.getElementById('coverStart');
+  const list = document.getElementById('pressList');
+  const visual = document.getElementById('pressVisual');
+  if(!list || !visual) return;
+  const rows = [...list.querySelectorAll('.press-row')];
+  const imgs = [...visual.querySelectorAll('img')];
+  const capSource = document.getElementById('pressVisualSource');
+  const capIndex  = document.getElementById('pressVisualIndex');
 
-  const answers = {};      // accumulated across every step — sent as one payload at the end
-  let stepEls = [];        // DOM nodes, index 0 = cover, 1..N = questions
-  let current = 0;
-
-  function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
-
-  function buildStep(cfg, qIndex){
-    const el = document.createElement('section');
-    el.className = 'step';
-    el.dataset.qindex = qIndex;
-
-    const kicker = document.createElement('div');
-    kicker.className = 'step-kicker'; kicker.textContent = cfg.kicker || '';
-    el.appendChild(kicker);
-
-    const q = document.createElement('h2');
-    q.className = 'step-q'; q.textContent = cfg.q;
-    el.appendChild(q);
-
-    if (cfg.help){
-      const help = document.createElement('p');
-      help.className = 'step-help'; help.textContent = cfg.help;
-      el.appendChild(help);
-    }
-
-    if (cfg.fields){
-      const wrap = document.createElement('div');
-      wrap.className = 'flow-fields';
-      cfg.fields.forEach((f, fi) => {
-        const field = document.createElement('div');
-        const label = document.createElement('label');
-        label.className = 'flow-field-label'; label.textContent = f.label; label.htmlFor = cfg.id+'-'+f.name;
-        field.appendChild(label);
-        const input = document.createElement(f.type === 'textarea' ? 'textarea' : 'input');
-        input.id = cfg.id+'-'+f.name;
-        input.className = f.type === 'textarea' ? 'flow-textarea' : 'flow-input';
-        if (f.type !== 'textarea') input.type = f.type;
-        input.placeholder = f.placeholder || '';
-        input.dataset.name = f.name;
-        input.addEventListener('input', () => { answers[f.name] = input.value; refreshNextState(); });
-        input.addEventListener('keydown', (e) => {
-          if (e.key !== 'Enter') return;
-          if (f.type === 'textarea' && !(e.metaKey || e.ctrlKey)) return; // allow newlines in textarea
-          e.preventDefault();
-          const isLast = fi === cfg.fields.length - 1;
-          if (isLast) { if (isStepValid(cfg)) goNext(); }
-          else { const inputs = wrap.querySelectorAll('input,textarea'); inputs[fi+1] && inputs[fi+1].focus(); }
-        });
-        field.appendChild(input);
-        wrap.appendChild(field);
-      });
-      el.appendChild(wrap);
-    }
-
-    if (cfg.choices){
-      const grid = document.createElement('div');
-      grid.className = 'flow-choices';
-      const key = cfg.id;
-      cfg.choices.forEach(choice => {
-        const btn = document.createElement('button');
-        btn.type = 'button'; btn.className = 'flow-choice'; btn.textContent = choice;
-        btn.addEventListener('click', () => {
-          grid.querySelectorAll('.flow-choice').forEach(b => b.classList.remove('selected'));
-          btn.classList.add('selected');
-          answers[key] = choice;
-          refreshNextState();
-          setTimeout(() => { if (isStepValid(cfg)) goNext(); }, 320);
-        });
-        grid.appendChild(btn);
-      });
-      el.appendChild(grid);
-    }
-
-    const actions = document.createElement('div');
-    actions.className = 'flow-actions';
-    const isLastQuestion = qIndex === FLOW_STEPS.length - 1;
-    const nextBtn = document.createElement('button');
-    nextBtn.type = 'button'; nextBtn.className = 'flow-next';
-    nextBtn.textContent = isLastQuestion ? 'Submit request →' : 'Next →';
-    nextBtn.disabled = true;
-    nextBtn.addEventListener('click', () => { if (isLastQuestion) submitAll(); else goNext(); });
-    const backBtn = document.createElement('button');
-    backBtn.type = 'button'; backBtn.className = 'flow-back'; backBtn.textContent = '← Back';
-    backBtn.addEventListener('click', goPrev);
-    actions.appendChild(backBtn);
-    actions.appendChild(nextBtn);
-    if (!cfg.choices){
-      const hint = document.createElement('span');
-      hint.className = 'flow-hint';
-      hint.innerHTML = cfg.fields && cfg.fields.some(f=>f.type==='textarea') ? '<kbd>⌘/Ctrl</kbd> + <kbd>Enter</kbd> to continue' : 'Press <kbd>Enter ↵</kbd>';
-      actions.appendChild(hint);
-    }
-    el.appendChild(actions);
-    el._nextBtn = nextBtn;
-    el._cfg = cfg;
-    return el;
+  function show(i, row){
+    imgs.forEach((im,ii)=>im.classList.toggle('active', ii===i));
+    if(capSource) capSource.textContent = row.querySelector('.press-row-source').textContent;
+    if(capIndex)  capIndex.textContent  = row.querySelector('.press-row-index').textContent + ' / ' + String(rows.length).padStart(2,'0');
   }
-
-  function isStepValid(cfg){
-    if (cfg.choices) return !!answers[cfg.id];
-    if (cfg.fields) return cfg.fields.every(f => {
-      const v = (answers[f.name] || '').trim();
-      if (f.required && !v) return false;
-      if (v && f.validate) return f.validate(v);
-      return true;
-    });
-    return true;
-  }
-
-  function refreshNextState(){
-    const el = stepEls[current];
-    if (el && el._nextBtn) el._nextBtn.disabled = !isStepValid(el._cfg);
-  }
-
-  function updateChrome(){
-    const total = FLOW_STEPS.length;
-    const qIndex = current - 1; // -1 while on cover
-    if (current === 0){
-      countEl.hidden = true; fill.style.width = '0%';
-    } else {
-      countEl.hidden = false;
-      countEl.textContent = String(qIndex+1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
-      fill.style.width = (((qIndex+1)/total) * 100).toFixed(1) + '%';
-    }
-  }
-
-  function focusFirst(el){
-    const f = el.querySelector('input,textarea,button.flow-choice');
-    if (f) setTimeout(() => f.focus(), 60);
-  }
-
-  function showStep(index){
-    const prev = stepEls[current];
-    prev.classList.remove('active','in');
-    current = index;
-    const el = stepEls[current];
-    el.classList.add('active');
-    requestAnimationFrame(() => requestAnimationFrame(() => el.classList.add('in')));
-    updateChrome();
-    focusFirst(el);
-  }
-
-  function goNext(){ if (current < stepEls.length - 1) showStep(current + 1); }
-  function goPrev(){ if (current > 0) showStep(current - 1); }
-
-  function submitAll(){
-    const btn = stepEls[current]._nextBtn;
-    btn.disabled = true; btn.textContent = 'Sending…';
-    const fd = new FormData();
-    Object.keys(answers).forEach(k => fd.append(k, answers[k]));
-    fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:fd })
-      .then(showConfirmation)
-      .catch(showConfirmation);
-  }
-  function showConfirmation(){ overlay.classList.add('active'); }
-
-  // Build DOM
-  const coverEl = stage.querySelector('[data-role="cover"]');
-  stepEls.push(coverEl);
-  FLOW_STEPS.forEach((cfg, i) => { const el = buildStep(cfg, i); stage.appendChild(el); stepEls.push(el); });
-
-  coverEl.classList.add('active','in');
-  coverStart.addEventListener('click', goNext);
-  updateChrome();
+  rows.forEach(row=>{
+    const i = parseInt(row.dataset.img,10);
+    row.addEventListener('mouseenter', ()=>show(i,row));
+    row.addEventListener('focus', ()=>show(i,row));
+  });
 })();
 </script>
 
-</body>
-</html>    width: 100%;
-    height: 52px;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-    border-bottom: 1px solid rgba(255,255,255,0.12);
-    z-index: 1000;
-    transition: background 0.3s ease;
-  }
 
-  .nav-inner {
-    max-width: 1100px;
-    height: 100%;
-    margin: 0 auto;
-    padding: 0 24px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .nav-center {
-    display: flex;
-    gap: 34px;
-    align-items: center;
-  }
-
-  .nav-center a {
-    text-decoration: none;
-    font-size: 11px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.55);
-    transition: all .25s ease;
-    font-family: var(--font-mono);
-  }
-
-  .nav-center a:hover { color: white; }
-
-  .nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .nav-pill {
-    border: 1px solid rgba(255,255,255,.25);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 10px;
-    letter-spacing: .15em;
-    text-transform: uppercase;
-    text-decoration: none;
-    color: white;
-    font-family: var(--font-mono);
-    transition: all .25s ease;
-  }
-
-  .nav-pill:hover { background: white; color: black; }
-
-  .nav-toggle {
-    display: none;
-    width: 28px; height: 28px;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    gap: 4px;
-  }
-
-  .nav-dot { width: 4px; height: 4px; background: #fff; border-radius: 50%; }
-
-  @media (max-width: 900px) {
-    .nav-center {
-      position: absolute;
-      top: 52px; left: 0; right: 0;
-      background: #0a0a0a;
-      flex-direction: column;
-      gap: 20px;
-      padding: 30px 0;
-      display: none;
-    }
-    .nav-center.active { display: flex; }
-    .nav-toggle { display: flex; }
-  }
-
-
-
-
-
-
-/* =====================================================
-   HERO
-   ===================================================== */
-   
-.hero {
-
-  /* Desktop */
-  --img-x-desktop: 20%;
-  --img-y-desktop: 100%;
-  --img-scale-desktop: 140%;
-
-  /* Tablet */
-  --img-x-tablet: 40%;
-  --img-y-tablet: 100%;
-  --img-scale-tablet: 230%;
-
-  /* Mobile */
-  --img-x-mobile: 50%;
-  --img-y-mobile: 100%;
-  --img-scale-mobile: 300%;
-
-  position: relative;
-  height: 100svh;
-  min-height: 500px;
-  overflow: hidden;
-}
-
-/* BACKGROUND IMAGE */
-.hero-image {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-
-  background-image: url("images/Renders/WebP/hero.webp");
-  background-repeat: no-repeat;
-
-  background-size: var(--img-scale-desktop);
-  background-position:
-    var(--img-x-desktop)
-    var(--img-y-desktop);
-}
-
-/* OPTIONAL OVERLAY */
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-
-  background:
-    linear-gradient(
-      to top,
-      rgba(0,0,0,0.55),
-      rgba(0,0,0,0.15) 40%,
-      rgba(0,0,0,0)
-    );
-}
-
-/* CONTENT */
-.hero-content {
-  position: relative;
-  z-index: 2;
-
-  width: 100%;
-  height: 100%;
-
-  padding-left: clamp(24px, 5vw, 80px);
-
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
-  opacity: 0;
-  transform: translateY(24px);
-  animation: fadeUp 1s ease 0.5s forwards;
-}
-
-/* TEXT BLOCK */
-.hero-text {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: 700px;
-}
-
-.hero-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.2em;
-  color: var(--accent);
-  text-transform: uppercase;
-  margin-bottom: 12px;
-}
-
-.hero-title {
-  font-family: var(--font-display);
-  font-size: clamp(56px, 9vw, 100px);
-  font-weight: 600;
-  line-height: 0.92;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  color: var(--white);
-
-  margin-bottom: 24px;
-  max-width: 800px;
-}
-
-/* BUTTON */
-.hero-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-
-  width: fit-content;
-
-  padding: 12px 20px;
-
-  border: 1px solid rgba(255,255,255,0.25);
-  border-radius: 999px;
-
-  text-decoration: none;
-  color: var(--white);
-
-  font-family: var(--font-mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-
-  backdrop-filter: blur(6px);
-
-  transition: all 0.25s ease;
-}
-
-.hero-cta svg {
-  width: 14px;
-  height: 14px;
-}
-
-.hero-cta:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: rgba(255,255,255,0.5);
-  transform: translateY(-2px);
-}
-
-/* =====================================================
-   TABLET
-   ===================================================== */
-
-@media (max-width: 1024px) {
-
-  .hero-image {
-    background-size: var(--img-scale-tablet);
-    background-position:
-      var(--img-x-tablet)
-      var(--img-y-tablet);
-  }
-}
-
-/* =====================================================
-   MOBILE
-   ===================================================== */
-
-@media (max-width: 768px) {
-
-  .hero-image {
-    background-size: var(--img-scale-mobile);
-    background-position:
-      var(--img-x-mobile)
-      var(--img-y-mobile);
-  }
-
-  .hero-content {
-    justify-content: flex-start;
-    align-items: center;
-
-    padding-top: 100px;
-    padding-left: 24px;
-    padding-right: 24px;
-
-    text-align: center;
-
-    display: flex;
-    align-items:start;
-    justify-content: flex-start;
-  }
-
-  .hero-text {
-    width: 100%;
-    align-items: center;
-  }
-
-  .hero-title {
-    font-size: clamp(42px, 12vw, 72px);
-    margin-bottom: 18px;
-  }
-
-  .hero-cta {
-    align-self: center;
-  }
-}
-
-/* =====================================================
-   ANIMATIONS
-   ===================================================== */
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-
-
-
-
-
-
-
-  /* =====================================================
-   STAT TICKER
-   ===================================================== */
-  .stat-bar {
-    background: var(--mid);
-    border-top: 1px solid var(--border);
-    border-bottom: 1px solid var(--border);
-    overflow: hidden;
-    height: 44px;
-    display: flex;
-    align-items: center;
-  }
-
-  .stat-ticker {
-    display: flex;
-    white-space: nowrap;
-    animation: ticker 30s linear infinite;
-  }
-
-  .stat-ticker-inner { display: flex; }
-
-  @keyframes ticker {
-    0%   { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  .stat-item {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 0 48px;
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--text-muted);
-    text-transform: uppercase;
-    border-right: 1px solid var(--border);
-  }
-
-  .stat-item span { color: var(--white); font-weight: 700; font-size: 11px; }
-
-  /* =====================================================
-   PRODUCT GRID
-   ===================================================== */
-  .product-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-    background: #000;
-  }
-
-  .product-grid > a {
-    display: block;
-    text-decoration: none;
-    color: inherit;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .product-card {
-    position: relative;
-    overflow: hidden;
-    width: 100%; height: 100%;
-    aspect-ratio: 1/1;
-  }
-
-  .product-card img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    display: block;
-  }
-
-  .product-grid > a:hover .product-card img { transform: scale(1.06); }
-
-  .product-card-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.85) 100%);
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: clamp(12px, 2vw, 24px);
-    z-index: 1;
-  }
-
-  .product-card-name {
-    font-family: var(--font-display);
-    font-size: clamp(13px, 1.4vw, 20px);
-    font-weight: 500;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--white);
-    line-height: 1;
-    margin-bottom: 4px;
-  }
-
-  .product-card-arrow {
-    position: absolute;
-    top: clamp(12px, 2vw, 20px);
-    right: clamp(12px, 2vw, 20px);
-    width: 28px; height: 28px;
-    border: 1px solid rgba(255,255,255,0.3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transform: translate(-4px, 4px);
-    transition: opacity 0.3s ease, transform 0.3s ease;
-    font-size: 12px;
-    color: var(--white);
-    z-index: 2;
-  }
-
-  .product-grid > a:hover .product-card-arrow { opacity: 1; transform: translate(0,0); }
-
-  @media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 480px)  { .product-grid { grid-template-columns: 1fr; } }
-
-
-
-
-
- 
- /* =====================================================
-   VISION & INDISTINGUISHABILITY — COMBINED
-   ===================================================== */
-.ep-combined {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  background: #000;
-}
-
-.ep-col {
-  position: relative;
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  overflow: hidden;
-}
-
-.ep-bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.ep-col--vision {
-  --img-x: 50%;
-  --img-y: 30%;
-  --img-scale: 1;
-}
-
-.ep-col--indist {
-  --img-x: 50%;
-  --img-y: 100%;
-  --img-scale: 1.4;
-}
-
-.ep-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: var(--img-x) var(--img-y);
-  display: block;
-  transform: scale(var(--img-scale));
-  transform-origin: var(--img-x) var(--img-y);
-  transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.ep-bg-fade {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to top,
-    rgba(10,10,10,0.95) 0%,
-    rgba(10, 10, 10, 0.27) 40%,
-    rgba(10,10,10,0) 70%
-  );
-}
-
-.ep-col-inner {
-  position: relative;
-  z-index: 2;
-  padding: clamp(32px, 4vw, 56px);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.ep-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  color: var(--accent);
-  text-transform: uppercase;
-  opacity: 0.65;
-}
-
-.ep-title {
-  font-family: var(--font-display);
-  font-size: clamp(48px, 6vw, 88px);
-  font-weight: 600;
-  text-transform: uppercase;
-  line-height: 0.9;
-  color: var(--white);
-  letter-spacing: -0.01em;
-  margin: 0;
-}
-
-.ep-body {
-  font-family: var(--font-body);
-  font-size: clamp(13px, 1.1vw, 15px);
-  font-weight: 300;
-  color: rgb(240, 237, 232);
-  line-height: 1.9;
-  max-width: 600px;
-}
-
-.ep-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  font-family: var(--font-mono);
-  font-size: 9px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(255,255,255,0.12);
-  padding-bottom: 6px;
-  width: fit-content;
-  transition: color 0.25s ease, gap 0.25s ease, border-color 0.25s ease;
-  margin-top: 8px;
-}
-
-.ep-link:hover {
-  color: var(--white);
-  gap: 16px;
-  border-bottom-color: rgba(255,255,255,0.35);
-}
-
-@media (max-width: 768px) {
-  .ep-combined {
-    grid-template-columns: 1fr;
-  }
-  .ep-col {
-    min-height: 90svh;
-  }
-  .ep-body {
-    max-width: 100%;
-  }
-}
-  
-
-
-
-
- 
- 
-/* =====================================================
-     PRESS — HORIZONTAL SCROLL STRIP (replaces press grid)
-     ===================================================== */
- 
-  .press-section {
-    padding: clamp(80px, 10vw, 130px) 0;
-    background: #060606;
-    overflow: hidden;
-    position: relative;
-  }
- 
-  .press-section::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 1px;
-    background: linear-gradient(90deg,
-      transparent, rgba(255,255,255,0.07) 30%, rgba(255,255,255,0.07) 70%, transparent
-    );
-  }
- 
-  .press-head {
-    padding: 0 clamp(24px, 5vw, 80px);
-    margin-bottom: 56px;
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-between;
-    gap: 24px;
-  }
- 
-  .press-head-left {}
- 
-  .press-label {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: var(--accent);
-    opacity: 0.55;
-    margin-bottom: 14px;
-  }
- 
-  .press-h2 {
-    font-family: var(--font-display);
-    font-size: clamp(48px, 7vw, 88px);
-    font-weight: 600;
-    line-height: 0.9;
-    text-transform: uppercase;
-    color: var(--white);
-  }
- 
-  .press-count {
-    font-family: var(--font-mono);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.2);
-    padding-bottom: 8px;
-    white-space: nowrap;
-  }
- 
-  /* Scroll track */
-  .press-track {
-    display: flex;
-    gap: 2px;
-    padding: 0 clamp(24px, 5vw, 80px);
-    overflow-x: auto;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    cursor: grab;
-  }
- 
-  .press-track::-webkit-scrollbar { display: none; }
-  .press-track:active { cursor: grabbing; }
- 
-  /* Card */
-  .pcard {
-    flex: 0 0 clamp(280px, 30vw, 380px);
-    position: relative;
-    overflow: hidden;
-    text-decoration: none;
-    color: var(--white);
-    display: flex;
-    flex-direction: column;
-    border: 1px solid rgba(255,255,255,0.05);
-    background: #0f0f0f;
-    transition: border-color 0.3s ease, transform 0.3s ease;
-  }
- 
-  .pcard:hover {
-    border-color: rgba(255,255,255,0.12);
-    transform: translateY(-4px);
-  }
- 
-  .pcard-thumb {
-    position: relative;
-    aspect-ratio: 16/9;
-    overflow: hidden;
-  }
- 
-  .pcard-thumb img {
-    width: 100%; height: 100%;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.7s ease;
-    filter: brightness(0.85) saturate(0.9);
-  }
- 
-  .pcard:hover .pcard-thumb img {
-    transform: scale(1.06);
-    filter: brightness(1) saturate(1);
-  }
- 
-  /* Source badge on image */
-  .pcard-badge {
-    position: absolute;
-    top: 12px; left: 12px;
-    background: rgba(0,0,0,0.7);
-    backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,0.1);
-    padding: 4px 9px;
-    font-family: var(--font-mono);
-    font-size: 8px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.7);
-  }
- 
-  .pcard-body {
-    padding: 24px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
- 
-  .pcard-date {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.12em;
-    color: rgba(255,255,255,0.25);
-  }
- 
-  .pcard-title {
-    font-family: var(--font-display);
-    font-size: clamp(17px, 1.6vw, 22px);
-    font-weight: 600;
-    line-height: 1.15;
-    text-transform: uppercase;
-    color: var(--white);
-  }
- 
-  .pcard-excerpt {
-    font-family: var(--font-body);
-    font-size: 13px;
-    line-height: 1.7;
-    color: rgba(240,237,232,0.45);
-    margin-top: auto;
-  }
- 
-  .pcard-arrow {
-    margin-top: 16px;
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.2);
-    transition: color 0.25s ease;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
- 
-  .pcard-arrow::after {
-    content: '';
-    display: block;
-    width: 20px;
-    height: 1px;
-    background: currentColor;
-    transition: width 0.25s ease;
-  }
- 
-  .pcard:hover .pcard-arrow {
-    color: var(--accent);
-  }
- 
-  .pcard:hover .pcard-arrow::after {
-    width: 36px;
-  }
- 
-  /* Scroll hint gradient */
-  .press-fade-right {
-    position: absolute;
-    top: 0; right: 0;
-    width: 120px; height: 100%;
-    background: linear-gradient(90deg, transparent, #060606);
-    pointer-events: none;
-    z-index: 2;
-  }
- 
- 
-    /* =====================================================
-     DEPLOY — WHITE EDITORIAL
-     ===================================================== */
-  .deploy-section {
-    position: relative;
-    background: #f0ede8;
-    overflow: hidden;
-    isolation: isolate;
-  }
- 
-  /* Kill all old noise */
-  .deploy-section::before,
-  .deploy-section::after,
-  .deploy-blob,
-  .deploy-top-line,
-  .deploy-glow { display: none !important; }
- 
-  /* ---- EYEBROW ROW ---- */
-  .deploy-eyebrow-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: clamp(28px, 3vw, 40px) clamp(32px, 5vw, 80px);
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-  }
- 
-  .deploy-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.22em;
-    text-transform: uppercase;
-    color: rgba(0,0,0,0.35);
-    margin: 0;
-    opacity: 1;
-  }
- 
-  .deploy-eyebrow-right {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(0,0,0,0.25);
-  }
- 
-  /* ---- MAIN BODY ---- */
-  .deploy-inner {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-    max-width: 100%;
-    margin: 0;
-    align-items: stretch;
-    min-height: 70svh;
-  }
- 
-  /* ---- LEFT — giant type ---- */
-  .deploy-left {
-    padding: clamp(48px, 6vw, 96px) clamp(32px, 5vw, 80px);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border-right: 1px solid rgba(0,0,0,0.1);
-  }
- 
-  .deploy-title {
-    font-family: var(--font-display);
-    font-size: clamp(64px, 9vw, 130px);
-    line-height: 0.88;
-    text-transform: uppercase;
-    font-weight: 600;
-    letter-spacing: -0.02em;
-    color: #0a0a0a;
-    margin: 0;
-  }
- 
-  .deploy-desc {
-    font-family: var(--font-body);
-    font-size: clamp(13px, 1.1vw, 15px);
-    font-weight: 300;
-    color: rgba(0,0,0,0.45);
-    line-height: 1.85;
-    max-width: 380px;
-    margin-top: auto;
-    padding-top: 48px;
-  }
- 
-  /* ---- RIGHT — two full-height action panels ---- */
-  .deploy-right {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    gap: 0;
-    flex-direction: unset;
-  }
- 
-  .deploy-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: clamp(32px, 4vw, 56px) clamp(32px, 4vw, 60px);
-    text-decoration: none;
-    border: none;
-    background: transparent;
-    gap: 0;
-    position: relative;
-    overflow: hidden;
-    transition: none;
-    transform: none;
-    border-radius: 0;
-  }
- 
-  /* Top card — off-white with black text */
-  .deploy-card:first-child {
-    background: #e8e4de;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
-    color: #0a0a0a;
-  }
- 
-  .deploy-card:first-child::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: #0a0a0a;
-    transform: translateY(101%);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 0;
-  }
- 
-  .deploy-card:first-child:hover::before {
-    transform: translateY(0);
-  }
- 
-  .deploy-card:first-child:hover {
-    color: #f0ede8;
-  }
- 
-  /* Bottom card — black with cream text */
-  .deploy-card-highlight {
-    background: #1e454b !important;
-    color: #f0ede8;
-    border-color: transparent !important;
-  }
- 
-  .deploy-card-highlight::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: #7da5ab;
-    color: black;
-    transform: translateY(101%);
-    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 0;
-  }
- 
-  .deploy-card-highlight:hover::before {
-    transform: translateY(0);
-  }
- 
-  /* All card content above the wipe */
-  .deploy-card-label,
-  .deploy-card-title,
-  .deploy-card-arrow {
-    position: relative;
-    z-index: 1;
-  }
- 
-  .deploy-card-label {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    opacity: 0.4;
-    margin-bottom: 12px;
-  }
- 
-  .deploy-card-title {
-    font-family: var(--font-display);
-    font-size: clamp(32px, 3.5vw, 48px);
-    font-weight: 600;
-    text-transform: uppercase;
-    line-height: 0.95;
-    letter-spacing: -0.01em;
-  }
- 
-  /* Arrow indicator — top right corner */
-  .deploy-card-arrow {
-    position: absolute;
-    top: clamp(24px, 3vw, 40px);
-    right: clamp(24px, 3vw, 40px);
-    width: 36px;
-    height: 36px;
-    border: 1px solid currentColor;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0.25;
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
- 
-  .deploy-card:hover .deploy-card-arrow {
-    opacity: 0.7;
-    transform: translate(3px, -3px);
-  }
- 
-  .deploy-card-arrow svg {
-    width: 14px;
-    height: 14px;
-  }
- 
-  /* hover state override */
-  .deploy-card:hover {
-    transform: none;
-    background: transparent;
-    border-color: transparent;
-    color: #0a0a0a;
-  }
- 
-  @media (max-width: 900px) {
-    .deploy-inner {
-      grid-template-columns: 1fr;
-      min-height: auto;
-    }
-    .deploy-left {
-      border-right: none;
-      border-bottom: 1px solid rgba(0,0,0,0.1);
-      gap: 40px;
-    }
-    .deploy-right {
-      grid-template-rows: auto auto;
-    }
-    .deploy-card {
-      min-height: 220px;
-    }
-    .deploy-desc {
-      padding-top: 32px;
-    }
-  }
- 
- 
-
-
-
-  
-  /* =====================================================
-     FOOTER
-     ===================================================== */
-  .footer-minimal {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 22px clamp(24px, 4vw, 56px);
-    border-top: 1px solid rgba(255,255,255,0.05);
-    background: #000;
-  }
- 
-  .footer-left {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-  }
- 
-  .footer-copy {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: rgb(240, 237, 232);
-  }
- 
-  .footer-center {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 28px;
-  }
- 
-  .footer-center a {
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgb(240, 237, 232);
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
- 
-  .footer-center a:hover { font-weight: 900; transition: 0.5s ease; }
- 
-  .footer-right {
-    display: flex;
-    align-items: center;
-  }
- 
-  .footer-flag {
-    width: 24px;
-    height: auto;
-    opacity: 0.85;
-  }
- 
-  @media (max-width: 768px) {
-    .footer-minimal {
-      flex-direction: column;
-      gap: 20px;
-      text-align: center;
-    }
-    .footer-center {
-      position: static;
-      transform: none;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 20px;
-    }
-  }
-</style>
-</head>
-<body>
-
-<div class="scanline-overlay"></div>
-
-<!-- ===================== NAVBAR ===================== -->
-<nav class="navbar" id="navbar">
-  <div class="nav-inner">
-    <a class="nav-brand" href="index.html">
-      <img src="images/Renders/WebP/WhiteLogo1.webp" width="95" alt="Vanar Robots">
-    </a>
-    <div class="nav-center" id="navLinks">
-      <a href="Gen1.html">Generation‑1</a>
-      <a href="vision.html">Vision</a>
-      <a href="indistinguishability.html">Indistinguishability</a>
-      <a href="contact.html">Contact</a>
-    </div>
-    <div class="nav-actions">
-      <a href="interest.html" class="nav-pill">Request Access</a>
-      <div class="nav-toggle" onclick="toggleNav()">
-        <div class="nav-dot"></div>
-        <div class="nav-dot"></div>
-      </div>
-    </div>
-  </div>
-</nav>
-
-<!-- ===================== HERO ===================== -->
-<section class="hero">
-
-  <div class="hero-image"></div>
-  <div class="hero-overlay"></div>
-
-  <div class="hero-content">
-    <div class="hero-text">
-
-      <p class="hero-eyebrow">// Vanar Generation 1</p>
-
-      <h1 class="hero-title">
-        The Next<br>
-        Evolution of<br>
-        Labor
-      </h1>
-
-      <a href="Gen1.html" class="hero-cta">
-        <span>Explore Vanar Generation 1</span>
-        <svg viewBox="0 0 24 24" fill="none">
-          <path d="M7 17L17 7M17 7H7M17 7V17"
-                stroke="currentColor"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"/>
-        </svg>
-      </a>
-
-    </div>
-  </div>
-
-</section>
-
-<!-- ===================== STAT TICKER ===================== -->
-<div class="stat-bar">
-  <div class="stat-ticker">
-    <div class="stat-ticker-inner">
-      <div class="stat-item">Height <span>5'9"</span></div>
-      <div class="stat-item">Weight <span>~60kgs</span></div>
-      <div class="stat-item">Degrees of freedom <span>38</span></div>
-      <div class="stat-item">Runtime <span>5 hours +</span></div>
-      <div class="stat-item">Beta deployment <span>2027</span></div>
-      <div class="stat-item">Initial deployment type <span>Industrial</span></div>
-    </div>
-    <div class="stat-ticker-inner" aria-hidden="true">
-      <div class="stat-item">Height <span>5'9"</span></div>
-      <div class="stat-item">Weight <span>~60kgs</span></div>
-      <div class="stat-item">Degrees of freedom <span>38</span></div>
-      <div class="stat-item">Runtime <span>5 hours +</span></div>
-      <div class="stat-item">Beta deployment <span>2027</span></div>
-      <div class="stat-item">Initial deployment type <span>Industrial</span></div>
-    </div>
-  </div>
-</div>
-
-<!-- ===================== PRODUCT GRID ===================== -->
-<section class="product-grid reveal">
-
-  <a href="https://x.com/vanar_robots/status/2066018605444305146?s=20" target="_blank" rel="noopener">
-    <div class="product-card">
-      <img src="https://pbs.twimg.com/media/HIr1Wg_bkAAd6fO?format=jpg&name=medium" alt="Opposition Thumb" loading="lazy">
-      <div class="product-card-overlay">
-        <div class="product-card-name">Material Handling</div>
-      </div>
-      <div class="product-card-arrow">↗</div>
-    </div>
-  </a>
-  
-  <a href="https://x.com/vanar_robots/status/2035689089962545615?s=20" target="_blank" rel="noopener">
-    <div class="product-card">
-      <img src="images/Renders/WebP/humanoid.webp" alt="Opposition Thumb" loading="lazy">
-      <div class="product-card-overlay">
-        <div class="product-card-name">Vanar Generation 1</div>
-      </div>
-      <div class="product-card-arrow">↗</div>
-    </div>
-  </a>
-
-  <a href="https://x.com/vanar_robots/status/2025194650030735695?s=20" target="_blank" rel="noopener">
-    <div class="product-card">
-      <img src="images/Renders/WebP/manipulatorX.webp" alt="Opposition Thumb" loading="lazy">
-      <div class="product-card-overlay">
-        <div class="product-card-name">Opposition Thumb</div>
-      </div>
-      <div class="product-card-arrow">↗</div>
-    </div>
-  </a>
-
-  <a href="https://x.com/vanar_robots/status/2026032512448045458?s=20" target="_blank" rel="noopener">
-    <div class="product-card">
-      <img src="images/Renders/WebP/ManipulatorX1.webp" alt="Manipulators" loading="lazy">
-      <div class="product-card-overlay">
-        <div class="product-card-name">Manipulators</div>
-      </div>
-      <div class="product-card-arrow">↗</div>
-    </div>
-  </a>
-
-  <a href="https://x.com/ironwagh/status/1971205893908988319?s=20" target="_blank" rel="noopener">
-    <div class="product-card">
-      <img src="images/Renders/WebP/WalkX.webp" alt="Initial Locomotion" loading="lazy">
-      <div class="product-card-overlay">
-        <div class="product-card-name">Initial Locomotion</div>
-      </div>
-      <div class="product-card-arrow">↗</div>
-    </div>
-  </a>
-
-  <a href="https://x.com/ironwagh/status/1916622689537867814?s=20" target="_blank" rel="noopener">
-    <div class="product-card">
-      <img src="images/Renders/WebP/ActuatorX.webp" alt="Actuator Strength Test — SUV Pull" loading="lazy">
-      <div class="product-card-overlay">
-        <div class="product-card-name">Actuator Strength Test — SUV Pull</div>
-      </div>
-      <div class="product-card-arrow">↗</div>
-    </div>
-  </a>
-
-</section>
-
-
-
-
-
-
-
-<!-- ===================== VISION & INDISTINGUISHABILITY ===================== -->
-<section class="ep-combined">
-  <div class="ep-col ep-col--vision">
-    <div class="ep-bg">
-      <img src="images/Renders/WebP/File87.webp" alt="Vanar future vision" loading="lazy">
-      <div class="ep-bg-fade"></div>
-    </div>
-    <div class="ep-col-inner">
-      <h2 class="ep-title">Vision</h2>
-      <p class="ep-body">
-        To ensure the long-term survival and expansion of life, humanity must move beyond its current constraints.
-        Vanar Robots is building systems designed to accelerate humanity's progress.
-      </p>
-      <a href="vision.html" class="ep-link">
-        Explore Vision
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-
-  <div class="ep-col ep-col--indist">
-    <div class="ep-bg">
-      <img src="images/Renders/WebP/File146Large.webp" alt="Vanar humanoid form" loading="lazy">
-      <div class="ep-bg-fade"></div>
-    </div>
-    <div class="ep-col-inner">
-      <h2 class="ep-title">Indistin&shy;guish&shy;ability</h2>
-      <p class="ep-body">
-        For Vanars to truly be a part of human environments, they need to be indistinguishable from humans in their form, capabilities and interactions,
-        not just mimicking human actions, but understanding and adapting to the human environments, tasks, and social dynamics.
-      </p>
-      <a href="indistinguishability.html" class="ep-link">
-        Read More
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-          <path d="M5 12h14M13 5l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-</section>
- 
- 
-<!-- ===================== PRESS ===================== -->
-<section class="press-section reveal">
- 
-  <div class="press-head">
-    <div class="press-head-left">
-      <div class="press-label">// Press</div>
-      <h2 class="press-h2">In the News</h2>
-    </div>
-    <div class="press-count">04 FEATURES</div>
-  </div>
- 
-  <div class="press-track" id="pressTrack">
- 
-    <!-- Card 1 -->
-    <a href="https://youtu.be/Zd94vE75S_U?si=gxhbcrc2iD3GwMfD"
-       class="pcard"
-       target="_blank" rel="noopener">
-      <div class="pcard-thumb">
-        <img src="https://i.ytimg.com/vi/Zd94vE75S_U/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLB74-yz3ohGGAkR3mRgf5v2MKh76A" alt="RuntimeBRT">
-        <span class="pcard-badge">RuntimeBRT</span>
-      </div>
-      <div class="pcard-body">
-        <div class="pcard-date">Mar 2026</div>
-        <div class="pcard-title">They Built This Robot From Scratch With No Venture Capital</div>
-        <div class="pcard-excerpt">India's robotics era is here, and it's not coming from billion-dollar labs.</div>
-        <div class="pcard-arrow">Watch</div>
-      </div>
-    </a>
- 
-    <!-- Card 2 -->
-    <a href="https://startuppedia.in/trending/meet-indias-59-50-kg-humanoid-designed-by-mumbai-based-startup-for-strenuous-real-world-tasks-10992429"
-       class="pcard"
-       target="_blank" rel="noopener">
-      <div class="pcard-thumb">
-        <img src="https://img-cdn.publive.online/fit-in/1280x960/filters:format(webp)/startuppedia/media/media_files/2026/01/12/copy-of-website-1110-x-960-px-32-2026-01-12-17-43-50.png" alt="StartupPedia">
-        <span class="pcard-badge">StartupPedia</span>
-      </div>
-      <div class="pcard-body">
-        <div class="pcard-date">Jan 2026</div>
-        <div class="pcard-title">Meet India's 5'9" Humanoid Designed by a Mumbai-Based Startup</div>
-        <div class="pcard-excerpt">Vanar Robots unveils Generation-1 — an indigenous humanoid built for demanding industrial work.</div>
-        <div class="pcard-arrow">Read Article</div>
-      </div>
-    </a>
- 
-    <!-- Card 3 -->
-    <a href="https://youtube.com/shorts/ReRgv8WzCUk?si=RssCrYcEKFm6HXmm"
-       class="pcard"
-       target="_blank" rel="noopener">
-      <div class="pcard-thumb">
-        <img src="https://media.licdn.com/dms/image/v2/D4D05AQFyO7WEMin26Q/videocover-high/B4DZyNgFX0JYBc-/0/1771900527495?e=2147483647&v=beta&t=7zvFX6YBTOvmsvqC8igGp11MFlz-whkoAGiQWpcDawg" alt="Runtime Bharat">
-        <span class="pcard-badge">Runtime Bharat</span>
-      </div>
-      <div class="pcard-body">
-        <div class="pcard-date">Feb 2026</div>
-        <div class="pcard-title">They Built This in Mumbai</div>
-        <div class="pcard-excerpt">A first look at the dexterous robotic manipulator developed by Vanar Robots.</div>
-        <div class="pcard-arrow">Watch</div>
-      </div>
-    </a>
- 
-    <!-- Card 4 -->
-    <a href="https://youtube.com/shorts/ReRgv8WzCUk?si=RssCrYcEKFm6HXmm"
-       class="pcard"
-       target="_blank" rel="noopener">
-      <div class="pcard-thumb">
-        <img src="images/Renders/WebP/File178.webp" alt="Runtime Bharat">
-        <span class="pcard-badge">Runtime Bharat</span>
-      </div>
-      <div class="pcard-body">
-        <div class="pcard-date">Jan 2026</div>
-        <div class="pcard-title">Is This the Future of Indian Robotics?</div>
-        <div class="pcard-excerpt">Inside the team building one of India's most ambitious humanoid robotics companies.</div>
-        <div class="pcard-arrow">Watch</div>
-      </div>
-    </a>
- 
-  </div>
- 
-  <div class="press-fade-right"></div>
- 
-</section>
- 
- 
-
-<!-- ===================== DEPLOYMENT ===================== -->
-<section class="deploy-section reveal">
- 
-  <div class="deploy-inner">
- 
-    <div class="deploy-left">
-      <h2 class="deploy-title">
-        Bring A<br>Vanar<br>Into Your<br>Environment
-      </h2>
-      <p class="deploy-desc">
-        Limited beta units will be placed with select industrial partners. We will work directly with teams ready to shape how robots integrate into real-world environments.
-      </p>
-    </div>
- 
-    <div class="deploy-right">
- 
-      <a href="contact.html" class="deploy-card">
-        <div class="deploy-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="deploy-card-label">Partnerships / Research / Media</div>
-        <div class="deploy-card-title">Speak<br>With Us</div>
-      </a>
- 
-      <a href="interest.html" class="deploy-card deploy-card-highlight">
-        <div class="deploy-card-arrow">
-          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <div class="deploy-card-label">Limited Beta Deployment</div>
-        <div class="deploy-card-title">Request<br>Early Unit</div>
-      </a>
- 
-    </div>
- 
-  </div>
- 
-</section>
- 
- 
-<!-- ===================== FOOTER ===================== -->
-<footer class="footer-minimal">
-  <div class="footer-left">
-    <span class="footer-copy">© 2026 Vanar Robots Private Limited</span>
-  </div>
-  <div class="footer-center">
-    <a href="https://x.com/vanar_robots" target="_blank">X</a>
-    <a href="https://www.youtube.com/@VanarRobots" target="_blank">YouTube</a>
-    <a href="https://www.linkedin.com/company/vanar-robots/" target="_blank">LinkedIn</a>
-    <a href="https://www.instagram.com/vanar_robots/" target="_blank">Instagram</a>
-  </div>
-  <div class="footer-right">
-    <img src="images/Renders/WebP/India.webp" alt="India" class="footer-flag">
-  </div>
-</footer>
-
+<!-- ===== MULTI-CLIP SCROLL-FILM ENGINE (no libraries) ===== -->
 <script>
-  /* ---- Nav ---- */
-  function toggleNav() {
-    document.getElementById('navLinks').classList.toggle('active');
-  }
+(function(){
+  /* ============ YOUR CLIPS — played in order across the scroll ============
+     frame controls how the image fills the screen (like background-position
+     + background-size:cover, but with an explicit zoom knob):
+       x, y  — 0..1, where in the image stays anchored (0.5,0.5 = centered)
+       zoom  — 1 = just covers the screen edge-to-edge, >1 = zoomed in further
+     `mobile` overrides any of those three under 768px width — use it to
+     recompose the same shot for a tall, narrow screen instead of cropping
+     whatever the desktop framing happens to leave in view.
+     ========================================================================= */
+  const CLIPS = [
+    { dir:'models/humanoid/',  prefix:'h_', count:0, pad:4, ext:'webp', poster:'https://www.vanarrobots.com/images/Renders/WebP/File155.webp',
+      frame:{ x:0.5, y:0.35, zoom:1.1,  mobile:{ x:0.5, y:0.3,  zoom:1.4 } } },
+    { dir:'models/spaceship/', prefix:'s_', count:0, pad:4, ext:'webp', poster:'https://www.vanarrobots.com/images/Renders/WebP/File87.webp',
+      frame:{ x:0.5, y:0.45, zoom:1.05, mobile:{ x:0.5, y:0.4,  zoom:1.3 } } },
+    { dir:'models/build/',     prefix:'b_', count:0, pad:4, ext:'webp', poster:'https://www.vanarrobots.com/images/Renders/WebP/File178.webp',
+      frame:{ x:0.5, y:0.4,  zoom:1.1,  mobile:{ x:0.5, y:0.32, zoom:1.35 } } }
+  ];
+  // count:0 = preview (uses the poster). Set each to its rendered frame total.
 
-  const navbar = document.getElementById('navbar');
-  window.addEventListener('scroll', () => {
-    navbar.style.background = window.scrollY > 60
-      ? 'rgba(10,10,10,0.97)'
-      : 'rgba(0,0,0,0.35)';
-  });
+  const TRANS = {
+    width:   0.16,   // length of each blend, as a fraction of one clip (0..0.5)
+    streak:  0,      // motion-blur smear — off, transition is a plain dissolve
+    punch:   0,      // zoom punch — off, transition is a plain dissolve
+    flash:   0.0,    // white flash at the peak (0..1)
+    samples: 6       // blur sample count (unused while streak is 0)
+  };
+  /* ======================================================================== */
 
-  /* ---- Reveal ---- */
-  const revealEls = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        observer.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
-  revealEls.forEach(el => observer.observe(el));
+  const section=document.getElementById('film');
+  const canvas =document.getElementById('film-canvas');
+  const ctx    =canvas.getContext('2d');
+  const beats  =[...document.querySelectorAll('.film-text')];
+  const reduce =matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
+  const smooth=(p,a,b)=>{const t=clamp((p-a)/(b-a),0,1);return t*t*(3-2*t);};
+  const K=CLIPS.length, seg=1/K; let curP=0;
 
-  /* ---- Star field canvas ---- */
-  (function() {
-    const canvas = document.getElementById('starsCanvas');
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
+  CLIPS.forEach(c=>{ c.frames=null; c.started=false; c.posterImg=null;
+    if(c.poster){ const im=new Image(); im.onload=render; im.src=c.poster; c.posterImg=im; } });
 
-    let stars = [];
-    const NUM_STARS = 280;
+  function frameURL(c,i){ return c.dir+c.prefix+String((c.start||1)+i).padStart(c.pad,'0')+'.'+c.ext; }
+  function ensure(idx){ const c=CLIPS[idx]; if(!c||c.started||!c.count) return; c.started=true; c.frames=new Array(c.count);
+    for(let i=0;i<c.count;i++){ const im=new Image(); im.decoding='async'; im.onload=render; im.src=frameURL(c,i); c.frames[i]=im; } }
+  function pick(idx,local){ const c=CLIPS[idx]; if(!c) return null;
+    if(c.count&&c.frames){ const k=clamp(Math.round(local*(c.count-1)),0,c.count-1); const im=c.frames[k]; if(im&&im.complete&&im.width) return im; }
+    return (c.posterImg&&c.posterImg.width)?c.posterImg:null; }
 
-    function resize() {
-      canvas.width  = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    }
+  function frameFor(c){ const m = innerWidth<=768; const f = c.frame||{};
+    const o = (m && f.mobile) ? f.mobile : {};
+    return { x: o.x ?? f.x ?? 0.5, y: o.y ?? f.y ?? 0.5, zoom: o.zoom ?? f.zoom ?? 1 }; }
 
-    function createStars() {
-      stars = [];
-      for (let i = 0; i < NUM_STARS; i++) {
-        stars.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          r: Math.random() * 1.2 + 0.2,
-          alpha: Math.random() * 0.6 + 0.1,
-          speed: Math.random() * 0.004 + 0.001,
-          phase: Math.random() * Math.PI * 2,
-        });
-      }
-    }
+  function blit(img,alpha,shift,zoomMul,frame){ if(!img||!img.width) return; const cw=canvas.width,ch=canvas.height;
+    const f = frame||{x:0.5,y:0.5,zoom:1};
+    const cover = Math.max(cw/img.width, ch/img.height);           // true cover — fills both axes, no letterboxing
+    const scale = cover * (f.zoom||1) * zoomMul;
+    const w=img.width*scale, h=img.height*scale;
+    const x = -((w-cw)*f.x) + shift, y = -((h-ch)*f.y);
+    ctx.globalAlpha=alpha; ctx.drawImage(img,x,y,w,h); ctx.globalAlpha=1; }
+  function blitBlur(img,alpha,t,frame){ if(!img||!img.width) return; const zoomMul=1+TRANS.punch*t;
+    if(reduce||TRANS.streak===0||t<=0){ blit(img,alpha,0,zoomMul,frame); return; }
+    const N=TRANS.samples, smear=TRANS.streak*t;
+    for(let s=0;s<N;s++){ const dx=((s-(N-1)/2)/Math.max(1,N-1))*smear; blit(img,alpha/N,dx,zoomMul,frame); } }
 
-    let raf;
-    let t = 0;
+  function render(){ const cw=canvas.width,ch=canvas.height; ctx.clearRect(0,0,cw,ch);
+    const p=curP, gi=clamp(Math.floor(p/seg),0,K-1), local=clamp((p-gi*seg)/seg,0,1), tw=TRANS.width;
+    const frameA=frameFor(CLIPS[gi]), frameB=CLIPS[gi+1]?frameFor(CLIPS[gi+1]):frameA;
+    if(gi<K-1 && local>1-tw){
+      const t=(local-(1-tw))/tw, e=smooth(t,0,1), inten=Math.sin(e*Math.PI); ensure(gi+1);
+      blitBlur(pick(gi,   local),  1-e, inten, frameA);
+      blitBlur(pick(gi+1, t*0.12), e,   inten, frameB);
+      if(TRANS.flash>0){ ctx.globalAlpha=TRANS.flash*inten; ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,cw,ch); ctx.globalAlpha=1; }
+    } else {
+      blit(pick(gi,local),1,0,1,frameA);
+    } }
 
-    function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      t += 0.012;
+  function resize(){ const dpr=Math.min(devicePixelRatio||1,2);
+    canvas.width=innerWidth*dpr; canvas.height=innerHeight*dpr;
+    canvas.style.width=innerWidth+'px'; canvas.style.height=innerHeight+'px'; render(); }
 
-      for (const s of stars) {
-        const twinkle = s.alpha * (0.6 + 0.4 * Math.sin(t * s.speed * 80 + s.phase));
-        ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(228, 255, 10, ${twinkle})`;
-        ctx.fill();
-      }
+  // Text fade envelope: fade in over the first 20% of each beat's segment,
+  // hold through the middle, fade out over the last 15%. Scales to any K.
+  const T = Array.from({length:K}, (_,i)=>{ const s=i*seg; return [s, s+0.2*seg, s+0.75*seg, s+0.92*seg]; });
+  function env(p,e){ if(p<=e[0]||p>=e[3])return 0; if(p<e[1])return smooth(p,e[0],e[1]); if(p<e[2])return 1; return 1-smooth(p,e[2],e[3]); }
+  function text(p){ T.forEach((e,i)=>{ const o=env(p,e), el=beats[i]; if(!el)return; el.style.opacity=o.toFixed(3);
+    if(reduce){ el.style.transform='none'; el.style.filter='none'; }
+    else { el.style.transform='translateY('+((1-o)*26).toFixed(1)+'px)'; el.style.filter='blur('+((1-o)*7).toFixed(2)+'px)'; } }); }
 
-      raf = requestAnimationFrame(draw);
-    }
+  let ticking=false;
+  function onScroll(){ if(ticking)return; ticking=true; requestAnimationFrame(()=>{ ticking=false;
+    const r=section.getBoundingClientRect(), scrollable=section.offsetHeight-innerHeight;
+    curP=clamp(-r.top/Math.max(1,scrollable),0,1);
+    const gi=clamp(Math.floor(curP/seg),0,K-1); ensure(gi); ensure(gi+1);
+    text(curP); render(); }); }
 
-    /* Only run when section is visible (perf) */
-    const section = canvas.closest('section');
-    const starObs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          if (!raf) draw();
-        } else {
-          cancelAnimationFrame(raf);
-          raf = null;
-        }
-      });
-    }, { threshold: 0.01 });
-
-    if (section) starObs.observe(section);
-
-    resize();
-    createStars();
-
-    window.addEventListener('resize', () => {
-      resize();
-      createStars();
-    });
-  })();
+  ensure(0); ensure(1);
+  addEventListener('resize',resize,{passive:true}); addEventListener('scroll',onScroll,{passive:true});
+  resize(); onScroll();
+})();
 </script>
 </body>
 </html>
