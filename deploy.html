@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
- <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-QGSPZLKM50"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -20,9 +20,10 @@
     })(window, document, "clarity", "script", "xhjgope2e6");
 </script>
  
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Deploy</title>
+<title>Deploy Vanar Generation 1</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
@@ -114,16 +115,32 @@
   .confirm-btn { display:inline-flex; align-items:center; justify-content:center; padding:14px 30px; border:1px solid rgba(246,246,246,0.35); color:var(--white); font-family:var(--font-body); font-size:14px; text-decoration:none; transition:background-color .5s cubic-bezier(.4,0,.2,1), color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1); }
   .confirm-btn:hover { background-color:var(--white); color:var(--black); border-color:var(--white); }
 
-  /* ===== FOOTER (matches main site) ===== */
-  .footer-minimal { position:relative; display:flex; align-items:center; justify-content:space-between; padding:clamp(20px,3vw,24px) var(--edge-sm); border-top:1px solid var(--line); background:var(--black); z-index:1; gap:16px; flex-wrap:wrap; }
-  .footer-left { display:flex; align-items:center; gap:14px; }
-  .footer-copy { font-family:var(--font-body); font-size:12px; letter-spacing:0; color:var(--dim); }
-  .footer-center { display:flex; gap:clamp(16px,3vw,28px); flex-wrap:wrap; justify-content:center; margin:0 auto; }
-  .footer-center a { font-family:var(--font-body); font-size:12px; letter-spacing:0; color:var(--dim); text-decoration:none; transition:color .25s ease; }
-  .footer-center a:hover { color:var(--white); }
-  .footer-right { display:flex; align-items:center; }
-  .footer-flag { width:22px; height:auto; opacity:.85; }
-  @media (max-width:768px){ .footer-minimal{ flex-direction:column; gap:18px; text-align:center; padding-top:28px; padding-bottom:28px;} .footer-center{ order:2; } .footer-right{ order:3; } .footer-left{ order:1; } }
+  
+    /* ===== FOOTER (matches main site) ===== */
+  .site-footer { position:relative; background:var(--black); border-top:1px solid var(--line); z-index:1; overflow:hidden; }
+  .footer-top { display:flex; justify-content:space-between; gap:clamp(40px,6vw,80px); padding:clamp(48px,7vw,88px) var(--edge) clamp(32px,5vw,48px); flex-wrap:wrap; }
+  .footer-brand { flex:1 1 260px; max-width:380px; }
+  .footer-logo { display:block; width:clamp(88px,9vw,104px); height:auto; margin-bottom:clamp(16px,2.4vw,22px); }
+  .footer-tagline { font-family:var(--font-desc); font-size:clamp(13.5px,1.3vw,15px); color:var(--dim); line-height:1.55; max-width:34ch; }
+  .footer-cols { display:flex; gap:clamp(40px,6vw,88px); flex-shrink:0; }
+  .footer-col { display:flex; flex-direction:column; gap:clamp(10px,1.6vw,14px); min-width:110px; }
+  .footer-col-title { font-family:var(--font-body); font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--faint); margin-bottom:clamp(4px,1vw,8px); }
+  .footer-col a { font-family:var(--font-body); font-size:13.5px; color:var(--dim); text-decoration:none; transition:color .25s ease; width:fit-content; }
+  .footer-col a:hover { color:var(--white); }
+ 
+  .footer-bottom { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:clamp(18px,2.6vw,22px) var(--edge); border-top:1px solid var(--line); flex-wrap:wrap; }
+  .footer-copy { font-family:var(--font-body); font-size:12px; letter-spacing:0; color:var(--faint); }
+  .footer-made { display:flex; align-items:center; gap:8px; font-family:var(--font-body); font-size:12px; color:var(--faint); }
+  .footer-flag { width:18px; height:auto; opacity:.85; }
+ 
+  .footer-wordmark { font-family:var(--font-display); font-weight:600; letter-spacing:-.02em; line-height:.78; text-align:center; color:var(--white); opacity:.05; font-size:clamp(72px,17vw,220px); padding:0 var(--edge) clamp(8px,2vw,20px); user-select:none; pointer-events:none; white-space:nowrap; }
+ 
+  @media (max-width:768px){
+    .footer-top { flex-direction:column; gap:clamp(28px,6vw,36px); padding-bottom:clamp(28px,5vw,36px); }
+    .footer-cols { gap:clamp(32px,10vw,56px); }
+    .footer-bottom { flex-direction:column; text-align:center; padding-top:20px; padding-bottom:20px; }
+  }
+  
 
   @media (max-width:600px){
     .flow-stage{ min-height:clamp(460px,62vh,620px); }
@@ -189,10 +206,32 @@
 </div>
 
 <!-- FOOTER -->
-<footer class="footer-minimal">
-  <div class="footer-left"><span class="footer-copy">© 2026 Vanar Robots Private Limited</span></div>
-  <div class="footer-center"><a href="https://x.com/vanar_robots" target="_blank">X</a><a href="https://www.youtube.com/@VanarRobots" target="_blank">YouTube</a><a href="https://www.linkedin.com/company/vanar-robots/" target="_blank">LinkedIn</a><a href="https://www.instagram.com/vanar_robots/" target="_blank">Instagram</a></div>
-  <div class="footer-right"><img src="images/Renders/WebP/India.webp" alt="India" class="footer-flag"></div>
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img class="footer-logo" src="images/Renders/WebP/WhiteLogo1.webp" alt="Vanar Robots">
+      <p class="footer-tagline">Humanoid robots built to work in the environments humanity has already built.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col">
+        <div class="footer-col-title">Site</div>
+        <a href="index.html">Home</a>
+        <a href="contact.html">Communications</a>
+        <a href="interest.html">Deploy</a>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Follow</div>
+        <a href="https://x.com/vanar_robots" target="_blank" rel="noopener">X</a>
+        <a href="https://www.youtube.com/@VanarRobots" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.linkedin.com/company/vanar-robots/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.instagram.com/vanar_robots/" target="_blank" rel="noopener">Instagram</a>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Vanar Robots Private Limited</span>
+    <span class="footer-made"><img src="images/Renders/WebP/India.webp" alt="" class="footer-flag">Made in India</span>
+  </div>
 </footer>
 
 <script>
