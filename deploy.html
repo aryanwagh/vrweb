@@ -185,10 +185,10 @@
       <section class="step" data-role="cover">
         <div class="cover-eyebrow">Beta Access · Vanar Generation 1</div>
         <h1 class="cover-title">Bring a Vanar into your environment.</h1>
-        <p class="cover-sub">Ten quick questions, about two minutes. We personally review every application against Gen 1's first target environments before reaching out.</p>
+        <p class="cover-sub">A few questions, about two minutes. We personally review every application against Gen 1's first target environments before reaching out.</p>
         <div class="cover-meta">
           <div><strong>2027</strong>Beta deployment</div>
-          <div><strong>Industry</strong>Target environment</div>
+          <div><strong>Gen 1</strong>Target environments</div>
         </div>
         <div class="flow-actions">
           <button class="flow-next" id="coverStart" type="button">Begin →</button>
@@ -205,7 +205,7 @@
   <div class="confirm-box">
     <div class="confirm-tag">Request logged</div>
     <h2>Beta request<br>received.</h2>
-    <p>Your request has been recorded. We review every environment personally against Gen 1's first target applications — if it's a fit, our team will reach out with next steps.</p>
+    <p>Your request has been recorded. We review every environment personally against Gen 1's first target applications. If there's a strong fit, our team will reach out with next steps.</p>
     <a href="index.html" class="confirm-btn">← Return home</a>
   </div>
 </div>
@@ -278,14 +278,21 @@ const FLOW_STEPS = [
   { id:'scale', kicker:'The task', q:'How much human or machine capacity is currently dedicated to this task?',
     choices:['Under 10 hours/week', '10–40 hours/week', 'Full-time (1 role)', 'Multiple full-time roles']
   },
-  { id:'timeline', kicker:'Deployment', q:'When would you want a Vanar unit deployed?',
-    choices:['As soon as possible', 'Early - Mid 2027', 'Late 2027 - Early 2028', 'Just exploring for now']
+  { id:'cost', kicker:'Deployment', q:'What does this task currently cost your organisation?',
+    help:'Estimate the annual cost of the people, outsourcing, machinery, maintenance, and other resources directly involved in this task.',
+    choices:[
+      'Under ₹1,00,000 per year',
+      '₹1,00,000 – ₹5,00,000 per year',
+      '₹5,00,000 – ₹15,00,000 per year',
+      '₹15,00,000 – ₹50,00,000 per year',
+      'Over ₹50,00,000 per year',
+      'Not sure'
+    ]
   },
-  { id:'budget', kicker:'Deployment', q:'What budget would you be able to allocate for an initial deployment?',
-    help:'This helps us understand the commercial fit of the deployment. If you are unsure, choose “Need to discuss”.',
-    choices:['Under ₹20,000', '₹20,000 – ₹50,000', '₹50,000 – ₹1,00,000', '₹1,00,000+', 'Need to discuss']
+  { id:'timeline', kicker:'Deployment', q:'When could this task realistically be automated?',
+    choices:['As soon as possible', 'Early – Mid 2027', 'Late 2027 – Early 2028', 'No defined timeline yet']
   },
-  { id:'location', kicker:'Deployment', q:'Where would this Vanar unit operate?',
+  { id:'location', kicker:'Deployment', q:'Where would a Vanar operate?',
     fields:[
       { name:'city',  label:'City / deployment location', type:'text', placeholder:'e.g. Andheri, Mumbai, Maharashtra', required:true },
       { name:'phone', label:'Phone number',                type:'tel',  placeholder:'+910000000000', required:true,
@@ -293,7 +300,6 @@ const FLOW_STEPS = [
     ]
   }
 ];
-
 // Same Google Apps Script endpoint as the previous form.
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkRqZoU-kc-j1cGCUOxHaB2VH5hL2p61U5M92ktDeNcpaRDP-Zww/exec";
 
@@ -305,8 +311,14 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
   const coverStart = document.getElementById('coverStart');
 
   const answers = {};      // accumulated across every step — sent as one payload at the end
+  const submissionId = createSubmissionId();
   let stepEls = [];        // DOM nodes, index 0 = cover, 1..N = questions
   let current = 0;
+
+  function createSubmissionId(){
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'gen1-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+  }
 
   function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
 
@@ -371,7 +383,7 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
           btn.classList.add('selected');
           answers[key] = choice;
           refreshNextState();
-          setTimeout(() => { if (isStepValid(cfg)) goNext(); }, 320);
+          setTimeout(() => { if (isStepValid(cfg)) goNext(); }, 420);
         });
         grid.appendChild(btn);
       });
@@ -452,12 +464,36 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
 
   function submitAll(){
     const btn = stepEls[current]._nextBtn;
-    btn.disabled = true; btn.textContent = 'Sending…';
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
     const fd = new FormData();
     Object.keys(answers).forEach(k => fd.append(k, answers[k]));
-    fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:fd })
-      .then(showConfirmation)
-      .catch(showConfirmation);
+
+    fd.append('formType', 'gen1_beta');
+    fd.append('submissionId', submissionId);
+    fd.append('submitted_at', new Date().toISOString());
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: fd
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('Network request failed.');
+      return response.json();
+    })
+    .then(data => {
+      if (!data || data.result !== 'success') {
+        throw new Error(data && data.message ? data.message : 'Submission failed.');
+      }
+      showConfirmation();
+    })
+    .catch(error => {
+      console.error('Gen 1 beta submission failed:', error);
+      btn.disabled = false;
+      btn.textContent = 'Try again →';
+      alert('We could not submit your request. Please check your connection and try again.');
+    });
   }
   function showConfirmation(){ overlay.classList.add('active'); }
 
@@ -473,4 +509,4 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
 </script>
 
 </body>
-</html>
+</html>w
