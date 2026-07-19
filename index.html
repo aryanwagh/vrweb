@@ -161,14 +161,13 @@
   .film-scrim { position:absolute; inset:0; pointer-events:none; z-index:2;
     background:
       radial-gradient(ellipse 80% 70% at 50% 42%, transparent 46%, rgba(5,5,5,0.32) 100%),
-      linear-gradient(to bottom, rgba(5,5,5,0.2) 0%, transparent 24%, transparent 54%, rgba(5,5,5,0.74) 100%);
+      linear-gradient(to bottom, rgba(5,5,5,0.2) 0%, transparent 24%, transparent 50%, rgba(5,5,5,0.85) 100%);
   }
   .film-text { position:absolute; z-index:3; left:var(--edge); right:auto; bottom:clamp(9vh,14vh,14vh); text-align:left; margin:0; max-width:min(640px,86vw); opacity:0; pointer-events:none; will-change:opacity,transform,filter; }
-  .film-text::before { content:''; position:absolute; inset:-28px -52px; z-index:-1; filter:blur(12px); }
-  .film-eyebrow { font-family:var(--font-body); font-size:clamp(12px,1.4vw,14px); font-weight:400; letter-spacing:0; color:var(--dim); margin-bottom:clamp(12px,2vw,18px); }
-  .film-title { font-family:var(--font-display); font-weight:500; font-size:var(--section); line-height:1.12; letter-spacing:-.02em; color:var(--white); }
+  .film-eyebrow { font-family:var(--font-body); font-size:clamp(12px,1.4vw,14px); font-weight:400; letter-spacing:0; color:var(--dim); margin-bottom:clamp(12px,2vw,18px); text-shadow:0 1px 3px rgba(0,0,0,.55), 0 6px 18px rgba(0,0,0,.4); }
+  .film-title { font-family:var(--font-display); font-weight:500; font-size:var(--section); line-height:1.12; letter-spacing:-.02em; color:var(--white); text-shadow:0 2px 4px rgba(0,0,0,.5), 0 10px 30px rgba(0,0,0,.45); }
   .film-title .hl { color:inherit; }
-  .film-sub { margin-top:clamp(14px,2vw,22px); font-family:var(--font-desc); font-weight:400; font-size:clamp(13.5px,1.2vw,18px); color:var(--dim); max-width:50ch; line-height:1.45; }
+  .film-sub { margin-top:clamp(14px,2vw,22px); font-family:var(--font-desc); font-weight:400; font-size:clamp(13.5px,1.2vw,18px); color:var(--dim); max-width:50ch; line-height:1.45; text-shadow:0 1px 3px rgba(0,0,0,.55), 0 8px 20px rgba(0,0,0,.4); }
   @media (max-width:820px){
     .film { height:495vh; }
     .film-text { left:0; right:0; margin:0 auto; width:min(600px,88vw); bottom:11vh; text-align:center; }
@@ -359,6 +358,7 @@
 
     <!-- 1 -->
     <div class="film-text pos-bl" data-beat="1">
+      <div class="film-eyebrow">Capability</div>
       <h2 class="film-title">Human form. Superhuman capability.</h2>
       <p class="film-sub">The current world automation requires existing environments to adapt to the machine, demanding significant infrastructure, time, 
         and capital before the actual work can begin. Vanars are being engineered to operate within the environments humanity has already built,
@@ -369,6 +369,7 @@
 
     <!-- 2 -->
     <div class="film-text pos-bl" data-beat="0">
+      <div class="film-eyebrow">Purpose</div>
       <h2 class="film-title">To Protect the Civilization.</h2>
       <p class="film-sub">The future demands more than humanity has ever built before: advanced machinery, megastructures, spacecraft, healthcare infrastructure,
         and technologies to sustain and advance civilization. The challenge is not imagination. It is the speed of research, iteration, and construction.
@@ -378,6 +379,7 @@
 
     <!-- 3 -->
     <div class="film-text pos-bl" data-beat="2">
+      <div class="film-eyebrow">The Future</div>
       <h2 class="film-title">&ldquo;Build me a<br><span class="hl">spaceship.</span>&rdquo;</h2>
       <p class="film-sub">We are advancing toward a future where a team of Vanars can receive an objective: Build a spacecraft. 
         They determine the required resources, plan the work, coordinate across tasks, adapt to conditions, and execute continuously with minimal human intervention.
@@ -577,12 +579,12 @@
      whatever the desktop framing happens to leave in view.
      ========================================================================= */
   const CLIPS = [
-    { dir:'models/humanoid/',  prefix:'h_', count:0, pad:4, ext:'webp', poster:'https://www.vanarrobots.com/images/Renders/WebP/File155.webp',
-      frame:{ x:0.5, y:0.35, zoom:1.1,  mobile:{ x:0.5, y:0.3,  zoom:1.4 } } },
+    { dir:'models/humanoid/',  prefix:'h_', count:0, pad:4, ext:'webp', poster:'https://www.vanarrobots.com/images/Renders/WebP/hero.webp',
+      frame:{ x:0.3, y:0.9,  zoom:1.6,  mobile:{ x:0.5, y:1.02, zoom:1.35 } } },
     { dir:'models/spaceship/', prefix:'s_', count:0, pad:4, ext:'webp', poster:'https://www.vanarrobots.com/images/Renders/WebP/File87.webp',
       frame:{ x:0.5, y:0.45, zoom:1.05, mobile:{ x:0.5, y:0.4,  zoom:1.3 } } },
-    { dir:'models/build/',     prefix:'b_', count:0, pad:4, ext:'webp', poster:'https://www.vanarrobots.com/images/Renders/WebP/hero.webp',
-      frame:{ x:0.3, y:0.9,  zoom:1.6,  mobile:{ x:0.5, y:1.02, zoom:1.35 } } }
+    { dir:'models/build/',     prefix:'b_', count:0, pad:4, ext:'webp', poster:'https://www.vanarrobots.com/images/Renders/WebP/File155.webp',
+      frame:{ x:0.5, y:0.35, zoom:1.1,  mobile:{ x:0.5, y:0.3,  zoom:1.4 } } },
   ];
   // count:0 = preview (uses the poster). Set each to its rendered frame total.
 
