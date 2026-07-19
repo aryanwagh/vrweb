@@ -301,7 +301,7 @@ const BRANCHES = {
       choices:['Angel / individual', 'Pre-seed', 'Seed', 'Series A', 'Growth stage']
     },
     { id:'invnotes', kicker:'Investment', q:"Anything specific you'd like to know?",
-      fields:[{ name:'invnotes', label:'Notes (optional)', type:'textarea', placeholder:'Context, thesis fit, questions…', required:false }]
+      fields:[{ name:'invnotes', label:'Notes (optional)', type:'textarea', placeholder:'Context, thesis fit, questions…', required:true }]
     }
   ],
   'Partnership': [
@@ -330,6 +330,19 @@ const BRANCHES = {
   ]
 };
 
+// Every field/choice key that can appear across any branch — used to wipe
+// stale answers from a previously-chosen branch when the person changes
+// their mind about "What brings you here?" after going back.
+const ALL_BRANCH_KEYS = (() => {
+  const keys = new Set();
+  Object.values(BRANCHES).forEach(steps => {
+    steps.forEach(cfg => {
+      if (cfg.choices) keys.add(cfg.id);
+      if (cfg.fields) cfg.fields.forEach(f => keys.add(f.name));
+    });
+  });
+  return keys;
+})();
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkRqZoU-kc-j1cGCUOxHaB2VH5hL2p61U5M92ktDeNcpaRDP-Zww/exec";
 
@@ -340,10 +353,16 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
   const overlay = document.getElementById('flowOverlay');
   const coverStart = document.getElementById('coverStart');
 
-  const answers = { formType: 'communications' };      // accumulated across every step — sent as one payload at the end
+  const answers = { formType: 'communications' };
+  const submissionId = createSubmissionId();
   let stepEls = [];        // DOM nodes: [0]=cover, [1]=contact, [2]=reason, [3..]=the chosen branch
   let current = 0;
   const BASE_COUNT = BASE_STEPS.length; // 2 — everything past this index is branch-dependent
+
+  function createSubmissionId(){
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'com-' + Date.now() + '-' + Math.random().toString(36).slice(2, 10);
+  }
 
   function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/(^-|-$)/g,''); }
 
@@ -443,9 +462,13 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
 
   // Swap in the question set for whichever reason the person picked. Always
   // rebuilt fresh (cheap — a handful of DOM nodes) so changing your mind and
-  // picking a different reason after going back works cleanly.
+  // picking a different reason after going back works cleanly. Also wipes
+  // any answers left over from a previously-chosen branch, so a switched
+  // reason never submits alongside stale fields from the path not taken.
   function mountBranch(reason){
     while (stepEls.length > BASE_COUNT + 1){ const el = stepEls.pop(); el.remove(); }
+    ALL_BRANCH_KEYS.forEach(k => { delete answers[k]; });
+
     const cfgs = BRANCHES[reason] || [];
     cfgs.forEach((cfg, i) => {
       const el = buildStep(cfg, i === cfgs.length - 1);
@@ -507,12 +530,34 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
 
   function submitAll(){
     const btn = stepEls[current]._nextBtn;
-    btn.disabled = true; btn.textContent = 'Sending…';
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
     const fd = new FormData();
     Object.keys(answers).forEach(k => fd.append(k, answers[k]));
-    fetch(SCRIPT_URL, { method:'POST', mode:'no-cors', body:fd })
-      .then(showConfirmation)
-      .catch(showConfirmation);
+    fd.append('submissionId', submissionId);
+    fd.append('submitted_at', new Date().toISOString());
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      body: fd
+    })
+    .then(response => {
+      if (!response.ok) throw new Error('Network request failed.');
+      return response.json();
+    })
+    .then(data => {
+      if (!data || data.result !== 'success') {
+        throw new Error(data && data.message ? data.message : 'Submission failed.');
+      }
+      showConfirmation();
+    })
+    .catch(error => {
+      console.error('Communications submission failed:', error);
+      btn.disabled = false;
+      btn.textContent = 'Try again →';
+      alert('We could not send your message. Please check your connection and try again.');
+    });
   }
   function showConfirmation(){ overlay.classList.add('active'); }
 
