@@ -272,13 +272,17 @@ const FLOW_STEPS = [
   { id:'handling', kicker:'The task', q:'How is this task handled today?',
     choices:['Manual labour team', 'Contracted / outsourced labour', 'Existing machinery or automation', 'Not being done adequately', 'Other']
   },
-  { id:'scale', kicker:'The task', q:'How much of your week does this task take up?',
+  { id:'motivation', kicker:'The task', q:'What is driving you to explore a new solution?',
+    choices:['Labour availability or shortages', 'High labour cost', 'Dangerous or unsuitable working conditions', 'Existing automation is too rigid', 'Existing automation is too expensive', 'Need greater production capacity', 'Need to automate a task that is difficult to automate today', 'Other']
+  },
+  { id:'scale', kicker:'The task', q:'How much human or machine capacity is currently dedicated to this task?',
     choices:['Under 10 hours/week', '10–40 hours/week', 'Full-time (1 role)', 'Multiple full-time roles']
   },
   { id:'timeline', kicker:'Deployment', q:'When would you want a Vanar unit deployed?',
     choices:['As soon as possible', 'Early - Mid 2027', 'Late 2027 - Early 2028', 'Just exploring for now']
   },
-  { id:'budget', kicker:'Deployment', q:'What monthly budget are you working with?',
+  { id:'budget', kicker:'Deployment', q:'What budget would you be able to allocate for an initial deployment?',
+    help:'This helps us understand the commercial fit of the deployment. If you are unsure, choose “Need to discuss”.',
     choices:['Under ₹20,000', '₹20,000 – ₹50,000', '₹50,000 – ₹1,00,000', '₹1,00,000+', 'Need to discuss']
   },
   { id:'location', kicker:'Deployment', q:'Where would this Vanar unit operate?',
