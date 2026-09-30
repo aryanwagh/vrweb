@@ -464,11 +464,15 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
 
   function submitAll(){
     const btn = stepEls[current]._nextBtn;
+
     btn.disabled = true;
     btn.textContent = 'Sending…';
 
     const fd = new FormData();
-    Object.keys(answers).forEach(k => fd.append(k, answers[k]));
+
+    Object.keys(answers).forEach(k => {
+      fd.append(k, answers[k]);
+    });
 
     fd.append('formType', 'gen1_beta');
     fd.append('submissionId', submissionId);
@@ -476,23 +480,24 @@ const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbylMhVp6onjtEj-mnqkR
 
     fetch(SCRIPT_URL, {
       method: 'POST',
-      body: fd
+      body: fd,
+      mode: 'no-cors'
     })
-    .then(response => {
-      if (!response.ok) throw new Error('Network request failed.');
-      return response.json();
-    })
-    .then(data => {
-      if (!data || data.result !== 'success') {
-        throw new Error(data && data.message ? data.message : 'Submission failed.');
-      }
+    .then(() => {
+      console.log('Deploy submission request sent.');
+      console.log('Submission ID:', submissionId);
+
       showConfirmation();
     })
     .catch(error => {
-      console.error('Gen 1 beta submission failed:', error);
+      console.error('Deploy submission failed:', error);
+
       btn.disabled = false;
       btn.textContent = 'Try again →';
-      alert('We could not submit your request. Please check your connection and try again.');
+
+      alert(
+        'We could not submit your request. Please check your connection and try again.'
+      );
     });
   }
   function showConfirmation(){ overlay.classList.add('active'); }
