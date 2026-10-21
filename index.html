@@ -191,7 +191,17 @@
   .when-section { padding:clamp(72px,11vw,150px) var(--edge); background:var(--tone-4); border-top:1px solid var(--line); position:relative; z-index:1; }
   .when-inner { max-width:760px; margin:0 auto; text-align:center; display:flex; flex-direction:column; align-items:center; }
   .when-lead { font-family:var(--font-display); font-weight:500; font-size:clamp(20px,2.6vw,30px); line-height:1.3; letter-spacing:-.015em; color:var(--white); margin:clamp(14px,2vw,22px) 0 clamp(18px,3vw,28px); }
-  .when-sub { text-align: center; font-family:var(--font-desc); font-weight:400; font-size:clamp(14.5px,1.4vw,17px); line-height:1.5; color:var(--dim); max-width:56ch; margin-bottom:clamp(30px,5vw,44px); }
+  .when-sub {
+  text-align: justify;
+  text-align-last: center;
+  font-family: var(--font-desc);
+  font-weight: 400;
+  font-size: clamp(14.5px, 1.4vw, 17px);
+  line-height: 1.5;
+  color: var(--dim);
+  max-width: 56ch;
+  margin-bottom: clamp(30px, 5vw, 44px);
+}
 
   /* SHARED CTA BUTTONS */
   .cta-btn { display:inline-flex; align-items:center; justify-content:center; padding:clamp(13px,1.8vw,15px) clamp(24px,3vw,32px); border:1px solid rgba(246,246,246,0.35); background:transparent; color:var(--white); font-family:var(--font-body); font-size:clamp(14px,1.5vw,15px); font-weight:400; text-decoration:none; white-space:nowrap; transition:background-color .5s cubic-bezier(.4,0,.2,1), color .5s cubic-bezier(.4,0,.2,1), border-color .5s cubic-bezier(.4,0,.2,1); }
