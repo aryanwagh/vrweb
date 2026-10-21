@@ -165,14 +165,14 @@
   }
   .film-text { position:absolute; z-index:3; left:var(--edge); right:auto; bottom:clamp(9vh,14vh,14vh); text-align:left; margin:0; max-width:min(640px,86vw); opacity:0; pointer-events:none; will-change:opacity,transform,filter; }
   .film-eyebrow { font-family:var(--font-body); font-size:clamp(12px,1.4vw,14px); font-weight:400; letter-spacing:0; color:var(--dim); margin-bottom:clamp(12px,2vw,18px); text-shadow:0 1px 4px rgba(0,0,0,.45); }
-  .film-title { font-family:var(--font-display); font-weight:500; font-size:var(26px); line-height:1.12; letter-spacing:-.02em; color:var(--white); text-shadow:0 1px 6px rgba(0,0,0,.45); }
+  .film-title { font-family:var(--font-display); font-weight:500; font-size:26px; line-height:1.12; letter-spacing:-.02em; color:var(--white); text-shadow:0 1px 6px rgba(0,0,0,.45); }
   .film-title .hl { color:inherit; }
   .film-sub { margin-top:clamp(14px,2vw,22px); font-family:var(--font-desc); font-weight:400; font-size:clamp(13.5px,1.2vw,18px); color:var(--dim); max-width:50ch; line-height:1.45; text-shadow:0 1px 4px rgba(0,0,0,.45); }
   @media (max-width:820px){
     .film { height:495vh; }
     .film-text { left:0; right:0; margin:0 auto; width:90vw; bottom:11vh; text-align:center; }
     .film-text .film-sub { margin-left:auto; margin-right:auto; text-align:justify; text-align-last:center; }
-    .film-title { font-size:clamp(26px); }
+    .film-title { font-size:26px; }
     .film-sub { font-size:14px; line-height:1.45; }
     /* Images crowd the text on mobile framing. .film-scrim is already
        inset:0 on .film-pin (a true full-bleed box, no vw arithmetic needed),
