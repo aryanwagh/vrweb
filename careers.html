@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Careers · Vanar Robots</title>
+<link rel="icon" type="image/png" href="images/Renders/WebP/profile.webp">
+<link rel="apple-touch-icon" href="images/Renders/WebP/profile.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300..600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#070707;--white:#f6f6f6;--dim:rgba(246,246,246,.55);--faint:rgba(246,246,246,.30);--line:rgba(246,246,246,.17);
+--font-display:'Switzer','Bricolage Grotesque','Inter',system-ui,sans-serif;--font-desc:'Switzer','Inter',system-ui,-apple-system,sans-serif;--font-body:'Inter',system-ui,-apple-system,sans-serif;
+--edge:clamp(20px,5.2vw,88px);--edge-sm:clamp(16px,4vw,56px)}
+html{overflow-x:hidden;overflow-x:clip}
+body{background:var(--black);color:var(--white);font-family:var(--font-body);font-weight:300;overflow-x:hidden;overflow-x:clip;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;min-height:100svh;display:flex;flex-direction:column}
+::selection{background:var(--white);color:var(--black)}
+a:focus-visible,button:focus-visible{outline:1px solid var(--white);outline-offset:3px}
+button{font:inherit}
+
+.navbar{position:fixed;top:0;left:0;width:100%;height:clamp(52px,7vw,64px);background:rgba(7,7,7,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);z-index:1000}
+.nav-inner{max-width:1440px;height:100%;margin:0 auto;padding:0 var(--edge-sm);display:flex;align-items:center;justify-content:space-between;gap:16px}
+.nav-brand img{display:block;width:clamp(78px,9vw,100px);height:auto}
+.nav-links{display:flex;gap:clamp(18px,3vw,32px);align-items:center}
+.nav-links a{text-decoration:none;font-size:clamp(13px,1.4vw,15px);font-weight:400;color:var(--dim);transition:color .3s;white-space:nowrap}
+.nav-links a:hover,.nav-links a.current{color:var(--white)}
+@media(max-width:480px){.nav-links{gap:12px}.nav-links a{font-size:12.5px}}
+
+.progress{position:fixed;top:0;left:0;width:100%;height:2px;background:var(--line);z-index:1002;opacity:0;transition:opacity .3s}
+.progress.on{opacity:1}
+.progress i{display:block;height:100%;width:0;background:var(--white);transition:width .5s cubic-bezier(.19,.75,.24,1)}
+
+main{flex:1;display:flex;flex-direction:column;padding-top:clamp(52px,7vw,64px)}
+.shell{flex:1;display:flex;flex-direction:column;max-width:760px;width:100%;margin:0 auto;padding:0 var(--edge)}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:clamp(20px,3.5vw,32px) 0;min-height:clamp(64px,8vw,86px);gap:16px}
+.count{font-size:12px;letter-spacing:.02em;color:var(--faint)}
+.back{background:none;border:none;padding:0;color:var(--dim);font-size:14px;cursor:pointer;transition:color .25s}
+.back:hover{color:var(--white)}
+
+.view{display:none;flex:1;flex-direction:column;justify-content:center;padding-bottom:clamp(40px,6vw,72px);opacity:0;filter:blur(10px);transform:translateY(16px);transition:opacity .55s cubic-bezier(.19,.75,.24,1),filter .55s cubic-bezier(.19,.75,.24,1),transform .55s cubic-bezier(.19,.75,.24,1)}
+.view.active{display:flex}
+.view.active.in{opacity:1;filter:blur(0);transform:none}
+
+.eyebrow{font-size:13px;color:var(--dim);margin-bottom:clamp(18px,3vw,26px)}
+.kicker{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);margin-bottom:clamp(14px,2vw,20px)}
+.title{font-family:var(--font-display);font-weight:500;font-size:clamp(34px,6vw,56px);line-height:1.1;letter-spacing:-.02em;max-width:16ch}
+.sub{font-family:var(--font-desc);font-size:clamp(14.5px,1.6vw,17px);color:var(--dim);line-height:1.55;max-width:50ch;margin-top:clamp(18px,2.5vw,24px)}
+.q{font-family:var(--font-display);font-weight:500;font-size:clamp(24px,3.6vw,40px);line-height:1.22;letter-spacing:-.015em;max-width:22ch}
+.help{font-family:var(--font-desc);font-size:clamp(13.5px,1.3vw,15px);color:var(--dim);line-height:1.5;max-width:52ch;margin-top:12px}
+
+/* openings list */
+.roles{display:flex;flex-direction:column;margin-top:clamp(28px,4vw,40px);border-top:1px solid var(--line)}
+.role{display:flex;align-items:center;gap:18px;width:100%;padding:clamp(18px,2.6vw,24px) 2px;border:none;border-bottom:1px solid var(--line);background:transparent;text-align:left;color:var(--white);cursor:pointer;transition:padding-left .25s}
+.role-main{flex:1;min-width:0}
+.role-name{display:block;font-family:var(--font-display);font-weight:500;font-size:clamp(17px,2vw,22px);letter-spacing:-.01em}
+.role-meta{display:block;font-family:var(--font-desc);font-size:13px;color:var(--faint);margin-top:5px}
+.role-tag{font-size:12px;letter-spacing:.04em;color:var(--dim);white-space:nowrap}
+.role-tag.open::after{content:' →';display:inline-block;opacity:0;transform:translateX(-6px);transition:opacity .25s,transform .25s}
+.role:not(:disabled):hover{padding-left:8px}
+.role:not(:disabled):hover .role-tag.open::after{opacity:1;transform:none}
+.role:disabled{cursor:not-allowed;color:var(--faint)}
+.role:disabled .role-name{text-decoration:line-through;text-decoration-color:var(--line)}
+.role:disabled .role-tag{border:1px solid var(--line);padding:3px 10px;border-radius:99px;color:var(--faint)}
+.roles-note{font-size:13px;color:var(--faint);margin-top:24px;line-height:1.6}
+.roles-note a{color:var(--dim)}
+
+/* role detail */
+.facts{display:flex;flex-wrap:wrap;gap:8px 28px;margin-top:20px;font-size:13px;color:var(--dim)}
+.desc-block{margin-top:clamp(26px,4vw,38px)}
+.desc-block h3{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);font-weight:400;margin-bottom:12px}
+.desc-block p{font-family:var(--font-desc);font-size:15px;line-height:1.65;color:var(--dim);max-width:60ch}
+.desc-block ul{list-style:none;border-top:1px solid var(--line);max-width:60ch}
+.desc-block li{font-family:var(--font-desc);font-size:14.5px;line-height:1.5;color:var(--dim);padding:12px 0;border-bottom:1px solid var(--line)}
+
+/* form */
+.fields{display:flex;flex-direction:column;gap:clamp(22px,3vw,30px);margin-top:clamp(28px,4vw,40px)}
+.entry{position:relative}
+.label{display:block;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+.input,.textarea{width:100%;background:transparent;border:none;border-bottom:1px solid var(--line);color:var(--white);font-family:var(--font-display);font-weight:500;font-size:clamp(19px,2.6vw,28px);letter-spacing:-.01em;padding:10px 2px 14px;outline:none;transition:border-color .3s;border-radius:0}
+.input:focus,.textarea:focus{border-color:var(--white)}
+.input::placeholder,.textarea::placeholder{color:var(--faint)}
+.textarea{resize:none;height:120px;line-height:1.4;font-size:clamp(17px,2vw,22px)}
+.remove{position:absolute;right:0;top:-2px;background:none;border:none;color:var(--faint);font-size:12px;cursor:pointer}
+.remove:hover{color:var(--white)}
+.add{align-self:flex-start;background:none;border:none;padding:0;color:var(--dim);font-size:14px;cursor:pointer;transition:color .25s}
+.add:hover{color:var(--white)}
+
+.actions{display:flex;align-items:center;gap:20px;margin-top:clamp(32px,5vw,48px);flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;padding:15px 32px;border:1px solid rgba(246,246,246,.35);background:transparent;color:var(--white);font-size:15px;font-weight:400;cursor:pointer;white-space:nowrap;text-decoration:none;transition:background-color .5s cubic-bezier(.4,0,.2,1),color .5s cubic-bezier(.4,0,.2,1),border-color .5s cubic-bezier(.4,0,.2,1),opacity .3s}
+.btn:hover:not(:disabled){background:var(--white);color:var(--black);border-color:var(--white)}
+.btn:disabled{opacity:.3;cursor:not-allowed}
+.hint{font-size:12px;color:var(--faint)}
+.hint kbd{font-family:var(--font-body);border:1px solid var(--line);border-radius:3px;padding:1px 6px;color:var(--dim)}
+
+.overlay{position:fixed;inset:0;background:var(--black);display:flex;align-items:center;justify-content:center;z-index:2000;opacity:0;pointer-events:none;transition:opacity .5s;padding:24px}
+.overlay.active{opacity:1;pointer-events:auto}
+.confirm{max-width:520px;width:100%;text-align:center}
+.confirm .tag{font-size:13px;color:var(--dim);margin-bottom:22px}
+.confirm h2{font-family:var(--font-display);font-weight:500;font-size:clamp(30px,5vw,46px);line-height:1.1;letter-spacing:-.02em;margin-bottom:20px}
+.confirm p{font-family:var(--font-desc);font-size:14.5px;color:var(--dim);line-height:1.6;margin-bottom:36px}
+
+.site-footer{background:var(--black);border-top:1px solid var(--line);overflow:hidden}
+.footer-top{display:flex;justify-content:space-between;gap:clamp(40px,6vw,80px);padding:clamp(48px,7vw,88px) var(--edge) clamp(32px,5vw,48px);flex-wrap:wrap}
+.footer-brand{flex:1 1 260px;max-width:380px}
+.footer-logo{display:block;width:clamp(88px,9vw,104px);height:auto;margin-bottom:clamp(16px,2.4vw,22px)}
+.footer-tagline{font-family:var(--font-desc);font-size:clamp(13.5px,1.3vw,15px);color:var(--dim);line-height:1.55;max-width:34ch}
+.footer-cols{display:flex;gap:clamp(40px,6vw,88px)}
+.footer-col{display:flex;flex-direction:column;gap:clamp(10px,1.6vw,14px);min-width:110px}
+.footer-col-title{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
+.footer-col a{font-size:13.5px;color:var(--dim);text-decoration:none;transition:color .25s;width:fit-content}
+.footer-col a:hover{color:var(--white)}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:clamp(18px,2.6vw,22px) var(--edge);border-top:1px solid var(--line);flex-wrap:wrap}
+.footer-copy{font-size:12px;color:var(--faint)}
+.footer-flag{width:18px;height:auto;opacity:.85}
+@media(max-width:768px){.footer-top{flex-direction:column;gap:30px}.footer-bottom{flex-direction:column;text-align:center}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition-duration:.001ms!important}.view{transform:none!important;filter:none!important}}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html"><img src="images/Renders/WebP/WhiteLogo1.webp" alt="Vanar Robots"></a>
+    <div class="nav-links">
+      <a href="communication.html">Communications</a>
+      <a href="career.html" class="current">Careers</a>
+      <a href="deploy.html">Deploy</a>
+    </div>
+  </div>
+</nav>
+<div class="progress" id="progress"><i id="fill"></i></div>
+
+<main>
+  <div class="shell">
+    <div class="bar"><button class="back" id="backBtn" type="button" hidden>← Back</button><span class="count" id="count" hidden></span></div>
+
+    <!-- 1. OPENINGS -->
+    <section class="view" id="listView">
+      <div class="eyebrow">Careers · Vanar Robots</div>
+      <h1 class="title">Build the Workforce<br>of the future.</h1>
+      <p class="sub">Vanar Robots is bringing together ambitious minds to build advanced machines that help humanity shape its future.
+        If you’re driven by engineering, curiosity, and the desire to make a meaningful contribution to human progress, we would love to hear from you.</p>
+      <div class="roles" id="roles"></div>
+      <p class="roles-note">Don't see your role? Write to <a href="mailto:hello@vanarrobots.com">hello@vanarrobots.com</a> or use the <a href="communication.html">Communications</a> page.</p>
+    </section>
+
+    <!-- 2. DESCRIPTION -->
+    <section class="view" id="detailView">
+      <div class="kicker" id="dKicker"></div>
+      <h1 class="title" id="dTitle" style="max-width:20ch"></h1>
+      <div class="facts" id="dFacts"></div>
+      <div id="dBody"></div>
+      <div class="actions"><button class="btn" id="applyBtn" type="button">Apply for this role →</button></div>
+    </section>
+
+    <!-- 3. QUESTIONS (rendered by JS) -->
+    <div id="formHost" style="display:contents"></div>
+  </div>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="confirm">
+    <div class="tag">Application received</div>
+    <h2>Thanks for<br>applying.</h2>
+    <p>Thank you for your interest in Vanar Robots! We receive a large number of applications and may not be able to respond to everyone individually.
+        If we feel your experience and interests align with what we’re building, we’ll be in touch with you about the next steps.<br><br>
+        In the meantime, you can reach us at <a href="mailto:hello@vanarrobots.com" style="color:var(--white)">hello@vanarrobots.com</a>.</p>
+    <a href="career.html" class="btn">← Back to openings</a>
+  </div>
+</div>
+
+<footer class="site-footer">
+  <div class="footer-top">
+    <div class="footer-brand">
+      <img class="footer-logo" src="images/Renders/WebP/WhiteLogo1.webp" alt="Vanar Robots">
+      <p class="footer-tagline">A new species, designed and built to speed up humanity's progress.</p>
+    </div>
+    <div class="footer-cols">
+      <div class="footer-col"><div class="footer-col-title">Site</div>
+        <a href="index.html">Home</a><a href="communication.html">Communications</a><a href="news.html">News</a><a href="deploy.html">Deploy</a><a href="careers.html">Careers</a></div>
+      <div class="footer-col"><div class="footer-col-title">Follow</div>
+        <a href="https://x.com/vanar_robots" target="_blank" rel="noopener">X</a>
+        <a href="https://www.youtube.com/@VanarRobots" target="_blank" rel="noopener">YouTube</a>
+        <a href="https://www.linkedin.com/company/vanar-robots/" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="https://www.instagram.com/vanar_robots/" target="_blank" rel="noopener">Instagram</a></div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Vanar Robots Private Limited</span>
+    <img src="images/Renders/WebP/India.webp" alt="" class="footer-flag">
+  </div>
+</footer>
+
+<script>
+/* ==========================================================================
+   OPENINGS — edit this list. status: 'open' | 'closed'. Closed roles show
+   greyed-out and can't be selected. The descriptions below are PLACEHOLDERS.
+   ========================================================================== */
+const OPENINGS = [
+  {
+  id:'robot-learning',
+  title:'Robot Learning Infrastructure Intern',
+  type:'Internship',
+  location:'Remote',
+  status:'open',
+  about:'Develop the software foundations that enable intelligent Vanars to learn from real-world interactions. You will work across robotics software, sensor integration and data systems to support the development of increasingly autonomous robotic capabilities.',
+  does:[
+    'Develop and improve software infrastructure for Vanars',
+    'Work with robotic sensors, actuators and perception systems',
+    'Build reliable data acquisition, synchronization and processing pipelines',
+    'Develop tools for organizing and preparing robotics data for machine learning',
+    'Support the integration of AI models with robotic systems',
+    'Test, debug and document software running on real robotic hardware'
+  ],
+  wants:[
+    'Strong Python programming skills; C++ or ROS 2 experience is a plus',
+    'Understanding of robotics software, sensor systems or machine learning',
+    'Interest in robot learning, imitation learning or embodied AI',
+    'Familiarity with data processing, computer vision or hardware integration is a plus',
+    'A robotics, AI or software project you have built and can show us'
+  ]
+},
+   {
+  id:'electronics',
+  title:'Robotics Electronics & Embedded Systems Intern',
+  type:'Internship / Project-based',
+  location:'Mumbai, India',
+  status:'closed',
+  about:'Work at the intersection of electronics, embedded systems and physical robotics. You will contribute to the development and testing of electronic and control systems that enable humanoid robots to move, sense and interact with the world.',
+  does:[
+    'Develop, integrate and test electronic systems for humanoid robotics',
+    'Work with motor control, sensors and encoder-based feedback systems',
+    'Develop and debug embedded firmware for robotic applications',
+    'Work with communication interfaces between electronic and robotic systems',
+    'Support hardware testing, debugging and system integration',
+    'Document designs, experiments and test results'
+  ],
+  wants:[
+    'Strong fundamentals in electronics and embedded systems',
+    'Comfort with C/C++ and microcontrollers such as ESP32, STM32 or Arduino',
+    'Understanding of sensors, motor drivers and communication protocols',
+    'Familiarity with PCB design, circuit debugging or hardware testing is a plus',
+    'A hardware, electronics, firmware or robotics project you have built and can show us'
+  ]
+},
+];
+
+const QUESTIONS = [
+  { id:'name', q:'What is your full name?', type:'text', ph:'Your full name', req:true },
+  { id:'email', q:'What is your email address?', type:'email', ph:'you@email.com', req:true, validate:v=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) },
+  { id:'phone', q:'What is your phone number?', type:'tel', ph:'+91 98765 43210', req:true, validate:v=>/^[+()\-\s\d]{7,18}$/.test(v) },
+  { id:'location', q:'Where are you based?', help:'Current city / country.', type:'text', ph:'e.g. Mumbai, India', req:true },
+  { id:'education', q:'Tell us about your education.', help:'Where did you study, what did you study, and what year are you in, or when did you graduate?', type:'multi', ph:'e.g. B.Tech Mechanical Engineering, IIT Bombay, graduating 2026', addLabel:'+ Add another education', req:true },
+  { id:'experience', q:'What experience do you have?', help:'Tell us about your relevant work, internships, research, or engineering experience.', type:'multi', ph:'Role, organisation, what you did and for how long', addLabel:'+ Add another experience', req:false },
+  { id:'built', q:'What have you built?', help:'Describe a project you personally worked on. What did you do, and what was the result? Include links to your work if available.', type:'multi', ph:'Project, your role, the result, and links (GitHub, portfolio, video)', addLabel:'+ Add another project', req:true },
+  { id:'interest', q:'What would you love to work on at Vanar Robots?', help:'Tell us what interests you and what you would like to contribute.', type:'textarea', ph:'What excites you and what you would bring', req:true },
+  { id:'availability', q:'What is your availability?', help:'When can you start, and how much time can you commit?', type:'textarea', ph:'e.g. Can start 1 January, full-time', req:true },
+  { id:'other', q:"Anything else you'd like us to know?", type:'textarea', ph:'Optional', req:false }
+];
+
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyk57GPmJfciorBC0OzjVbT0gNMcM-OFkaAUAKUzeJ4MXj_iWuRwBiN-hCevNMDdHn8/exec";
+
+(function(){
+  const $ = id => document.getElementById(id);
+  const listView=$('listView'), detailView=$('detailView'), host=$('formHost');
+  const backBtn=$('backBtn'), countEl=$('count'), progress=$('progress'), fill=$('fill'), overlay=$('overlay');
+  const esc = s => String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const submissionId = (window.crypto&&crypto.randomUUID) ? crypto.randomUUID() : 'car-'+Date.now()+'-'+Math.random().toString(36).slice(2,10);
+
+  let role=null, stepEls=[], qi=0, mode='list';
+  const answers={};   // single: string; multi: array of strings
+
+  function show(el){
+    [listView,detailView,...stepEls].forEach(v=>v.classList.remove('active','in'));
+    el.classList.add('active');
+    requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('in')));
+    window.scrollTo({top:0});
+  }
+  function chrome(){
+    backBtn.hidden = mode==='list';
+    const inForm = mode==='form';
+    countEl.hidden=!inForm; progress.classList.toggle('on',inForm);
+    if(inForm){
+      countEl.textContent=String(qi+1).padStart(2,'0')+' / '+String(QUESTIONS.length).padStart(2,'0');
+      fill.style.width=(((qi+1)/QUESTIONS.length)*100).toFixed(1)+'%';
+    }
+  }
+
+  /* ---- openings list ---- */
+  const rolesEl=$('roles');
+  OPENINGS.forEach(o=>{
+    const b=document.createElement('button');
+    b.type='button'; b.className='role'; b.disabled=o.status!=='open';
+    b.innerHTML='<span class="role-main"><span class="role-name">'+esc(o.title)+'</span><span class="role-meta">'+esc(o.type)+' · '+esc(o.location)+'</span></span><span class="role-tag '+(o.status==='open'?'open':'')+'">'+(o.status==='open'?'Open':'Closed')+'</span>';
+    if(o.status==='open') b.addEventListener('click',()=>openRole(o,true));
+    rolesEl.appendChild(b);
+  });
+
+  /* ---- description ---- */
+  function openRole(o,push){
+    role=o; mode='detail';
+    $('dKicker').textContent='Opening';
+    $('dTitle').textContent=o.title;
+    $('dFacts').innerHTML='<span>'+esc(o.type)+'</span><span>'+esc(o.location)+'</span>';
+    const li=a=>a.map(x=>'<li>'+esc(x)+'</li>').join('');
+    $('dBody').innerHTML=
+      '<div class="desc-block"><h3>About the role</h3><p>'+esc(o.about)+'</p></div>'+
+      '<div class="desc-block"><h3>What you will do</h3><ul>'+li(o.does)+'</ul></div>'+
+      '<div class="desc-block"><h3>What we look for</h3><ul>'+li(o.wants)+'</ul></div>';
+    if(push) history.pushState(null,'','#'+o.id);
+    show(detailView); chrome();
+  }
+
+  /* ---- application form ---- */
+  function isValid(cfg){
+    const a=answers[cfg.id];
+    if(cfg.type==='multi'){
+      const vals=(a||[]).map(s=>s.trim()).filter(Boolean);
+      return cfg.req ? vals.length>0 : true;
+    }
+    const v=(a||'').trim();
+    if(cfg.req&&!v) return false;
+    if(v&&cfg.validate) return cfg.validate(v);
+    return true;
+  }
+  function refresh(){ const el=stepEls[qi]; if(el) el._next.disabled=!isValid(el._cfg); }
+
+  function buildStep(cfg,i){
+    const last=i===QUESTIONS.length-1;
+    const el=document.createElement('section'); el.className='view';
+    el.innerHTML='<div class="kicker">'+String(i+1).padStart(2,'0')+(cfg.req?'':' · Optional')+'</div><h2 class="q">'+esc(cfg.q)+'</h2>'+(cfg.help?'<p class="help">'+esc(cfg.help)+'</p>':'');
+    const wrap=document.createElement('div'); wrap.className='fields'; el.appendChild(wrap);
+
+    const mkInput=(idx)=>{
+      const isArea=cfg.type==='textarea'||cfg.type==='multi';
+      const inp=document.createElement(isArea?'textarea':'input');
+      inp.className=isArea?'textarea':'input';
+      if(!isArea) inp.type=cfg.type;
+      inp.placeholder=cfg.ph||''; inp.autocomplete='off';
+      inp.addEventListener('input',()=>{
+        if(cfg.type==='multi') answers[cfg.id][idx]=inp.value; else answers[cfg.id]=inp.value;
+        refresh();
+      });
+      inp.addEventListener('keydown',e=>{
+        if(e.key!=='Enter') return;
+        if(isArea && !(e.metaKey||e.ctrlKey)) return;
+        e.preventDefault(); if(isValid(cfg)) last?submit():goNext();
+      });
+      return inp;
+    };
+
+    if(cfg.type==='multi'){
+      answers[cfg.id]=[''];
+      const list=document.createElement('div'); list.style.cssText='display:flex;flex-direction:column;gap:clamp(22px,3vw,30px)';
+      wrap.appendChild(list);
+      const addEntry=()=>{
+        const idx=list.children.length;
+        if(idx>0) answers[cfg.id][idx]='';
+        const box=document.createElement('div'); box.className='entry';
+        const lab=document.createElement('label'); lab.className='label'; lab.textContent=(idx===0?'Entry 1':'Entry '+(idx+1));
+        box.appendChild(lab);
+        if(idx>0){
+          const rm=document.createElement('button'); rm.type='button'; rm.className='remove'; rm.textContent='Remove';
+          rm.addEventListener('click',()=>{
+            const pos=[...list.children].indexOf(box);
+            answers[cfg.id].splice(pos,1); box.remove();
+            [...list.children].forEach((c,k)=>c.querySelector('.label').textContent='Entry '+(k+1));
+            refresh();
+          });
+          box.appendChild(rm);
+        }
+        const t=mkInput(idx); box.appendChild(t); list.appendChild(box); if(idx>0) t.focus();
+        // keep indices right after removals
+        t.addEventListener('input',()=>{ const pos=[...list.children].indexOf(box); answers[cfg.id][pos]=t.value; refresh(); },{capture:true});
+      };
+      addEntry();
+      const add=document.createElement('button'); add.type='button'; add.className='add'; add.textContent=cfg.addLabel;
+      add.addEventListener('click',addEntry); wrap.appendChild(add);
+    } else {
+      answers[cfg.id]='';
+      wrap.appendChild(mkInput());
+    }
+
+    const act=document.createElement('div'); act.className='actions';
+    const next=document.createElement('button'); next.type='button'; next.className='btn';
+    next.textContent=last?'Submit application →':'Next →'; next.disabled=cfg.req;
+    next.addEventListener('click',()=>last?submit():goNext());
+    act.appendChild(next);
+    const hint=document.createElement('span'); hint.className='hint';
+    hint.innerHTML=(cfg.type==='textarea'||cfg.type==='multi')?'<kbd>⌘/Ctrl</kbd> + <kbd>Enter</kbd> to continue':'Press <kbd>Enter ↵</kbd>';
+    act.appendChild(hint); el.appendChild(act);
+    el._next=next; el._cfg=cfg;
+    return el;
+  }
+
+  function startForm(){
+    host.innerHTML=''; stepEls=[];
+    QUESTIONS.forEach((c,i)=>{ const el=buildStep(c,i); host.appendChild(el); stepEls.push(el); });
+    mode='form'; qi=0; show(stepEls[0]); chrome(); focusFirst();
+  }
+  function focusFirst(){ const f=stepEls[qi].querySelector('input,textarea'); if(f) setTimeout(()=>f.focus(),60); }
+  function goNext(){ if(qi<stepEls.length-1){ qi++; show(stepEls[qi]); chrome(); focusFirst(); } }
+
+  function goBack(){
+    if(mode==='form'){ if(qi>0){ qi--; show(stepEls[qi]); chrome(); focusFirst(); } else { mode='detail'; show(detailView); chrome(); } }
+    else if(mode==='detail'){ history.pushState(null,'',location.pathname); goList(); }
+  }
+  function goList(){ mode='list'; role=null; show(listView); chrome(); }
+
+  function submit(){
+    const btn=stepEls[qi]._next; btn.disabled=true; btn.textContent='Sending…';
+    const fd=new FormData();
+    fd.append('formType','careers');
+    fd.append('role',role.title); fd.append('roleId',role.id);
+    QUESTIONS.forEach(c=>{
+      const a=answers[c.id];
+      fd.append(c.id, c.type==='multi' ? a.map(s=>s.trim()).filter(Boolean).join('\n\n---\n\n') : (a||'').trim());
+    });
+    fd.append('submissionId',submissionId); fd.append('submitted_at',new Date().toISOString());
+    fetch(SCRIPT_URL, {
+        method: 'POST',
+        body: fd,
+        mode: 'no-cors'
+        })
+        .then(() => {
+        overlay.classList.add('active');
+        })
+        .catch(err => {
+        console.error('Careers submission failed:', err);
+        btn.disabled = false;
+        btn.textContent = 'Try again →';
+        alert('We could not send your application. Please check your connection and try again.');
+        });
+  }
+
+  $('applyBtn').addEventListener('click',startForm);
+  backBtn.addEventListener('click',goBack);
+  window.addEventListener('popstate',()=>{ if(mode==='form') return; const o=OPENINGS.find(x=>'#'+x.id===location.hash&&x.status==='open'); o?openRole(o,false):goList(); });
+
+  // initial view (supports deep links like careers.html#firmware)
+  const deep=OPENINGS.find(x=>'#'+x.id===location.hash&&x.status==='open');
+  if(deep) openRole(deep,false); else { listView.classList.add('active','in'); chrome(); }
+})();
+</script>
+</body>
+</html>
